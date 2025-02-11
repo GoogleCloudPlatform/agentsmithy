@@ -18,17 +18,17 @@ Intended for use at Next '25 and similar conferences, this project is meant to s
 
 # Contributors
 
-[Ivan Rufino](mailto:ivanerufino@google.com): ENG
+[Ivan Rufino](mailto:ivanerufino@google.com): Eng
 
-[Sean Rastatter](mailto:srastatter@google.com): ENG
+[Sean Rastatter](mailto:srastatter@google.com): Eng
 
 [Arpit Vaidya](mailto:arpit@google.com): GTM
 
-[Dinesh Varyani](mailto:dineshvaryani@google.com): ENG (UX)
+[Dinesh Varyani](mailto:dineshvaryani@google.com): Eng (UX)
 
-[Rob Keohane](mailto:rkeohane@google.com): ENG (UX)
+[Rob Keohane](mailto:rkeohane@google.com): Eng (UX)
 
-[Robin Singh](mailto:robbysingh@google.com): ENG (UX)
+[Robin Singh](mailto:robbysingh@google.com): Eng (UX)
 
 
 
