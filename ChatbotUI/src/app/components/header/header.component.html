@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light top-nav fixed-top">
+    <div class="parent-container">
+        <div class="left-heading" [matTooltip]="'Home'">
+            <span class="logo-text gradient-text" (click)="navigate()">{{headerTitle}}</span>
+        </div>
+        <div class="right-menu-items">
+            <div class="profile-container" [matMenuTriggerFor]="userAccountMenu">
+                <div class="circle bypassLoginLogo"><mat-icon>person</mat-icon></div>
+            </div>
+        </div>
+    </div>
+    <mat-menu #userAccountMenu class="profile-menu" [overlapTrigger]="false" yPosition="below">
+      <div class="card-inside-right">
+        <div class="name">
+          <span class="sub-title">
+            {{ 'Guest'}}
+          </span>
+          <div class="user-icon container-circle bypassMenuContainer">
+            <mat-icon class="bypassMenuLogo">person</mat-icon>
+          </div>
+        </div>
+        <div class="action-item-container">
+          <br>
+            <div class="logout" (click)="goToManageIntentPage()">
+              <div class="logout-container">
+                <span class="material-symbols-rounded logo">feedback</span>
+                <div class="text">
+                  <span class="sub-title">Manage Playbook</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </mat-menu>
+</nav>
