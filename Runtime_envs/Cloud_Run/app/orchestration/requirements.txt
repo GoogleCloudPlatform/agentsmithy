@@ -1,0 +1,14 @@
+google-cloud-aiplatform
+google-cloud-discoveryengine
+langchain
+langchain-community
+langchain-google-vertexai
+pydantic
+langgraph
+yfinance
+xmltodict
+google-search-results
+ionic-langchain
+wikipedia
+mediawikiapi
+wikibase-rest-api-client

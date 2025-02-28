@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "starter-app-sample"
-version = "0.2.0"
+name = "agentsmithy-starter-agent"
+version = "0.1.0"
 description = ""
 authors = ["Your Name <your@email.com>"]
 packages = [
@@ -8,25 +8,31 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
+python = ">=3.9,<3.13"
 fastapi = "0.110.3"
 pydantic = "2.9.2"
 uvicorn = {extras = ["standard"], version = "^0.30.5"}
 langchain-google-vertexai = "^2.0.7"
 langchain = "^0.3.0"
-langgraph = "^0.2.21"
+langgraph = "^0.2.69"
 langchain-core = "^0.3.9"
+langchain-community = "^0.3.4"
 langchain-google-community = {extras = ["vertexaisearch"], version = "^2.0.2"}
 traceloop-sdk = "^0.33.12"
 opentelemetry-exporter-gcp-trace = "^1.6.0"
 opentelemetry-sdk = "^1.25.0"
 google-cloud-logging = "^3.10.0"
 google-cloud-aiplatform = {extras = ["evaluation"], version = "^1.73.0"}
+google-cloud-discoveryengine = "^0.11.14"
 grpcio = "1.64.1"
 scikit-learn = "^1.5.0"
 immutabledict = "^4.2.0"
 pypdf = "^4.3.1"
 langchain-openai = "^0.2.10"
+yfinance = "^0.2.54"
+xmltodict = "^0.14.2"
+google-search-results = "^2.4.2"
+
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
