@@ -18,9 +18,9 @@ Intended for use at Next '25 and similar conferences, this project is meant to s
 
 # Contributors
 
-[Ivan Rufino](mailto:ivanerufino@google.com): Eng
+[Sean Rastatter](mailto:srastatter@google.com): Eng TL
 
-[Sean Rastatter](mailto:srastatter@google.com): Eng
+[Ivan Rufino](mailto:ivanerufino@google.com): Eng
 
 [Arpit Vaidya](mailto:arpit@google.com): GTM
 
@@ -30,6 +30,23 @@ Intended for use at Next '25 and similar conferences, this project is meant to s
 
 [Robin Singh](mailto:robbysingh@google.com): Eng (UX)
 
+
+# Relevant Terms of Service
+
+[Google Cloud Platform TOS](https://cloud.google.com/terms)
+
+[Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice)
+
+
+# Responsible Use
+
+Building and deploying generative AI agents requires a commitment to responsible development practices. AgentSmithy provides the you the tools to build agents, but you must also provide the commitment to ethical and fair use of these agents. We encourage you to:
+
+*   **Start with a Risk Assessment:** Before deploying your agent, identify potential risks related to bias, privacy, safety, and accuracy.
+*   **Implement Monitoring and Evaluation:** Continuously monitor your agent's performance and gather user feedback.
+*   **Iterate and Improve:**  Use monitoring data and user feedback to identify areas for improvement and update your agent's prompts and configuration.
+*   **Stay Informed:**  The field of AI ethics is constantly evolving. Stay up-to-date on best practices and emerging guidelines.
+*   **Document Your Process:**  Maintain detailed records of your development process, including data sources, models, configurations, and mitigation strategies.
 
 
 # Disclaimer
@@ -49,3 +66,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+
