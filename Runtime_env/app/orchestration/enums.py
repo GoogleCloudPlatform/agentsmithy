@@ -25,7 +25,7 @@ class OrchestrationFramework(Enum):
     LANGGRAPH_VERTEX_AI_AGENT_ENGINE_AGENT = 'langgraph_vertex_ai_agent_engine_agent'
     LLAMAINDEX_AGENT = 'llamaindex_agent'
     # CREW_AI_AGENT = 'crew_ai_agent' # Coming Soon
-    # VERTEX_AI_AGENT_FRAMEWORK_AGENT = 'vertex_ai_agent_framework_agent' # Coming Soon
+    VERTEX_AI_AGENT_FRAMEWORK_AGENT = 'vertex_ai_agent_framework_agent'
 
 class IndustryType(Enum):
     """Enum representing the available Langchain agent options."""

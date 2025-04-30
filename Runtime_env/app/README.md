@@ -61,6 +61,7 @@ A complete list of configuration options is shown below. These can be set by edi
       - "langgraph_prebuilt_agent"
       - "langgraph_vertex_ai_agent_engine_agent" # use if using Agent Engine deployment
       - "llamaindex_agent"  # can use with either Agent Engine or Cloud Run deployment
+      - "vertex_ai_agent_framework_agent"  # can use with either Agent Engine or Cloud Run deployment"
 
       AGENT_FOUNDATION_MODEL:
       - "gemini-2.0-pro-exp-02-05"

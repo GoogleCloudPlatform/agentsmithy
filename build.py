@@ -255,6 +255,12 @@ def run_agent_engine_deployment() -> str:
             AGENT_NAME,
             AGENT_DESCRIPTION
         )
+    elif AGENT_ORCHESTRATION_FRAMEWORK == "vertex_ai_agent_framework_agent":
+        remote_agent = deploy_agent_to_agent_engine(
+            agent_manager.agent_executor.agent,
+            AGENT_NAME,
+            AGENT_DESCRIPTION
+        )
 
     if not remote_agent.resource_name:
         raise Exception("Error deploying Agent to Agent Engine.")

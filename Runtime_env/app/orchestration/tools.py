@@ -15,6 +15,8 @@
 """Module that contains various tool definitions."""
 from typing import List
 
+from google.adk.tools import VertexAiSearchTool
+
 from langchain_core.documents import Document
 from langchain_core.tools import StructuredTool
 from langchain_community.tools.pubmed.tool import PubmedQueryRun
@@ -175,18 +177,35 @@ def get_tools(
             google_finance_tool
         ])
     # The Vertex AI Search Tool is only used if the user specifies a DATA_STORE_ID
-    if DATA_STORE_ID != "unset":
+    if DATA_STORE_ID != "unset" and orchestration_framework != OrchestrationFramework.VERTEX_AI_AGENT_FRAMEWORK_AGENT.value:
         tools_list.append(retrieve_info)
 
-    tools_list.extend([
-        # fallback,
-        should_continue
-    ])
+    # ADK agent currently does not support multiple tool including ADK built-in tool
+    if orchestration_framework != OrchestrationFramework.VERTEX_AI_AGENT_FRAMEWORK_AGENT.value:
+        tools_list.extend([
+            # fallback,
+            should_continue
+        ])
 
     # If using langchain or langgraph, then the tools must be defined as structured tools
     if (orchestration_framework == OrchestrationFramework.LANGCHAIN_PREBUILT_AGENT.value or
         orchestration_framework == OrchestrationFramework.LANGGRAPH_PREBUILT_AGENT.value):
         tools_list = [StructuredTool.from_function(tool) for tool in tools_list]
+
+    elif orchestration_framework == OrchestrationFramework.VERTEX_AI_AGENT_FRAMEWORK_AGENT.value:
+        if DATA_STORE_ID != "unset":
+            vais_tool = VertexAiSearchTool(
+                data_store_id=f"projects/{PROJECT_ID}/locations/{AGENT_BUILDER_LOCATION}/collections/default_collection/dataStores/{DATA_STORE_ID}"
+            )
+            vais_tool.name = "Vertex AI Search"
+            vais_tool.description = (
+                "Use this when you need additional information to answer a "
+                "question. Useful for retrieving relevant information based on "
+                "a query.")
+
+            # ADK agent currently only support one built-in tool
+            # see https://google.github.io/adk-docs/tools/built-in-tools/#limitations
+            tools_list = [vais_tool]
 
     return tools_list
 

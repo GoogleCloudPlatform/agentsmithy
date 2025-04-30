@@ -3,16 +3,19 @@ PROJECT_ID: next-2024-industry-demos
 VERTEX_AI_LOCATION: us-central1
 AGENT_BUILDER_LOCATION: us
 AGENT_INDUSTRY_TYPE: finance
-AGENT_ORCHESTRATION_FRAMEWORK: langgraph_prebuilt_agent
+AGENT_ORCHESTRATION_FRAMEWORK: vertex_ai_agent_framework_agent
 AGENT_FOUNDATION_MODEL: gemini-2.0-flash
 USER_AGENT: agentsmithy-starter-agent
 AGENT_DESCRIPTION: "This is a test agent"
-
+# Required by ADK agent
+GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
+GOOGLE_CLOUD_PROJECT: next-2024-industry-demos
+GOOGLE_CLOUD_LOCATION: us-central1
 
 # These env vars will be set for you by build.py
-FRONTEND_URL: 
-GCS_STAGING_BUCKET: 
-DATA_STORE_ID: 
+FRONTEND_URL: TO_BE_SET
+GCS_STAGING_BUCKET: TO_BE_SET
+DATA_STORE_ID: TO_BE_SET
 
 # Backend Server Details (Only include if you are using agent engine). Example shown below
 # AGENT_ENGINE_RESOURCE_ID: projects/599247973214/locations/us-central1/reasoningEngines/5008011581729013760

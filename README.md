@@ -14,6 +14,7 @@ Below is a list of the options that AgentSmithy currently supports:
 - LangChain
 - LangGraph
 - LlamaIndex
+- Agent Development Kit
 
 **AGENT FOUNDATION MODELS:**
 - Gemini 2.0 Pro (Experiment v02-05)
@@ -134,6 +135,7 @@ AgentSmithy uses env vars defined in [Runtime_env/deployment/config/dev.yaml](Ru
 - "langgraph_prebuilt_agent"
 - "langgraph_vertex_ai_agent_engine_agent"    # use if using Agent Engine deployment e.g. `DEPLOY_TO_AGENT_ENGINE = True` in build.py
 - "llamaindex_agent"                          # can use with either Agent Engine or Cloud Run deployment
+- "vertex_ai_agent_framework_agent"           # can use with either Agent Engine or Cloud Run deployment
 
 **AGENT_FOUNDATION_MODEL:**
 - "gemini-2.0-pro-exp-02-05"

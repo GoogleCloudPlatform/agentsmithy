@@ -17,6 +17,11 @@ from abc import ABC, abstractmethod
 from typing import AsyncGenerator, Generator, Dict, Any, Optional
 import uuid
 
+from google.adk.agents import Agent
+from google.adk.sessions import InMemorySessionService, VertexAiSessionService
+from google.adk.runners import Runner
+from google.genai import types
+
 from google.api_core import exceptions
 from langchain.agents import (
     AgentExecutor,
@@ -181,6 +186,147 @@ class BaseAgentManager(ABC):
         streaming logic of their agent executor.
         """
         pass
+
+
+class GoogleAdkAgentManager(BaseAgentManager):
+    """
+    AgentManager subclass for Google ADK orchestration.
+    """
+
+    USER_ID = "dummy_user_id"
+
+    def __init__(
+        self,
+        prompt: str,
+        industry_type: str,
+        location: Optional[str] = "us-central1",
+        agent_engine_resource_id: Optional[str] = None,
+        model_name: Optional[str] = GEMINI_FLASH_20_LATEST,
+        max_retries: Optional[int] = 6,
+        max_output_tokens: Optional[int] = None,
+        temperature: Optional[float] = 0,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        return_steps: Optional[bool] = False,
+        verbose: Optional[bool] = True
+    ):
+        # TODO: use Vertex AI Session Service for Agent Engine deployment
+        self.app_name = "adk_agent_runner"
+        self.session_service = InMemorySessionService()
+
+        super().__init__(
+            prompt=prompt,
+            industry_type=industry_type,
+            location=location,
+            orchestration_framework=OrchestrationFramework.VERTEX_AI_AGENT_FRAMEWORK_AGENT.value,
+            agent_engine_resource_id=agent_engine_resource_id,
+            model_name=model_name,
+            max_retries=max_retries,
+            max_output_tokens=max_output_tokens,
+            temperature=temperature,
+            top_p=top_p,
+            top_k=top_k,
+            return_steps=return_steps,
+            verbose=verbose
+        )
+
+    def create_agent_executor(self):
+        """
+        Creates a ADK Agent executor.
+        """
+
+        tool_names = []
+        tool_desc = []
+        for tool in self.tools:
+            try:
+                tool_names.append(tool.name)
+                tool_desc.append(f"*  `{tool.name}`: {tool.description}")
+            except Exception:
+                continue
+
+        tool_names = ", ".join(tool_names)
+        tool_desc = "\n".join(tool_desc)
+
+        prompt = self.prompt.format(tool_names=tool_names, tool_desc=tool_desc)
+
+        root_agent = Agent(
+            name="assistant_agent",
+            model=self.model_name,
+            instruction=prompt,
+            tools=self.tools,
+        )
+
+        runner = Runner(
+            agent=root_agent,
+            app_name=self.app_name,
+            session_service=self.session_service,
+        )
+
+        return runner
+
+    async def astream(
+        self,
+        input: Dict[str, Any],
+    ) -> AsyncGenerator[Dict, Any]:
+        """Asynchronously event streams the Agent output."""
+        query = input["messages"][-1]["content"]
+        message = types.Content(role='user', parts=[types.Part(text=query)])
+
+        try:
+            # check if session exists, if not, create one
+            session = None
+            try:
+                session = self.session_service.get_session(
+                    app_name=self.app_name,
+                    user_id=self.USER_ID,
+                    session_id=input["session_id"]
+                )
+            finally:
+                if not session:
+                    self.session_service.create_session(
+                        app_name=self.app_name,
+                        user_id=self.USER_ID,
+                        session_id=input["session_id"]
+                    )
+
+            async for event in self.agent_executor.run_async(
+                    user_id=self.USER_ID,
+                    session_id=input["session_id"],
+                    new_message=message,
+            ):
+                # Events can be of various types (e.g., tool calls, intermediate steps).
+                # We are interested in events that contain text content from the agent.
+                if event.content and event.content.parts:
+                    for part in event.content.parts:
+                        if part.text:
+                            response_obj = {
+                                "agent": {
+                                    "output": part.text,
+                                    "messages": [
+                                        {
+                                            "lc": 1,
+                                            "type": "constructor",
+                                            "id": ["langchain", "schema",
+                                                   "messages", "AIMessage"],
+                                            "kwargs": {
+                                                "content": part.text,
+                                                "type": "ai",
+                                                "tool_calls": [],
+                                                "invalid_tool_calls": [],
+                                                "id": input["run_id"]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                            yield response_obj
+
+                # Check if this event marks the completion of the agent's turn
+                if event.is_final_response():
+                    # [End of Agent Turn]
+                    break
+        except Exception as e:
+            raise RuntimeError(f"Unexpected error. {e}") from e
 
 
 class LangChainPrebuiltAgentManager(BaseAgentManager):

@@ -9,12 +9,12 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
-fastapi = "0.110.3"
+fastapi = "0.115.10"
 pydantic = "^2.10.0"
 toml = "^0.10.2"
 PyYAML = "^6.0.2"
-cloudpickle = "3.0.0"
-uvicorn = {extras = ["standard"], version = "^0.30.5"}
+cloudpickle = "3.1.1"
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
 langchain-google-vertexai = "2.0.15"
 langchain = "^0.3.0"
 langgraph = "^0.2.69"
@@ -27,11 +27,12 @@ llama-index-indices-managed-vertexai = "0.2.1"
 llama-index-llms-langchain = "0.6.0"
 llama-index-llms-openai = "0.3.25"
 llama-index-tools-yahoo-finance = "0.3.0"
-traceloop-sdk = "^0.33.12"
+traceloop-sdk = "^0.36.1"
 opentelemetry-exporter-gcp-trace = "^1.6.0"
-opentelemetry-sdk = "^1.28.0"
+opentelemetry-sdk = "^1.32.1"
+google-adk = "0.3.0"
 google-cloud-logging = "^3.10.0"
-google-cloud-aiplatform = {extras = ["evaluation", "agent_engines", "langchain"], version = "1.84.0"}
+google-cloud-aiplatform = {extras = ["evaluation", "agent_engines", "langchain"], version = "1.90.0"}
 google-cloud-discoveryengine = "^0.11.14"
 google-api-core = "^2.24.2"
 grpcio = "1.70.0"
