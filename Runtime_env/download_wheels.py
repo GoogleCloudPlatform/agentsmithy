@@ -23,7 +23,7 @@ def download_wheel():
     """Downloads specified wheel file"""
     if not os.path.exists(WHEEL_FILE):
         try:
-            subprocess.check_call(["gsutil", "cp", WHEEL_URL, "."])
+            subprocess.check_call(["gcloud", "storage", "cp", WHEEL_URL, "."])
             print(f"Downloaded {WHEEL_FILE}")
         except subprocess.CalledProcessError as e:
             print(f"Error downloading wheel: {e}")
