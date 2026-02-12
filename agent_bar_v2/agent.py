@@ -5,10 +5,9 @@ from .callbacks.system_instructions_callback import (
 )
 
 from .tools.context_based_toolset import ContextBasedToolset
-from .subagents import weather_agent
-from .subagents import contract_creation
-from .subagents import contract_review
-
+from .subagents.weather_agent.agent import root_agent as weather_agent
+from .subagents.contract_creation.agent import root_agent as contract_creation
+from .subagents.contract_review.agent import root_agent as contract_review
 
 context_based_toolset = ContextBasedToolset()
 
