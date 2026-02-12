@@ -5,6 +5,9 @@ from .callbacks.system_instructions_callback import (
 )
 
 from .tools.context_based_toolset import ContextBasedToolset
+from .subagents import weather_agent
+from .subagents import contract_creation
+from .subagents import contract_review
 
 
 context_based_toolset = ContextBasedToolset()
@@ -16,4 +19,5 @@ root_agent = Agent(
     instruction="You are a very helpful assistant",
     before_model_callback=set_system_instructions_callback,
     tools=[context_based_toolset],
+    sub_agents=[weather_agent, contract_creation, contract_review],
 )
