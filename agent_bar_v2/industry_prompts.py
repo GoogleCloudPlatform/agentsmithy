@@ -25,6 +25,7 @@ INDUSTRY_PROMPT_MAP = {
     "weather": WEATHER_PROMPT,
 }
 
+
 def get_prompt_for_industry(industry_id: str) -> str:
     """Returns the prompt for the given industry ID, or the default prompt if not found."""
     return INDUSTRY_PROMPT_MAP.get(industry_id, DEFAULT_PROMPT)
