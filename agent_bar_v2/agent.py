@@ -6,7 +6,6 @@ from .callbacks.system_instructions_callback import (
 
 from .tools.context_based_toolset import ContextBasedToolset
 
-
 context_based_toolset = ContextBasedToolset()
 
 root_agent = Agent(
@@ -15,5 +14,5 @@ root_agent = Agent(
     description="A helpful assistant for user questions.",
     instruction="You are a very helpful assistant",
     before_model_callback=set_system_instructions_callback,
-    tools=[context_based_toolset],
+    tools=[context_based_toolset]
 )
