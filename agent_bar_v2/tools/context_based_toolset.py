@@ -5,8 +5,23 @@ from typing import List, Optional
 
 from google.adk.tools.agent_tool import AgentTool
 
-from ..subagents.joke_agent import JokeAgent
-from ..subagents.finance_agent import FinanceAgent
+# from ..subagents.joke_agent import JokeAgent
+# from ..subagents.finance_agent import FinanceAgent
+
+from ..subagents.weather_agent.agent import root_agent as weather_agent
+from ..subagents.contract_creation.agent import root_agent as contract_creation
+from ..subagents.contract_review.agent import root_agent as contract_review
+from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover_agent
+
+INSURANCE_AGENTS = [AgentTool(contract_creation), AgentTool(contract_review)]
+WEATHER_AGENTS = [AgentTool(weather_agent)]
+HCLS_AGENTS = [AgentTool(patient_handover_agent)]
+
+INDUSTRY_AGENTS_MAP = {
+    "insurance": INSURANCE_AGENTS,
+    "weather": WEATHER_AGENTS,
+    "hcls": HCLS_AGENTS,
+}
 
 
 class ContextBasedToolset(BaseToolset):
@@ -14,17 +29,13 @@ class ContextBasedToolset(BaseToolset):
     def __init__(self, prefix: str = "ctxts_"):
         self.tool_name_prefix = prefix
 
-        self.joke_agent = JokeAgent()
-        self.finance_agent = FinanceAgent()
-
     async def get_tools(self, readonly_context: Optional[ReadonlyContext] = None) -> List[BaseTool]:
         print("SimpleMathToolset.get_tools() called. ")
 
-        tools_to_return = [AgentTool(self.joke_agent)]
-        if readonly_context.state.get("industry_id") == "finance":
-            tools_to_return.append(AgentTool(self.finance_agent))
-
-        print(f"Providing tools: {[t.name for t in tools_to_return]}")
+        industry_id = readonly_context.state.get("industry_id")
+        print(f"Getting agent for industry Id: {industry_id}")
+        tools_to_return = INDUSTRY_AGENTS_MAP.get(industry_id, [])
+        print(f"Providing tools (agents): {[t.name for t in tools_to_return]}")
         return tools_to_return
 
     async def close(self) -> None:
