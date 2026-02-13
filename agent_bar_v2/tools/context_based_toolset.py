@@ -11,13 +11,16 @@ from google.adk.tools.agent_tool import AgentTool
 from ..subagents.weather_agent.agent import root_agent as weather_agent
 from ..subagents.contract_creation.agent import root_agent as contract_creation
 from ..subagents.contract_review.agent import root_agent as contract_review
+from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover_agent
 
 INSURANCE_AGENTS = [AgentTool(contract_creation), AgentTool(contract_review)]
 WEATHER_AGENTS = [AgentTool(weather_agent)]
+HCLS_AGENTS = [AgentTool(patient_handover_agent)]
 
 INDUSTRY_AGENTS_MAP = {
     "insurance": INSURANCE_AGENTS,
     "weather": WEATHER_AGENTS,
+    "hcls": HCLS_AGENTS,
 }
 
 

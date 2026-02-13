@@ -1,4 +1,4 @@
-"""Entrypoint for the nurse handover agent."""
+"""Entrypoint for the patient handover agent."""
 
 import os
 from datetime import datetime
@@ -26,7 +26,7 @@ def initialize_state(callback_context: CallbackContext) -> None:
     )
 
 
-def load_agent(name: str = "nurse_handover_assistant") -> LlmAgent:
+def load_agent(name: str = "patient_handover_assistant") -> LlmAgent:
     """Load an agent instance.
 
     Args:
@@ -39,10 +39,10 @@ def load_agent(name: str = "nurse_handover_assistant") -> LlmAgent:
     return LlmAgent(
         name=name,
         instruction="""
-You are a nurse shift handover / endorsement assistant.
-Your goal is to help the nurse (user) generate a report for the shift that they request.
+You are a patient shift handover / endorsement assistant.
+Your goal is to help the user generate a report for the shift that they request.
 Always make sure to look up what shifts and patients are available before attempting to generate an endorsement report.
-When the user starts the conversation, greet them and briefly state your purpose for being a nurse handover assistant that helps streamline the shift handover process by automatically generating a comprehensive reports. Use your tools to mention the shifts and patients after greeting.
+When the user starts the conversation, greet them and briefly state your purpose for being a patient handover assistant that helps streamline the shift handover process by automatically generating a comprehensive reports. Use your tools to mention the shifts and patients after greeting.
 """.strip(),
         model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
         before_agent_callback=initialize_state,

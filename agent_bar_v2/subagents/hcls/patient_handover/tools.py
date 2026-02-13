@@ -1,4 +1,4 @@
-"""Nurse handover agent tools."""
+"""Patient handover agent tools."""
 
 import concurrent.futures
 import pathlib

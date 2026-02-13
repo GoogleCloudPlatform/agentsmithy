@@ -20,9 +20,17 @@ You have access to specialized sub-agents:
 - weather_agent: Useful for getting current weather data and forecasts.
 """
 
+HCLS_PROMPT = """
+You are a specialized agent focused on HCLS.
+Your goal is to provide tools relevant to users in the HCLS industry.
+You have access to specialized sub-agents:
+- patient_handover: Useful for drafting handoff summaries of patients.
+"""
+
 INDUSTRY_PROMPT_MAP = {
     "insurance": INSURANCE_PROMPT,
     "weather": WEATHER_PROMPT,
+    "hcls": HCLS_PROMPT,
 }
 
 
