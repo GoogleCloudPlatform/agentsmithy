@@ -1,3 +1,1 @@
-from agents.nurse_handover import agent
-
-__all__ = ["agent"]
+from . import agent as agent
