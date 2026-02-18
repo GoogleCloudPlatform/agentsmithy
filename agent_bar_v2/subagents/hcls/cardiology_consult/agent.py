@@ -12,21 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""HCLS Research Agent for supporting researchers with pubmed access."""
+"""HCLS Research Agent for supporting researchers with pubmed access.
+Cardiology consult agent — early cardiac risk prediction
 
-from google.adk.agents import LlmAgent
+Uses data (demographics, vitals, labs, lifestyle) to predict and identify cardiac risks
+and support early detection. Not for use as sole basis for clinical decisions.
+"""
 
-from . import prompt
-
-cardiology_consult = LlmAgent(
-    name="cardiology_consult_agent",
-    model="gemini-2.5-flash",
-    description=(
-        "Creates research hypotheses for research questions"
-        " based on pubmed search results."
-    ),
-    instruction=prompt.ROOT_PROMPT,
-    sub_agents=[],
+from google.adk.agents import Agent
+from .prompt import SYSTEM_INSTRUCTIONS
+from .tools import (
+    calculate_ascvd_risk,
+    assess_risk_factors,
+    interpret_lab_trends,
 )
 
-root_agent = cardiology_consult
+root_agent = Agent(
+    model="gemini-2.5-flash",
+    name="cardiology_consult",
+    description=(
+        "Cardiology consult agent that uses patient data to predict and identify cardiac risks "
+        "for early detection. Can compute 10-year ASCVD risk, assess risk factors, and interpret "
+        "lab trends when given demographics, vitals, labs, and lifestyle information."
+    ),
+    instruction=SYSTEM_INSTRUCTIONS,
+    tools=[
+        calculate_ascvd_risk,
+        assess_risk_factors,
+        interpret_lab_trends,
+    ],
+)
