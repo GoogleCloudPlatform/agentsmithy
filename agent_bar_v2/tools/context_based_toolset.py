@@ -14,6 +14,10 @@ from ..subagents.contract_creation.agent import root_agent as contract_creation
 from ..subagents.contract_review.agent import root_agent as contract_review
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover_agent
 
+from ..subagents.investment_strategy import root_agent as investment_strategy_agent
+from ..subagents.cyber_incident_response import root_agent as cyber_incident_response_agent
+from ..subagents.banking_modernization import root_agent as banking_modernization_agent
+
 INSURANCE_AGENTS = [AgentTool(contract_creation), AgentTool(contract_review)]
 WEATHER_AGENTS = [AgentTool(weather_agent)]
 HCLS_AGENTS = [AgentTool(patient_handover_agent)]
@@ -22,9 +26,12 @@ CROSSIN_LEGAL_GUARDIAN_AGENTS = [AgentTool(contract_review)]
 INDUSTRY_USE_CASE_AGENTS_MAP = {
     "fis": {
         "insurance": INSURANCE_AGENTS,
+        "investment_strategy": [AgentTool(investment_strategy_agent)],
+        "modernization": [AgentTool(banking_modernization_agent)],
     },
     "hcls": {"clinical_handover": HCLS_AGENTS},
     "cross": {"legal_guardian": CROSSIN_LEGAL_GUARDIAN_AGENTS},
+    "cyber": {"incident_response": [AgentTool(cyber_incident_response_agent)]},
 }
 
 
