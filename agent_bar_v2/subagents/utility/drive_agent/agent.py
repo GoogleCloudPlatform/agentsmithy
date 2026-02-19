@@ -1,4 +1,5 @@
 from google.adk.agents import Agent
+from .prompt import PROMPT
 from .tools import copy_and_replace_document_tool, save_document_tool, list_drive_documents_tool
 
 
@@ -12,5 +13,4 @@ drive_agent = Agent(
           save_document_tool,
           list_drive_documents_tool,
     ],
-    output_key="temp:designer_output"
 )
