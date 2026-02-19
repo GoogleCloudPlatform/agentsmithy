@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 
 from google.adk.agents.callback_context import CallbackContext
@@ -15,8 +16,9 @@ def set_system_instructions_callback(
     from ..industry_prompts import get_prompt_for_industry
 
     selected_industry = callback_context.state.get("industry_id")
-    print(f"Selected industry: {selected_industry}")
+    selected_use_case = callback_context.state.get("use_case_id")
+    logging.info(f"Selected industry: {selected_industry} and use case: {selected_use_case}")
 
-    industry_prompt = get_prompt_for_industry(selected_industry)
+    industry_prompt = get_prompt_for_industry(selected_industry, selected_use_case)
     system_instruction = types.Content(role="system", parts=[types.Part(text=str(industry_prompt))])
     llm_request.append_instructions(instructions=system_instruction)

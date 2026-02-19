@@ -1,4 +1,3 @@
-
 # Industry specific prompts
 
 DEFAULT_PROMPT = """
@@ -27,13 +26,23 @@ You have access to specialized sub-agents:
 - patient_handover: Useful for drafting handoff summaries of patients.
 """
 
-INDUSTRY_PROMPT_MAP = {
-    "insurance": INSURANCE_PROMPT,
-    "weather": WEATHER_PROMPT,
-    "hcls": HCLS_PROMPT,
+CROSSIN_LEGAL_GUARDIAN = """
+You are an expert Legal Counsel AI specializing in non-disclosure agreements (NDAs) and commercial contracts. 
+Your goal is to protect the user by identifying "landmine" clauses and providing ready-to-use negotiation language.
+"""
+
+INDUSTRY_USE_CASE_PROMPT_MAP = {
+    "fsi": {
+        "insurance": INSURANCE_PROMPT,
+    },
+    "hcls": {"clinical_handover": HCLS_PROMPT},
+    "cross": {"legal_guardian": CROSSIN_LEGAL_GUARDIAN},
 }
 
 
-def get_prompt_for_industry(industry_id: str) -> str:
+def get_prompt_for_industry(industry_id: str, use_case_id: str) -> str:
     """Returns the prompt for the given industry ID, or the default prompt if not found."""
-    return INDUSTRY_PROMPT_MAP.get(industry_id, DEFAULT_PROMPT)
+    try:
+        return INDUSTRY_USE_CASE_PROMPT_MAP.get(industry_id).get(use_case_id)
+    except Exception:
+        return DEFAULT_PROMPT

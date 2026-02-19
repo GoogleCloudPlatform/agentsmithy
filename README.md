@@ -45,26 +45,19 @@ adk web
 2. **Initialize the session state:**
 In a separate terminal, use `curl` to set the initial context for your session:
 ```bash
-# Insurance industry
+# Cross industry and legal guardian use case
 curl -X POST http://localhost:8000/apps/agent_bar_v2/users/u_123/sessions/s_123 \
      -H "Content-Type: application/json" \
-     -d '{ "user_id": "123", "industry_id": "insurance", "root_prompt_overwrite":"New instructions here" }'
-
-# Weather industry
-curl -X POST http://localhost:8000/apps/agent_bar_v2/users/u_321/sessions/s_321 \
-     -H "Content-Type: application/json" \
-     -d '{ "user_id": "321", "industry_id": "weather", "root_prompt_overwrite":"New instructions here" }'
+     -d '{ "user_id": "123", "industry_id": "cross", "use_case_id": "legal_guardian", "root_prompt_overwrite":"New instructions here" }'
 
 # Delete the session
 curl -X DELETE http://localhost:8000/apps/agent_bar_v2/users/u_123/sessions/s_123
-curl -X DELETE http://localhost:8000/apps/agent_bar_v2/users/u_321/sessions/s_321
 ```
 
 3. **Open the web interface:**
 Notice that this url contains the user id and session id.
 ```
 http://127.0.0.1:8000/dev-ui/?app=agent_bar_v2&session=s_123&userId=u_123
-http://127.0.0.1:8000/dev-ui/?app=agent_bar_v2&session=s_321&userId=u_321
 ```
 
 4. **Start Chatting:**

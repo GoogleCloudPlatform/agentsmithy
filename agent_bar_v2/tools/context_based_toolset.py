@@ -1,3 +1,4 @@
+import logging
 from google.adk.tools.base_toolset import BaseToolset
 from google.adk.agents.readonly_context import ReadonlyContext
 from google.adk.tools.base_tool import BaseTool
@@ -13,14 +14,24 @@ from ..subagents.contract_creation.agent import root_agent as contract_creation
 from ..subagents.contract_review.agent import root_agent as contract_review
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover_agent
 
+from ..subagents.investment_strategy import root_agent as investment_strategy_agent
+from ..subagents.cyber_incident_response import root_agent as cyber_incident_response_agent
+from ..subagents.banking_modernization import root_agent as banking_modernization_agent
+
 INSURANCE_AGENTS = [AgentTool(contract_creation), AgentTool(contract_review)]
 WEATHER_AGENTS = [AgentTool(weather_agent)]
 HCLS_AGENTS = [AgentTool(patient_handover_agent)]
+CROSSIN_LEGAL_GUARDIAN_AGENTS = [AgentTool(contract_review)]
 
-INDUSTRY_AGENTS_MAP = {
-    "insurance": INSURANCE_AGENTS,
-    "weather": WEATHER_AGENTS,
-    "hcls": HCLS_AGENTS,
+INDUSTRY_USE_CASE_AGENTS_MAP = {
+    "fis": {
+        "insurance": INSURANCE_AGENTS,
+        "investment_strategy": [AgentTool(investment_strategy_agent)],
+        "modernization": [AgentTool(banking_modernization_agent)],
+    },
+    "hcls": {"clinical_handover": HCLS_AGENTS},
+    "cross": {"legal_guardian": CROSSIN_LEGAL_GUARDIAN_AGENTS},
+    "cyber": {"incident_response": [AgentTool(cyber_incident_response_agent)]},
 }
 
 
@@ -30,15 +41,19 @@ class ContextBasedToolset(BaseToolset):
         self.tool_name_prefix = prefix
 
     async def get_tools(self, readonly_context: Optional[ReadonlyContext] = None) -> List[BaseTool]:
-        print("SimpleMathToolset.get_tools() called. ")
+        logging.info("SimpleMathToolset.get_tools() called. ")
 
         industry_id = readonly_context.state.get("industry_id")
-        print(f"Getting agent for industry Id: {industry_id}")
-        tools_to_return = INDUSTRY_AGENTS_MAP.get(industry_id, [])
-        print(f"Providing tools (agents): {[t.name for t in tools_to_return]}")
+        use_case_id = readonly_context.state.get("use_case_id")
+        logging.info(f"Getting agent for industry Id: {industry_id} and use case Id: {use_case_id}")
+        try:
+            tools_to_return = INDUSTRY_USE_CASE_AGENTS_MAP.get(industry_id).get(use_case_id)
+        except Exception:
+            logging.warning("No agents found for this industry and use case.")
+            tools_to_return = []
+
+        logging.info(f"Providing tools (agents): {[t.name for t in tools_to_return]}")
         return tools_to_return
 
     async def close(self) -> None:
-        # self.joke_agent.close()
-        # self.finance_agent.close()
         pass
