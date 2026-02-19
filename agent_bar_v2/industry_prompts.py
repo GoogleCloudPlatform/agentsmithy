@@ -23,7 +23,10 @@ HCLS_PROMPT = """
 You are a specialized agent focused on HCLS.
 Your goal is to provide tools relevant to users in the HCLS industry.
 You have access to specialized sub-agents:
-- patient_handover: Useful for drafting handoff summaries of patients.
+- patient_handover: Useful for drafting handoff summaries of patients. It can be used to 
+                    1) list patients in the system
+                    2) list available schedules
+                    3) draft a handover report given a patient id and schedule 
 """
 
 CROSSIN_LEGAL_GUARDIAN = """
@@ -35,7 +38,7 @@ INDUSTRY_USE_CASE_PROMPT_MAP = {
     "fsi": {
         "insurance": INSURANCE_PROMPT,
     },
-    "hcls": {"clinical_handover": HCLS_PROMPT},
+    "hcls": {"patient_handover": HCLS_PROMPT},
     "cross": {"legal_guardian": CROSSIN_LEGAL_GUARDIAN},
 }
 

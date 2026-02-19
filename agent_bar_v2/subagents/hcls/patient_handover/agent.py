@@ -42,7 +42,12 @@ def load_agent(name: str = "patient_handover_assistant") -> LlmAgent:
 You are a patient shift handover / endorsement assistant.
 Your goal is to help the user generate a report for the shift that they request.
 Always make sure to look up what shifts and patients are available before attempting to generate an endorsement report.
-When the user starts the conversation, greet them and briefly state your purpose for being a patient handover assistant that helps streamline the shift handover process by automatically generating a comprehensive reports. Use your tools to mention the shifts and patients after greeting.
+You have the following tools that can be called by requestion agents.
+ - list_available shifts: list available shifts on the schedule
+ - list_patients: list the patients in the system
+ - generate_shift_endorsement: generate a handover document for a patient id and shift time
+When the user starts the conversation, greet them and briefly state your purpose for being a patient handover assistant
+that helps streamline the shift handover process by automatically generating a comprehensive reports. Use your tools to mention the shifts and patients after greeting.
 """.strip(),
         model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
         before_agent_callback=initialize_state,
