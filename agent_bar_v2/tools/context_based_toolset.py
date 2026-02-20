@@ -29,7 +29,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "investment_strategy": [AgentTool(investment_strategy_agent)],
         "modernization": [AgentTool(banking_modernization_agent)],
     },
-    "hcls": {"clinical_handover": HCLS_AGENTS},
+    "hcls": {"patient_handover": [AgentTool(patient_handover_agent)]},
     "cross": {"legal_guardian": CROSSIN_LEGAL_GUARDIAN_AGENTS},
     "cyber": {"incident_response": [AgentTool(cyber_incident_response_agent)]},
 }
