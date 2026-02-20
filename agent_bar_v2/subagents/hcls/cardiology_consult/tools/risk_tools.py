@@ -25,8 +25,7 @@ from typing import Literal
 
 def calculate_ascvd_risk(
     age_years: int,
-    sex: Literal["male", "female"],
-    race: Literal["white", "african_american"],
+    sex: Literal["male", "female", "other"],
     total_cholesterol_mg_dl: float,
     hdl_cholesterol_mg_dl: float,
     systolic_bp_mmhg: float,
@@ -38,14 +37,12 @@ def calculate_ascvd_risk(
     Estimate 10-year risk of atherosclerotic cardiovascular disease (ASCVD) using
     a simplified Pooled Cohort Equations-style model for early risk stratification.
 
-    Use this when the user provides demographics and key risk factors (age, sex,
-    race, lipids, blood pressure, smoking, diabetes) to get a numeric risk estimate
+    Use this when the user provides demographics and key risk factors (age, sex,lipids, blood pressure, smoking, diabetes) to get a numeric risk estimate
     and risk category.
 
     Args:
         age_years: Age in years (typically 40-79 for standard calculators).
         sex: Biological sex for risk equations.
-        race: Race cohort (white or african_american) per ACC/AHA equations.
         total_cholesterol_mg_dl: Total cholesterol in mg/dL.
         hdl_cholesterol_mg_dl: HDL cholesterol in mg/dL.
         systolic_bp_mmhg: Systolic blood pressure in mmHg.
@@ -70,8 +67,6 @@ def calculate_ascvd_risk(
     score += ln_sbp * 0.4
     if sex == "male":
         score += 0.5
-    if race == "african_american":
-        score += 0.3
     if current_smoker:
         score += 0.7
     if has_diabetes:
