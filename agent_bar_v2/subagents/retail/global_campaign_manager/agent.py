@@ -25,7 +25,7 @@ import google.cloud.storage as storage
 
 from .sub_agents.product_ad_generation.agent import product_ad_agent
 from .prompts import GLOBAL_CAMPAIGN_MANAGER_INSTRUCTIONS
-from .sub_agents.video_transcription.agent import video_agent
+from .sub_agents.video_transcription.agent import video_transcription_agent
 
 _, project_id = google.auth.default()
 os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
@@ -41,5 +41,5 @@ root_agent = Agent(
             "creative partner that generates multi-scene video advertisements. "
         ),
         instruction=GLOBAL_CAMPAIGN_MANAGER_INSTRUCTIONS,
-        sub_agents=[product_ad_agent, video_agent],
+        sub_agents=[product_ad_agent, video_transcription_agent],
     )

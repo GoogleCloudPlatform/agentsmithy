@@ -92,7 +92,7 @@ async def inline_data_processing(callback_context: CallbackContext) -> None:
 
 
 product_ad_agent = Agent(
-        name="product_ad_generation",
+        name="product_ad_agent",
         model="gemini-2.5-flash",
         description=(
             "You are a Product Ad Generation Agent, a helpful AI agent and "

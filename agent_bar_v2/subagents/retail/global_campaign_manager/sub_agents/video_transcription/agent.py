@@ -97,8 +97,8 @@ async def inline_data_processing(callback_context: CallbackContext) -> None:
         print("[Callback] No user content found.")
     return None
 
-video_agent = LlmAgent(
-    name="transcription_agent",
+video_transcription_agent = LlmAgent(
+    name="video_transcription_agent",
     model="gemini-2.5-flash",
     description="Agent to extract audio data from video files and then transcribe the audio files.",
     instruction=VIDEO_AGENT_INSTRUCTIONS,
