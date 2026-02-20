@@ -10,8 +10,10 @@ from google.adk.tools.agent_tool import AgentTool
 # from ..subagents.finance_agent import FinanceAgent
 
 from ..subagents.weather_agent.agent import root_agent as weather_agent
-from ..subagents.contract_creation.agent import root_agent as contract_creation
-from ..subagents.contract_review.agent import root_agent as contract_review
+from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
+from ..subagents.cross_industry.contract_review.agent import root_agent as contract_review
+from ..subagents.cross_industry.proposal_writer.agent import root_agent as proposal_writer
+#from ..subagents.cross_industry.product_ad_generation.agent import root_agent as product_ad_generation
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover_agent
 
 from ..subagents.investment_strategy import root_agent as investment_strategy_agent
@@ -22,6 +24,7 @@ INSURANCE_AGENTS = [AgentTool(contract_creation), AgentTool(contract_review)]
 WEATHER_AGENTS = [AgentTool(weather_agent)]
 HCLS_AGENTS = [AgentTool(patient_handover_agent)]
 CROSSIN_LEGAL_GUARDIAN_AGENTS = [AgentTool(contract_review)]
+#CROSSIN_PROPOSAL_PITCH_FACTORY = [AgentTool(proposal_writer), AgentTool(product_ad_generation)]
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
     "fis": {
@@ -30,7 +33,11 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "modernization": [AgentTool(banking_modernization_agent)],
     },
     "hcls": {"clinical_handover": HCLS_AGENTS},
-    "cross": {"legal_guardian": CROSSIN_LEGAL_GUARDIAN_AGENTS},
+    "cross": {
+        "legal_guardian": CROSSIN_LEGAL_GUARDIAN_AGENTS,
+        # "proposal_pitch_factory": CROSSIN_PROPOSAL_PITCH_FACTORY
+
+    },
     "cyber": {"incident_response": [AgentTool(cyber_incident_response_agent)]},
 }
 

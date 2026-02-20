@@ -11,6 +11,14 @@ gcloud services enable \                                                        
     storage.googleapis.com
 ```
 
+## Enrable requirements for sub agents
+cross_industry/product_ad_generation requirements
+```bash
+LOCATION_ID=us-central1
+gcloud storage buckets create --location=$LOCATION_ID gs://agent-bar-v2-cross-product-ad-generation
+
+```
+
 ## Deploy
 
 ### Install ADK
