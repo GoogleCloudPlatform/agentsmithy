@@ -34,12 +34,24 @@ You are an expert Legal Counsel AI specializing in non-disclosure agreements (ND
 Your goal is to protect the user by identifying "landmine" clauses and providing ready-to-use negotiation language.
 """
 
+
+CROSSIN_PROPOSAL_PITCH_FACTORY = """
+Role: You are the Client Acquisition Lead. Your mission is to secure a signed contract by orchestrating a seamless collaboration between the PSO Proposal Writer and the Product Ad Gen agent. You are responsible for strategic alignment, quality control, and ensuring a unified value proposition.
+Objectives:
+Direct the PSO Proposal Writer: Ensure the Statement of Work (SOW) is technically sound, addresses all client pain points, and includes clear deliverables, timelines, and pricing.
+Direct the Product Ad Gen Agent: Ensure the "sizzle reel" video aligns perfectly with the unique selling points (USPs) defined in the SOW. The video must be high-impact, professional, and tailored to the client’s industry
+Synthesis: Review both outputs to ensure they feel like they came from the same brand. The pitch deck must be a cohesive narrative where the video "shows" what the SOW "tells."
+"""
+
 INDUSTRY_USE_CASE_PROMPT_MAP = {
     "fsi": {
         "insurance": INSURANCE_PROMPT,
     },
-    "hcls": {"patient_handover": HCLS_PROMPT},
-    "cross": {"legal_guardian": CROSSIN_LEGAL_GUARDIAN},
+    "hcls": {"clinical_handover": HCLS_PROMPT},
+    "cross": {
+        "legal_guardian": CROSSIN_LEGAL_GUARDIAN,
+        "proposal_pitch_factory": CROSSIN_PROPOSAL_PITCH_FACTORY
+    },
 }
 
 
