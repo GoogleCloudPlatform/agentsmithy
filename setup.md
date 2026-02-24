@@ -2,12 +2,12 @@
 
 ## Enable APIs
 ```
-gcloud services enable \                                                                                                                                                │
-    aiplatform.googleapis.com \                                                                                                                                           │
-    artifactregistry.googleapis.com \                                                                                                                                     │
-    cloudbuild.googleapis.com \                                                                                                                                           │
-    cloudresourcemanager.googleapis.com \                                                                                                                                 │
-    iam.googleapis.com \                                                                                                                                                  │
+gcloud services enable \
+    aiplatform.googleapis.com \
+    artifactregistry.googleapis.com \
+    cloudbuild.googleapis.com \
+    cloudresourcemanager.googleapis.com \
+    iam.googleapis.com \
     storage.googleapis.com
 ```
 
@@ -30,7 +30,7 @@ pip install google-adk
 
 ### Deploy the agent
 ```
-PROJECT_ID=ai-agent-bar-2026-dev
+PROJECT_ID=ai-agent-bar-2026-stage
 LOCATION_ID=us-central1
 
 adk deploy agent_engine \
@@ -73,10 +73,17 @@ curl \
     -H "Authorization: Bearer $(gcloud auth print-access-token)" \
     -H "Content-Type: application/json" \
     "https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-dev/locations/us-central1/reasoningEngines/3208589334617784320:query" \
-    -d '{"class_method": "async_create_session", "input": { "user_id": "123", "state": { "industry_id": "cross", "use_case_id": "legal_guardian", "root_prompt_overwrite":"New instructions here" }}}'
+    -d '{"class_method": "async_create_session", "input": { "user_id": "123", "state": { "industry_id": "cross", "use_case_id": "legal_guardian", "root_prompt_overwrite":"" }}}'
 
 curl \
 -H "Authorization: Bearer $(gcloud auth print-access-token)" \
 -H "Content-Type: application/json" \
 https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-dev/locations/us-central1/reasoningEngines/3208589334617784320:streamQuery?alt=sse -d '{"class_method": "async_stream_query", "input": { "user_id": "123", "session_id": "53925685223227392", "message": "What you can do?"}}'
 ```
+
+
+https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-dev/locations/us-central1/reasoningEngines/3208589334617784320:streamQuery?alt=sse
+
+https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-stage/locations/us-central1/reasoningEngines/7140821147544715264:query
+
+agent-bar-api-sa@ai-agent-bar-2026-stage.iam.gserviceaccount.com

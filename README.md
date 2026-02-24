@@ -54,6 +54,14 @@ curl -X POST http://localhost:8000/apps/agent_bar_v2/users/u_123/sessions/s_123 
 curl -X DELETE http://localhost:8000/apps/agent_bar_v2/users/u_123/sessions/s_123
 ```
 
+2.1. **Custom Agents workflows:**
+```bash
+curl -X POST http://localhost:8000/apps/agent_bar_v2/users/u_123/sessions/s_123 \
+     -H "Content-Type: application/json" \
+     -d '{  "user_id": "123", "industry_id": "cross", "use_case_id": "legal", "is_custom": true, "custom_agents": [ "contract_review" ], "custom_workflow_map": { "start": "contract_review", "contract_review": "end" }, "custom_root_intructions": "You are a highly skilled legal assistant specializing in contract analysis. Your goal is to identify potential risks, clarify complex terminology, and ensure compliance with standard regulatory frameworks. Please provide concise, actionable feedback for each document reviewed."}'
+````
+
+
 3. **Open the web interface:**
 Notice that this url contains the user id and session id.
 ```
@@ -66,4 +74,3 @@ Return to the web interface, select the agent and the initialized session, and b
 ---
 
 > **Note:** For more advanced configurations, refer to the [official ADK Runtime documentation](https://google.github.io/adk-docs/runtime/api-server/#test-locally).
-
