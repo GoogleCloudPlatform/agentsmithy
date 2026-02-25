@@ -11,6 +11,7 @@ agent_bar_v2/
     ├── agent.py              # Main agent definition and configuration
     ├── prompts.py            # System instructions and prompt templates
     ├── tools.py              # Tool functions (typed and documented)
+    ├── config.py             # Environment variables and configuration settings
     └── sub_agents/           # Folder for specialized sub-agents
         ├── __init__.py
         └── [sub_agent_name]/
@@ -22,7 +23,8 @@ agent_bar_v2/
 
 1.  **Copy this folder** and rename it to your use case (e.g., `technical_support`).
 2.  **Update `prompts.py`**: define `SYSTEM_INSTRUCTION` with the persona and goals.
-3.  **Update `tools.py`**: define any custom Python functions needed. Ensure type hints and docstrings are present.
+3.  **Update `config.py`**: ensure environment variables (like `GCS_BUCKET`) are correctly mapped.
+4.  **Update `tools.py`**: define any custom Python functions needed. Ensure type hints and docstrings are present.
 4.  **Update `agent.py`**:
     - Set `AGENT_NAME` and `AGENT_DESCRIPTION`.
     - Configure the `Gemini` model parameters (temperature, etc.).
