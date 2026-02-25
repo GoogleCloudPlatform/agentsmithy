@@ -10,11 +10,11 @@ from ..industry_prompts import get_prompt_for_industry
 def set_system_instructions_callback(
     callback_context: CallbackContext, llm_request: LlmRequest
 ) -> Optional[LlmResponse]:
-    """Set the system instructions bassed on the context"""
+    """Set the system instructions based on the context"""
 
     is_custom_workflow = bool(callback_context.state.get("is_custom"))
     if is_custom_workflow:
-        custom_root_instructions = callback_context.state.get("custom_root_intructions")
+        custom_root_instructions = callback_context.state.get("custom_root_instructions")
         logging.info(f"Using custom workflow with root instructions: {custom_root_instructions[:50]}...")
 
         # workflow_type = callback_context.state.get("type")

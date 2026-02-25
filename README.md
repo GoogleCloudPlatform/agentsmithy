@@ -58,7 +58,7 @@ curl -X DELETE http://localhost:8000/apps/agent_bar_v2/users/u_123/sessions/s_12
 ```bash
 curl -X POST http://localhost:8000/apps/agent_bar_v2/users/u_123/sessions/s_123 \
      -H "Content-Type: application/json" \
-     -d '{  "user_id": "123", "industry_id": "cross", "use_case_id": "legal", "is_custom": true, "custom_agents": [ "contract_review" ], "custom_workflow_map": { "start": "contract_review", "contract_review": "end" }, "custom_root_intructions": "You are a highly skilled legal assistant specializing in contract analysis. Your goal is to identify potential risks, clarify complex terminology, and ensure compliance with standard regulatory frameworks. Please provide concise, actionable feedback for each document reviewed."}'
+     -d '{  "user_id": "123", "industry_id": "cross", "use_case_id": "legal", "is_custom": true, "custom_agents": [ "contract_review" ], "custom_workflow_map": { "start": "contract_review", "contract_review": "end" }, "custom_root_instructions": "You are a highly skilled legal assistant specializing in contract analysis. Your goal is to identify potential risks, clarify complex terminology, and ensure compliance with standard regulatory frameworks. Please provide concise, actionable feedback for each document reviewed."}'
 ````
 
 
@@ -81,7 +81,7 @@ locally
 ```
 python -m agent_bar_v2.subagents.agent_registry --local-output
 ```
-publish to GSC
+publish to GCS
 ```
 python -m agent_bar_v2.subagents.agent_registry --gcs-bucket=ai-agent-bar-2026-stage-shared-config
 ```

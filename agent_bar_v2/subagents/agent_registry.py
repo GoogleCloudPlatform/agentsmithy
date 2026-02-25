@@ -22,7 +22,7 @@ from ..subagents.banking_modernization import root_agent as banking_modernizatio
 from google.adk.tools.agent_tool import AgentTool
 
 
-AGETN_REGISTRY_MAP = {
+AGENT_REGISTRY_MAP = {
     "weather_agent": weather_agent,
     "contract_creation": contract_creation,
     "contract_review": contract_review,
@@ -55,7 +55,7 @@ def get_sub_agents(agents_id: [str]):
     if not agents_id:
         return agents
     for agent_id in agents_id:
-        agent = AGETN_REGISTRY_MAP.get(agent_id)
+        agent = AGENT_REGISTRY_MAP.get(agent_id)
         if agent is None:
             raise ValueError(f"Agent id '{agent_id}' not found in registry")
         agents.append(AgentTool(agent))
@@ -101,7 +101,7 @@ def main():
                 "name": agent.name,
                 "description": agent.description,
             }
-            for agent_id, agent in AGETN_REGISTRY_MAP.items()
+            for agent_id, agent in AGENT_REGISTRY_MAP.items()
         ],
         "default_industry_use_cases": INDUSTRY_USE_CASE_AGENTS_MAP,
     }
