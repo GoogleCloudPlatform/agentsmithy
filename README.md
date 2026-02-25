@@ -74,3 +74,14 @@ Return to the web interface, select the agent and the initialized session, and b
 ---
 
 > **Note:** For more advanced configurations, refer to the [official ADK Runtime documentation](https://google.github.io/adk-docs/runtime/api-server/#test-locally).
+
+
+## Generate configuration
+locally
+```
+python -m agent_bar_v2.subagents.agent_registry --local-output
+```
+publish to GSC
+```
+python -m agent_bar_v2.subagents.agent_registry --gcs-bucket=ai-agent-bar-2026-stage-shared-config
+```
