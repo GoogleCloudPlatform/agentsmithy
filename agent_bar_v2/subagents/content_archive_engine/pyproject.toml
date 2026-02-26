@@ -1,0 +1,25 @@
+
+[project]
+name = "content_archive_engine"
+version = "0.1.0"
+description = "Content Archive Engine Agent"
+authors = [
+    {name = "User", email = "user@example.com"},
+]
+dependencies = [
+    "google-adk",
+    "google-genai",
+    "python-dotenv",
+    "google-cloud-storage",
+    "google-cloud-bigquery",
+    "google-cloud-videointelligence",
+    "fpdf",
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
