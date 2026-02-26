@@ -57,7 +57,7 @@ INDUSTRY_USE_CASE_PROMPT_MAP = {
         "insurance": INSURANCE_PROMPT,
     },
     "hcls": {"clinical_handover": HCLS_PROMPT},
-     "media": {"content_archive_engine": MEDIA_CONTENT_ARCHIVE_ENGINE_PROMPT},
+    "media": {"content_archive_engine": MEDIA_CONTENT_ARCHIVE_ENGINE_PROMPT},
     "cross": {
         "legal_guardian": CROSSIN_LEGAL_GUARDIAN,
         "proposal_pitch_factory": CROSSIN_PROPOSAL_PITCH_FACTORY
