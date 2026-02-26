@@ -11,6 +11,8 @@ from google.adk.tools.agent_tool import AgentTool
 from ..subagents.weather_agent.agent import root_agent as weather_agent
 from ..subagents.contract_creation.agent import root_agent as contract_creation
 from ..subagents.contract_review.agent import root_agent as contract_review
+from ..subagents.content_archive_engine.agent import root_agent as content_archive_engine
+
 
 INSURANCE_AGENTS = [AgentTool(contract_creation), AgentTool(contract_review)]
 WEATHER_AGENTS = [AgentTool(weather_agent)]
@@ -18,6 +20,7 @@ WEATHER_AGENTS = [AgentTool(weather_agent)]
 INDUSTRY_AGENTS_MAP = {
     "insurance": INSURANCE_AGENTS,
     "weather": WEATHER_AGENTS,
+    "content_archive_engine": content_archive_engine,
 }
 
 
