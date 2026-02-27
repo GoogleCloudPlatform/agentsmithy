@@ -15,6 +15,7 @@ from ..subagents.cross_industry.contract_review.agent import root_agent as contr
 from ..subagents.cross_industry.proposal_writer.agent import root_agent as proposal_writer
 #from ..subagents.cross_industry.product_ad_generation.agent import root_agent as product_ad_generation
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover_agent
+from ..subagents.hcls.hcls_research.agent import root_agent as hcls_research_agent
 
 from ..subagents.investment_strategy import root_agent as investment_strategy_agent
 from ..subagents.cyber_incident_response import root_agent as cyber_incident_response_agent
@@ -32,7 +33,10 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "investment_strategy": [AgentTool(investment_strategy_agent)],
         "modernization": [AgentTool(banking_modernization_agent)],
     },
-    "hcls": {"clinical_handover": HCLS_AGENTS},
+    "hcls": {
+        "clinical_handover": [AgentTool(patient_handover_agent)],
+        "hcls_research": [AgentTool(hcls_research_agent)],
+    },
     "cross": {
         "legal_guardian": CROSSIN_LEGAL_GUARDIAN_AGENTS,
         # "proposal_pitch_factory": CROSSIN_PROPOSAL_PITCH_FACTORY

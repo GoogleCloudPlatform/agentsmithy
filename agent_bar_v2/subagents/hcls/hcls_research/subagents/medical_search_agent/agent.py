@@ -87,7 +87,7 @@ def search_pubmed(
     return records
 
 
-search_agent = Agent(
+medical_search_agent = Agent(
     model="gemini-2.5-flash",
     name="search_agent",
     instruction=prompt.SEARCH_PROMPT,

@@ -13,13 +13,21 @@
 # limitations under the License.
 
 """HCLS Research Agent for supporting researchers with pubmed access."""
-
+import sys
+import os
 from google.adk.agents import LlmAgent
 
+shared_utility = os.path.abspath("../../subagents/")
+
+print(shared_utility)
+
+if shared_utility not in sys.path:
+    sys.path.append(shared_utility)
+
 from . import prompt
-from .sub_agents.hypothesis_agent import hypothesis_agent
-from .sub_agents.research_question_agent import research_question_agent
-from .sub_agents.search_agent import search_agent
+from .subagents import medical_search_agent
+from subagents.utility import hypothesis_agent
+from subagents.utility import research_question_agent
 
 hcls_researcher = LlmAgent(
     name="hcls_research_agent",
@@ -29,7 +37,7 @@ hcls_researcher = LlmAgent(
         " based on pubmed search results."
     ),
     instruction=prompt.ROOT_PROMPT,
-    sub_agents=[research_question_agent, search_agent, hypothesis_agent],
+    sub_agents=[research_question_agent, medical_search_agent, hypothesis_agent],
 )
 
 root_agent = hcls_researcher
