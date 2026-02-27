@@ -14,6 +14,7 @@ from ..subagents.cross_industry.product_ad_generation.agent import (
     root_agent as product_ad_generation,
 )
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover
+from ..subagents.hcls.hcls_research.agent import root_agent as hcls_research
 
 from ..subagents.investment_strategy import root_agent as investment_strategy
 from ..subagents.cyber_incident_response import root_agent as cyber_incident_response
@@ -28,6 +29,7 @@ AGENT_REGISTRY_MAP = {
     "contract_review": contract_review,
     "proposal_writer": proposal_writer,
     "patient_handover": patient_handover,
+    "hcls_research": hcls_research,
     "investment_strategy": investment_strategy,
     "cyber_incident_response": cyber_incident_response,
     "banking_modernization": banking_modernization,
@@ -40,7 +42,9 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "investment_strategy": ["investment_strategy"],
         "modernization": ["banking_modernization"],
     },
-    "hcls": {"clinical_handover": ["patient_handover"]},
+    "hcls": {"clinical_handover": ["patient_handover"],
+             "hcls_research": ["hcls_research"],
+             },
     "cross": {
         "legal_guardian": ["contract_review"],
         "proposal_pitch_factory": ["proposal_writer", "product_ad_generation"],

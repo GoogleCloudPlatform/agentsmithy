@@ -16,6 +16,7 @@ dependencies = [
     "google-cloud-aiplatform>=1.59.0",
     "pillow>=11.3.0", # required by product-ad-generation
     "uvicorn==0.34.3",
+    "biopython==1.86",
 ]
 
 [build-system]

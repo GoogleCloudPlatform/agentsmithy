@@ -19,6 +19,7 @@ from io import StringIO
 
 from Bio import Entrez, Medline
 from google.adk import Agent
+from google.adk.tools.agent_tool import AgentTool
 
 from . import prompt
 
