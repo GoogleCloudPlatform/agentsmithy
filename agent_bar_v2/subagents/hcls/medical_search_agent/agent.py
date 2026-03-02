@@ -16,13 +16,15 @@
 
 import time
 from io import StringIO
+import os
+import certifi
 
 from Bio import Entrez, Medline
 from google.adk import Agent
-from google.adk.tools.agent_tool import AgentTool
 
 from . import prompt
 
+os.environ['SSL_CERT_FILE'] = certifi.where()
 
 def search_pubmed(
     search_string: str,
@@ -88,9 +90,9 @@ def search_pubmed(
     return records
 
 
-medical_search_agent = Agent(
+root_agent = Agent(
     model="gemini-2.5-flash",
-    name="search_agent",
+    name="medical_search_agent",
     instruction=prompt.SEARCH_PROMPT,
     tools=[search_pubmed],
     output_key="pubmed_results",

@@ -12,6 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Search agent for finding research on Pubmed."""
+"""Hypothesis agent for creating new hypotheses based on pubmed results."""
 
-from .agent import medical_search_agent as medical_search_agent
+from google.adk import Agent
+
+from . import prompt
+
+root_agent = Agent(
+    model="gemini-2.5-flash",
+    name="hypothesis_agent",
+    instruction=prompt.HYPOTHESIS_PROMPT,
+)
