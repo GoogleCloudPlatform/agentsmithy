@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 # Construct the path to the .env file in the parent directory (agent_bar_v2)
-dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
 load_dotenv(dotenv_path)
 
 from ..subagents.weather_agent.agent import root_agent as weather_agent
@@ -35,7 +35,7 @@ AGENT_REGISTRY_MAP = {
 }
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
-    "fis": {
+    "fsi": {
         "insurance": ["contract_creation", "contract_review"],
         "investment_strategy": ["investment_strategy"],
         "modernization": ["banking_modernization"],

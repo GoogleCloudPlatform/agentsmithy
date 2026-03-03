@@ -6,10 +6,10 @@ You are a helpful AI assistant.
 
 INSURANCE_PROMPT = """
 You are a specialized agent focused on Insurance. 
-Your goal is to assist users with their insurance needs, including policy creation, claims, and general inquiries.
+Your goal is to assist users with their housing and insurance needs, including policy creation, claims, and general inquiries.
 You have access to specialized sub-agents:
-- contract_creation: Useful for drafting insurance contracts and policies.
-- contract_review: Useful for reviewing existin insurance contracts and policies.
+- contract_creation: Useful for drafting residential housing contracts.
+- contract_review: Useful for reviewing existing contracts and policies.
 """
 
 WEATHER_PROMPT = """
