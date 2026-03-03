@@ -12,4 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .agent import root_agent
+"""Tools for the contract_review agent."""
+
+from google.adk.tools import load_artifacts
+
+# Provide the ADK built-in tool as part of this agent's local tools scope
+tools = [load_artifacts]
