@@ -4,7 +4,7 @@ from typing import Optional
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.models import LlmRequest, LlmResponse
 from google.genai import types
-from ..industry_prompts import get_prompt_for_industry
+from ..subagents.industry_prompts import get_prompt_for_industry
 
 
 def set_system_instructions_callback(
@@ -25,15 +25,13 @@ def set_system_instructions_callback(
             workflow_prompt = f"\n\nFollow this specific sequential workflow: {custom_workflow_map}"
             custom_root_instructions += workflow_prompt
 
-        system_instruction = types.Content(role="system", parts=[types.Part(text=str(custom_root_instructions))])
-        llm_request.append_instructions(instructions=system_instruction)
-
-        return None
+        # system_instruction = types.Content(role="system", parts=[types.Part(text=str(custom_root_instructions))])
+        llm_request.append_instructions(instructions=custom_workflow_map)
     else:
         selected_industry = callback_context.state.get("industry_id")
         selected_use_case = callback_context.state.get("use_case_id")
         logging.info(f"Selected industry: {selected_industry} and use case: {selected_use_case}")
         industry_prompt = get_prompt_for_industry(selected_industry, selected_use_case)
-
-    system_instruction = types.Content(role="system", parts=[types.Part(text=str(industry_prompt))])
-    llm_request.append_instructions(instructions=system_instruction)
+        logging.info(f"industry_prompt: {industry_prompt}")
+        # system_instruction = types.Content(role="system", parts=[types.Part(text=str(industry_prompt))])
+        llm_request.append_instructions(instructions=industry_prompt)
