@@ -1,5 +1,10 @@
 # Industry specific prompts
 
+from .subagents.cross_industry.meeting_intelligence.prompts import (
+    SYSTEM_INSTRUCTION as CROSSIN_MEETING_INTELLIGENCE_SYSTEM_INSTRUCTION,
+)
+
+
 DEFAULT_PROMPT = """
 You are a helpful AI assistant.
 """
@@ -60,7 +65,8 @@ INDUSTRY_USE_CASE_PROMPT_MAP = {
     "media": {"content_archive_engine": MEDIA_CONTENT_ARCHIVE_ENGINE_PROMPT},
     "cross": {
         "legal_guardian": CROSSIN_LEGAL_GUARDIAN,
-        "proposal_pitch_factory": CROSSIN_PROPOSAL_PITCH_FACTORY
+        "proposal_pitch_factory": CROSSIN_PROPOSAL_PITCH_FACTORY,
+        "meeting_intelligence": CROSSIN_MEETING_INTELLIGENCE_SYSTEM_INSTRUCTION,
     },
 }
 
