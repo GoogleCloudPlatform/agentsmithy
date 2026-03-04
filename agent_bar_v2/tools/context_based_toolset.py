@@ -11,16 +11,25 @@ from google.adk.tools.agent_tool import AgentTool
 from ..subagents.weather_agent.agent import root_agent as weather_agent
 from ..subagents.contract_creation.agent import root_agent as contract_creation
 from ..subagents.contract_review.agent import root_agent as contract_review
-from ..subagents.content_archive_engine.agent import root_agent as content_archive_engine
+# from ..subagents.content_archive_engine.agent import root_agent as content_archive_engine
+from ..subagents.fsi.investment.agent import root_agent as investment_agent
+from ..subagents.fsi.banking.agent import root_agent as banking_agent
+from ..subagents.fsi.cyber.agent import root_agent as cyber_agent
 
 
 INSURANCE_AGENTS = [AgentTool(contract_creation), AgentTool(contract_review)]
 WEATHER_AGENTS = [AgentTool(weather_agent)]
+FSI_AGENTS = [
+    AgentTool(investment_agent),
+    AgentTool(banking_agent),
+    AgentTool(cyber_agent),
+]
 
 INDUSTRY_AGENTS_MAP = {
     "insurance": INSURANCE_AGENTS,
     "weather": WEATHER_AGENTS,
-    "content_archive_engine": content_archive_engine,
+    # "content_archive_engine": content_archive_engine,
+    "fsi": FSI_AGENTS,
 }
 
 
@@ -30,9 +39,16 @@ class ContextBasedToolset(BaseToolset):
         self.tool_name_prefix = prefix
 
     async def get_tools(self, readonly_context: Optional[ReadonlyContext] = None) -> List[BaseTool]:
-        print("SimpleMathToolset.get_tools() called. ")
+        print("ContextBasedToolset.get_tools() called. ")
+
+        if readonly_context is None:
+            return []
 
         industry_id = readonly_context.state.get("industry_id")
+        if industry_id is None:
+            print("Warning: industry_id is None, defaulting to 'fsi' for debugging.")
+            industry_id = "fsi"
+
         print(f"Getting agent for industry Id: {industry_id}")
         tools_to_return = INDUSTRY_AGENTS_MAP.get(industry_id, [])
         print(f"Providing tools (agents): {[t.name for t in tools_to_return]}")
