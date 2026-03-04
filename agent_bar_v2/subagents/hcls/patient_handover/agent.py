@@ -1,12 +1,38 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """Entrypoint for the patient handover agent."""
 
 import os
 from datetime import datetime
 
-from google.adk.agents import LlmAgent
+from google.adk.agents import Agent
+from google.adk.models import Gemini
 from google.adk.agents.callback_context import CallbackContext
+from google.genai import types
 
+from . import prompts
 from . import tools
+
+
+AGENT_NAME = "patient_handover_assistant"
+AGENT_DESCRIPTION = "Provides shift handover and endorsement reports for medical patients."
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
+)
 
 
 def initialize_state(callback_context: CallbackContext) -> None:
@@ -26,37 +52,15 @@ def initialize_state(callback_context: CallbackContext) -> None:
     )
 
 
-def load_agent(name: str = "patient_handover_assistant") -> LlmAgent:
-    """Load an agent instance.
-
-    Args:
-        name: Name of the agent to create.
-
-    Returns:
-        An agent instance.
-    """
-
-    return LlmAgent(
-        name=name,
-        instruction="""
-You are a patient shift handover / endorsement assistant.
-Your goal is to help the user generate a report for the shift that they request.
-Always make sure to look up what shifts and patients are available before attempting to generate an endorsement report.
-You have the following tools that can be called by requestion agents.
- - list_available shifts: list available shifts on the schedule
- - list_patients: list the patients in the system
- - generate_shift_endorsement: generate a handover document for a patient id and shift time
-When the user starts the conversation, greet them and briefly state your purpose for being a patient handover assistant
-that helps streamline the shift handover process by automatically generating a comprehensive reports. Use your tools to mention the shifts and patients after greeting.
-""".strip(),
-        model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
-        before_agent_callback=initialize_state,
-        tools=[
-            tools.list_available_shifts,
-            tools.list_patients,
-            tools.generate_shift_endorsement,
-        ],
-    )
-
-
-root_agent = load_agent()
+root_agent = Agent(
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    before_agent_callback=initialize_state,
+    tools=[
+        tools.list_available_shifts,
+        tools.list_patients,
+        tools.generate_shift_endorsement,
+    ],
+)
