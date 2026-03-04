@@ -12,4 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .agent import root_agent
+"""Tools for the cardiology_consult agent."""
+
+from .internal_tools.risk_tools import (
+    calculate_ascvd_risk,
+    assess_risk_factors,
+    interpret_lab_trends,
+)
+
+tools = [
+    calculate_ascvd_risk,
+    assess_risk_factors,
+    interpret_lab_trends,
+]
