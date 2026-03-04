@@ -20,25 +20,34 @@ and support early detection. Not for use as sole basis for clinical decisions.
 """
 
 from google.adk.agents import Agent
-from .prompt import SYSTEM_INSTRUCTIONS
-from .tools import (
-    calculate_ascvd_risk,
-    assess_risk_factors,
-    interpret_lab_trends,
+from google.adk.models import Gemini
+from google.genai import types
+
+# Import local modules
+from . import prompts
+from . import tools
+
+AGENT_NAME = "cardiology_consult"
+AGENT_DESCRIPTION = (
+    "Cardiology consult agent that uses patient data to predict and identify cardiac risks "
+    "for early detection. Can compute 10-year ASCVD risk, assess risk factors, and interpret "
+    "lab trends when given demographics, vitals, labs, and lifestyle information."
+)
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model="gemini-2.5-flash",
+    generation_config=types.GenerateContentConfig(
+        temperature=0.7,
+        top_p=0.95,
+        max_output_tokens=65536,
+    ),
 )
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
-    name="cardiology_consult",
-    description=(
-        "Cardiology consult agent that uses patient data to predict and identify cardiac risks "
-        "for early detection. Can compute 10-year ASCVD risk, assess risk factors, and interpret "
-        "lab trends when given demographics, vitals, labs, and lifestyle information."
-    ),
-    instruction=SYSTEM_INSTRUCTIONS,
-    tools=[
-        calculate_ascvd_risk,
-        assess_risk_factors,
-        interpret_lab_trends,
-    ],
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
 )

@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 # Construct the path to the .env file in the parent directory (agent_bar_v2)
-dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
 load_dotenv(dotenv_path)
 
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
