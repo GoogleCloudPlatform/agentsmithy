@@ -11,8 +11,3 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from .transcription.agent import root_agent as transcription_agent
-from .video_analysis.agent import root_agent as video_analysis_agent
-
-__all__ = ["transcription_agent", "video_analysis_agent"]
