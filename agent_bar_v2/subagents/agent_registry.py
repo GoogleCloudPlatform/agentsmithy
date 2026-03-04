@@ -1,4 +1,3 @@
-
 import os
 from dotenv import load_dotenv
 
@@ -6,27 +5,34 @@ from dotenv import load_dotenv
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 load_dotenv(dotenv_path)
 
-from ..subagents.weather_agent.agent import root_agent as weather_agent
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
-from ..subagents.cross_industry.contract_review.agent import root_agent as contract_review
-from ..subagents.cross_industry.proposal_writer.agent import root_agent as proposal_writer
-from ..subagents.cross_industry.product_ad_generation.agent import (
+from ..subagents.cross_industry.legal_guardian.sub_agents.contract_review.agent import root_agent as contract_review
+from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.proposal_writer.agent import (
+    root_agent as proposal_writer,
+)
+from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.product_ad_generation.agent import (
     root_agent as product_ad_generation,
+)
+from ..subagents.cross_industry.meeting_intelligence.sub_agents.transcription.agent import (
+    root_agent as transcription,
+)
+from ..subagents.cross_industry.meeting_intelligence.sub_agents.video_analysis.agent import (
+    root_agent as video_analysis,
 )
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover
 from ..subagents.hcls.medical_search_agent.agent import root_agent as hcls_research
 from ..subagents.hcls.research_question_agent.agent import root_agent as research_question_writer
 from ..subagents.hcls.hypothesis_agent.agent import root_agent as hypothesis_writer
 
-from ..subagents.investment_strategy import root_agent as investment_strategy
-from ..subagents.cyber_incident_response import root_agent as cyber_incident_response
-from ..subagents.banking_modernization import root_agent as banking_modernization
+# this is not working properly
+from ..subagents.fsi.investment_strategy import root_agent as investment_strategy
+from ..subagents.fsi.cyber_incident_response_2 import root_agent as cyber_incident_response
+from ..subagents.fsi.banking_modernization_2 import root_agent as banking_modernization
 
 from google.adk.tools.agent_tool import AgentTool
 
 
 AGENT_REGISTRY_MAP = {
-    "weather_agent": weather_agent,
     "contract_creation": contract_creation,
     "contract_review": contract_review,
     "proposal_writer": proposal_writer,
@@ -38,20 +44,23 @@ AGENT_REGISTRY_MAP = {
     "cyber_incident_response": cyber_incident_response,
     "banking_modernization": banking_modernization,
     "product_ad_generation": product_ad_generation,
+    "transcription": transcription,
+    "video_analysis": video_analysis,
 }
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
     "fis": {
-        "insurance": ["contract_creation", "contract_review"],
         "investment_strategy": ["investment_strategy"],
         "modernization": ["banking_modernization"],
     },
-    "hcls": {"clinical_handover": ["patient_handover"],
-             "medical_research": ["hcls_researcher", "research_question_writer", "hypothesis_writer"],
+    "hcls": {
+        "clinical_handover": ["patient_handover"],
+        "medical_research": ["hcls_researcher", "research_question_writer", "hypothesis_writer"],
     },
     "cross": {
         "legal_guardian": ["contract_review"],
         "proposal_pitch_factory": ["proposal_writer", "product_ad_generation"],
+        "meeting_intelligence": ["transcription", "video_analysis"],
     },
     "cyber": {"incident_response": ["cyber_incident_response"]},
 }
@@ -84,7 +93,6 @@ def get_predefined_use_case_sub_agents(industry_id: str, use_case_id: str):
 
 
 def main():
-
 
     import argparse
     import json

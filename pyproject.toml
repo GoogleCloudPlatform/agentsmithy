@@ -17,6 +17,10 @@ dependencies = [
     "pillow>=11.3.0", # required by product-ad-generation
     "uvicorn==0.34.3",
     "biopython==1.86",
+    "google-cloud-storage",
+    "google-cloud-bigquery",
+    "google-cloud-videointelligence",
+    "fpdf",
 ]
 
 [build-system]

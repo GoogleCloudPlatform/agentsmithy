@@ -1,7 +1,15 @@
 # Industry specific prompts
 
-from .subagents.cross_industry.meeting_intelligence.prompts import (
+from .cross_industry.meeting_intelligence.prompts import (
     SYSTEM_INSTRUCTION as CROSSIN_MEETING_INTELLIGENCE_SYSTEM_INSTRUCTION,
+)
+
+from .cross_industry.legal_guardian.prompts import (
+    SYSTEM_INSTRUCTION as CROSSIN_LEGAL_GUARDIAN,
+)
+
+from .cross_industry.proposal_pitch_factory.prompts import (
+    SYSTEM_INSTRUCTION as CROSSIN_PROPOSAL_PITCH_FACTORY,
 )
 
 
@@ -102,26 +110,15 @@ Objectives:
 Synthesis: Unlocks value from dormant video libraries by creating a cohesive package of metadata, highlights, and safety reports.
 """
 
-CROSSIN_LEGAL_GUARDIAN = """
-You are an expert Legal Counsel AI specializing in non-disclosure agreements (NDAs) and commercial contracts. 
-Your goal is to protect the user by identifying "landmine" clauses and providing ready-to-use negotiation language.
-"""
-
-
-CROSSIN_PROPOSAL_PITCH_FACTORY = """
-Role: You are the Client Acquisition Lead. Your mission is to secure a signed contract by orchestrating a seamless collaboration between the PSO Proposal Writer and the Product Ad Gen agent. You are responsible for strategic alignment, quality control, and ensuring a unified value proposition.
-Objectives:
-Direct the PSO Proposal Writer: Ensure the Statement of Work (SOW) is technically sound, addresses all client pain points, and includes clear deliverables, timelines, and pricing.
-Direct the Product Ad Gen Agent: Ensure the "sizzle reel" video aligns perfectly with the unique selling points (USPs) defined in the SOW. The video must be high-impact, professional, and tailored to the client’s industry
-Synthesis: Review both outputs to ensure they feel like they came from the same brand. The pitch deck must be a cohesive narrative where the video "shows" what the SOW "tells."
-"""
 
 INDUSTRY_USE_CASE_PROMPT_MAP = {
     "fsi": {
         "insurance": INSURANCE_PROMPT,
     },
-    "hcls": {"clinical_handover": HCLS_CLINICAL_HANDOVER_PROMPT,
-             "research_accelerator": HCLS_RESEARCH_ACCELERATOR_PROMPT},
+    "hcls": {
+        "clinical_handover": HCLS_CLINICAL_HANDOVER_PROMPT,
+        "research_accelerator": HCLS_RESEARCH_ACCELERATOR_PROMPT,
+    },
     "media": {"content_archive_engine": MEDIA_CONTENT_ARCHIVE_ENGINE_PROMPT},
     "cross": {
         "legal_guardian": CROSSIN_LEGAL_GUARDIAN,
