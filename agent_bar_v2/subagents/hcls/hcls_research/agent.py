@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,22 +14,33 @@
 
 """HCLS Research Agent for supporting researchers with pubmed access."""
 
-from google.adk.agents import LlmAgent
+from google.adk.agents import Agent
+from google.adk.models import Gemini
+from google.genai import types
 
-from . import prompt
-from .sub_agents.hypothesis_agent import hypothesis_agent
-from .sub_agents.research_question_agent import research_question_agent
-from .sub_agents.search_agent import search_agent
+from . import prompts
+from . import tools
 
-hcls_researcher = LlmAgent(
-    name="hcls_research_agent",
-    model="gemini-2.5-flash",
-    description=(
-        "Creates research hypotheses for research questions"
-        " based on pubmed search results."
-    ),
-    instruction=prompt.ROOT_PROMPT,
-    sub_agents=[research_question_agent, search_agent, hypothesis_agent],
+from .subagents.hypothesis_agent import hypothesis_agent
+from .subagents.research_question_agent import research_question_agent
+from .subagents.search_agent import search_agent
+
+AGENT_NAME = "hcls_research_agent"
+AGENT_DESCRIPTION = (
+    "Creates research hypotheses for research questions"
+    " based on pubmed search results."
 )
 
-root_agent = hcls_researcher
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model="gemini-2.5-flash",
+)
+
+root_agent = Agent(
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
+    sub_agents=[research_question_agent, search_agent, hypothesis_agent],
+)
