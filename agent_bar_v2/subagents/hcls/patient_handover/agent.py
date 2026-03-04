@@ -8,6 +8,8 @@ from google.adk.agents.callback_context import CallbackContext
 
 from . import tools
 
+DEFAULT_MODEL = "gemini-2.5-flash"
+
 
 def initialize_state(callback_context: CallbackContext) -> None:
     start_time = datetime.strptime("2024-06-07 07:30:00", "%Y-%m-%d %H:%M:%S")
@@ -16,13 +18,13 @@ def initialize_state(callback_context: CallbackContext) -> None:
     callback_context.state["shifts"] = [
         {"start_time": start_time.isoformat(), "end_time": end_time.isoformat()}
     ]
-    callback_context.state["patients"] = ["MHID123456789"]
+    # callback_context.state["patients"] = ["MHID123456789"]
 
     callback_context.state["section_model"] = os.environ.get(
-        "SECTION_MODEL_NAME", "gemini-2.5-flash"
+        "SECTION_MODEL_NAME", DEFAULT_MODEL
     )
     callback_context.state["summary_model"] = os.environ.get(
-        "SUMMARY_MODEL_NAME", "gemini-2.5-flash"
+        "SUMMARY_MODEL_NAME", DEFAULT_MODEL
     )
 
 
@@ -49,11 +51,10 @@ You have the following tools that can be called by requestion agents.
 When the user starts the conversation, greet them and briefly state your purpose for being a patient handover assistant
 that helps streamline the shift handover process by automatically generating a comprehensive reports. Use your tools to mention the shifts and patients after greeting.
 """.strip(),
-        model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
+        model=os.environ.get("AGENT_MODEL_NAME", DEFAULT_MODEL),
         before_agent_callback=initialize_state,
         tools=[
             tools.list_available_shifts,
-            tools.list_patients,
             tools.generate_shift_endorsement,
         ],
     )

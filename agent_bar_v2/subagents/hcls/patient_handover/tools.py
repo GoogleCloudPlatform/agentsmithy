@@ -210,7 +210,7 @@ class Summarizer:
 
     def generate(
         self,
-        file_path: pathlib.Path,
+        patient: str,
         start_time: datetime,
         end_time: datetime,
     ) -> types.GenerateContentResponse:
@@ -225,8 +225,9 @@ class Summarizer:
             genai.types.GenerateContentResponse: A response object containing the shift summary.
         """
 
-        with open(file_path, "r") as txt_file:
-            self.document = txt_file.read()
+        # with open(file_path, "r") as txt_file:
+        #     self.document = txt_file.read()
+        self.document = patient
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             log_times_future = executor.submit(self._extract_log_times)
@@ -296,7 +297,7 @@ def list_patients(tool_context: ToolContext) -> dict[str, Any]:
         A list of patient IDs.
     """
 
-    patients = tool_context.state.get("patients")
+    patients = [x.replace('.txt', '') for x in tool_context.state.get("patients")]
 
     if patients is None:
         return {"error": "No patients found."}
@@ -340,20 +341,21 @@ async def generate_shift_endorsement(
         summary_model=tool_context.state["summary_model"],
         client=genai.Client(),
     )
-
+# this is going to be hard
     patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
 
     inputs_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-raw-inputs.txt"
     _ = await tool_context.save_artifact(
         inputs_filename,
-        artifact=types.Part.from_bytes(
-            data=patient_file.read_text().encode(),
-            mime_type="text/plain",
-        ),
+        artifact=tool_context.load_artifact(patient)
+        # artifact=types.Part.from_bytes(
+        #     data=patient_file.read_text().encode(),
+        #     mime_type="text/plain",
+        # ),
     )
 
     summary_content = summarizer.generate(
-        file_path=patient_file,
+        file_path=tool_context.load_artifact(patient),
         start_time=start_dt,
         end_time=end_dt,
     )

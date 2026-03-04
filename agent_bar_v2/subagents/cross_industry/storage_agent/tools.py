@@ -10,16 +10,16 @@ from google.api_core.exceptions import GoogleAPIError, NotFound
 from google.adk.tools import ToolContext, FunctionTool
 from typing import Dict, Any, Optional
 import logging
-from bartleby.config import (
-    PROJECT_ID,
-    GCS_DEFAULT_STORAGE_CLASS,
-    GCS_DEFAULT_LOCATION,
-    GCS_LIST_BUCKETS_MAX_RESULTS,
-    GCS_LIST_BLOBS_MAX_RESULTS,
-    GCS_DEFAULT_CONTENT_TYPE,
-    LOG_LEVEL,
-    LOG_FORMAT
-)
+
+
+PROJECT_ID='ai-agent-bar-2026-dev'
+GCS_LIST_BUCKETS_MAX_RESULTS = 100
+GCS_LIST_BLOBS_MAX_RESULTS = 100
+GCS_DEFAULT_STORAGE_CLASS='STANDARD'
+GCS_DEFAULT_LOCATION='us-central1'
+GCS_DEFAULT_CONTENT_TYPE = 'text/plain'
+LOG_LEVEL='INFO'
+LOG_FORMAT = '%(asctime)s %(clientip)-15s %(user)-8s %(message)s'
 
 # Configure logging
 logging.basicConfig(
@@ -411,12 +411,13 @@ def get_file_contents(tool_context: ToolContext, bucket_name: str, blob_name: st
         print(f"Blob '{blob_name}' from bucket '{bucket_name}' downloaded into memory.")
         if key_name is not None:
             # 1. Convert bytes to a string
-            html_string = blob_contents_bytes.decode('utf-8')
+            raw_string = blob_contents_bytes.decode('utf-8')
             # 2. Remove newline characters (if you want it all on one line)
-            clean_string = html_string.replace('\n', '').replace('\r', '')
-            tool_context.state[key_name] = clean_string
+            tool_context.state[key_name] = raw_string
+            tool_context.save_artifact[key_name] = raw_string
         else:
             tool_context.state[blob_name] = str(blob_contents_bytes)
+            tool_context.save_artifact[key_name] = str(blob_contents_bytes)
         return {
             "status": "success",
             "bucket": bucket_name,

@@ -10,6 +10,7 @@ from ..subagents.weather_agent.agent import root_agent as weather_agent
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
 from ..subagents.cross_industry.contract_review.agent import root_agent as contract_review
 from ..subagents.cross_industry.proposal_writer.agent import root_agent as proposal_writer
+from ..subagents.cross_industry.storage_agent.agent import root_agent as storage_agent
 from ..subagents.cross_industry.product_ad_generation.agent import (
     root_agent as product_ad_generation,
 )
@@ -38,6 +39,7 @@ AGENT_REGISTRY_MAP = {
     "cyber_incident_response": cyber_incident_response,
     "banking_modernization": banking_modernization,
     "product_ad_generation": product_ad_generation,
+    "storage_access": storage_agent
 }
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
@@ -46,7 +48,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "investment_strategy": ["investment_strategy"],
         "modernization": ["banking_modernization"],
     },
-    "hcls": {"clinical_handover": ["patient_handover"],
+    "hcls": {"clinical_handover": ["storage_access", "patient_handover"],
              "medical_research": ["hcls_researcher", "research_question_writer", "hypothesis_writer"],
     },
     "cross": {
