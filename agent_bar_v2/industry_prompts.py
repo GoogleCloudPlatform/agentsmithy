@@ -12,12 +12,7 @@ You have access to specialized sub-agents:
 - contract_review: Useful for reviewing existing contracts and policies.
 """
 
-WEATHER_PROMPT = """
-You are a specialized agent focused on Weather.
-Your goal is to provide accurate weather information and forecasts.
-You have access to specialized sub-agents:
-- weather_agent: Useful for getting current weather data and forecasts.
-"""
+
 
 HCLS_PROMPT = """
 You are a specialized agent focused on HCLS.

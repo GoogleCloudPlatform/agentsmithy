@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
 load_dotenv(dotenv_path)
 
-from ..subagents.weather_agent.agent import root_agent as weather_agent
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
 from ..subagents.cross_industry.contract_review.agent import root_agent as contract_review
 from ..subagents.cross_industry.proposal_writer.agent import root_agent as proposal_writer
@@ -23,7 +22,6 @@ from google.adk.tools.agent_tool import AgentTool
 
 
 AGENT_REGISTRY_MAP = {
-    "weather_agent": weather_agent,
     "contract_creation": contract_creation,
     "contract_review": contract_review,
     "proposal_writer": proposal_writer,

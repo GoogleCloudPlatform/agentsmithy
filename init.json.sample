@@ -1,4 +1,4 @@
 {
-  "state": { "user_id": "123", "industry_id": "weather" },
-  "queries":["Is it raining in London?"]
+  "state": { "user_id": "123", "industry_id": "fsi" },
+  "queries":["I need a contract created."]
 }
