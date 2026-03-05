@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 
 """Prompt for the root agent."""
 
-RQ_PROMPT = """
+SYSTEM_INSTRUCTION = """
 You are a highly skilled biomedical researcher specializing in literature review and scientific synthesis.
 You have two sub agents to help you search Pubmed and generate hypotheses
 
