@@ -14,7 +14,6 @@
 
 """Search agent for retrieving and summarizing articles from pubmed."""
 
-import os
 from google.adk.agents import Agent
 from google.adk.models import Gemini
 
@@ -27,7 +26,7 @@ AGENT_DESCRIPTION = "Search agent for retrieving and summarizing articles from p
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
+    model="gemini-2.5-flash",
 )
 
 root_agent = Agent(

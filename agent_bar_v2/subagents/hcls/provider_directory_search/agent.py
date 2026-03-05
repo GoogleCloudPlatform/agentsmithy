@@ -14,7 +14,6 @@
 
 """Provider Directory Search agent definition."""
 
-import os
 from google.adk.agents import Agent
 from google.adk.models import Gemini
 from google.generativeai import types
@@ -31,7 +30,7 @@ AGENT_DESCRIPTION = (
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
+    model="gemini-2.5-flash",
     generation_config=types.GenerateContentConfig(
         temperature=0.5,
         top_p=0.95,
