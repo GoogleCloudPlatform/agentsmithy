@@ -55,6 +55,7 @@ that helps streamline the shift handover process by automatically generating a c
         before_agent_callback=initialize_state,
         tools=[
             tools.list_available_shifts,
+            tools.list_patients,
             tools.generate_shift_endorsement,
         ],
     )

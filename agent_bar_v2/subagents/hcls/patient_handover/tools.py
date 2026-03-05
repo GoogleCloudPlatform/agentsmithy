@@ -217,7 +217,6 @@ class Summarizer:
         """Extracts invoice information from a PDF file.
 
         Args:
-            file_path: The path to the file containing the medical notes & questionnaire.
             start_time: The start time of the shift.
             end_time: The end time of the shift.
 
@@ -297,7 +296,7 @@ def list_patients(tool_context: ToolContext) -> dict[str, Any]:
         A list of patient IDs.
     """
 
-    patients = [x.replace('.txt', '') for x in tool_context.state.get("patients")]
+    patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in tool_context.state.get("patients")]
 
     if patients is None:
         return {"error": "No patients found."}
@@ -321,8 +320,8 @@ async def generate_shift_endorsement(
     Returns:
         The generated shift endorsement report.
     """
-
-    if not any(pid == patient for pid in tool_context.state.get("patients", [])):
+    patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in tool_context.state.get("patients")]
+    if not any(pid == patient for pid in patients):
         return {"error": f"Patient not found: {patient}"}
 
     start_dt, end_dt = (
@@ -342,12 +341,13 @@ async def generate_shift_endorsement(
         client=genai.Client(),
     )
 # this is going to be hard
-    patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
+    # patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
 
     inputs_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-raw-inputs.txt"
     _ = await tool_context.save_artifact(
         inputs_filename,
-        artifact=tool_context.load_artifact(patient)
+        # artifact=tool_context.load_artifact("patient_data")
+        artifact=types.Part(text=tool_context.state.get("patient_data"))
         # artifact=types.Part.from_bytes(
         #     data=patient_file.read_text().encode(),
         #     mime_type="text/plain",
@@ -355,7 +355,8 @@ async def generate_shift_endorsement(
     )
 
     summary_content = summarizer.generate(
-        file_path=tool_context.load_artifact(patient),
+        # file_path=tool_context.load_artifact(patient),
+        patient = tool_context.state.get("patient_data"),
         start_time=start_dt,
         end_time=end_dt,
     )

@@ -36,12 +36,13 @@ The following tools are available to you
   You can prime the environment by performing the following actions in sequence
   1) Update patients in the system. You will do this by executing the tool
      list_blobs_tool(
-        bucket_name = 'agent-bar-sample-data',
-        prefix = 'patients',
+        bucket_name = 'ai-agent-bar-data',
+        prefix = 'clinical_handover/patients',
+        key_name = 'patients'
         )
   2) Load data for a particular patient. You will do this by executing the tool
     get_file_contents(
-    bucket_name = 'agent-bar-sample-data', 
+    bucket_name = 'ai-agent-bar-data', 
     blob_name = {patient_id}.txt, 
     key_name = 'patient_data')
 
