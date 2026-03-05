@@ -12,6 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .agent import root_agent
-
-__all__ = ["agent"]
+"""Configuration for the medical_search_agent."""
