@@ -1,4 +1,4 @@
-PROMPT = """
+SYSTEM_INSTRUCTIONS = """
     You are a helpful assistant that and searches Google Cloud Storage buckets.
     
     Your primary goal is to understand the user's intent and select the most appropriate tool to help them accomplish their tasks. 

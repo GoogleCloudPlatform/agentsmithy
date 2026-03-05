@@ -34,6 +34,7 @@ class ContextBasedToolset(BaseToolset):
                 logging.info(f"Getting agent for industry Id: {industry_id} and use case Id: {use_case_id}")
                 tools_to_return = get_predefined_use_case_sub_agents(industry_id, use_case_id)
         except Exception:
+            logging.error(f"Error getting agents for industry {industry_id} and use case {use_case_id}: {e}")
             logging.warning("No agents found for this industry and use case.")
             tools_to_return = []
 

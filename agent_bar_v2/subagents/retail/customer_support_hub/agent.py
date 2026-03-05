@@ -1,6 +1,6 @@
 import os
 from google.adk.agents import LlmAgent
-from .prompts import SYSTEM_INSTRUCTIONS
+from .prompts import SYSTEM_INSTRUCTION
 from google.adk.tools import AgentTool
 # Import sub-agents
 from .sub_agents import customer_support_agent, conversational_shopping_assistant_agent
@@ -16,7 +16,7 @@ hub_agent = LlmAgent(
         1. Customer Support: For returns, refunds, and support issues.
         2. Conversational Shopping Assistant: For product search and shopping assistance.
     """,
-    instruction=SYSTEM_INSTRUCTIONS,
+    instruction=SYSTEM_INSTRUCTION,
     model=MODEL,
     tools=[support_tool, shopping_tool],
 )

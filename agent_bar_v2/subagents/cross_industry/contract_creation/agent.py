@@ -16,7 +16,6 @@
 
 from google.adk.agents import Agent
 from google.adk.models import Gemini
-from google.adk.tools import AgentTool
 from google.genai import types
 
 # Import local modules
@@ -41,5 +40,5 @@ root_agent = Agent(
     name=AGENT_NAME,
     model=GEMINI_MODEL_CONFIG,
     description=AGENT_DESCRIPTION,
-    instruction=prompts.SYSTEM_INSTRUCTION,
+    instruction=prompts.SYSTEM_INSTRUCTIONS,
 )

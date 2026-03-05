@@ -13,7 +13,7 @@ _ = load_dotenv()
 MODEL = os.getenv("LLM_MODEL", "gemini-2.5-flash")
 
 root_agent = LlmAgent(
-    name="Router_Agent",
+    name="customer_support",
     model=MODEL,
     description="""
         Greets users, triages issues and routes requests
