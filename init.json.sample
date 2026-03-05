@@ -1,4 +1,0 @@
-{
-  "state": { "user_id": "123", "industry_id": "weather" },
-  "queries":["Is it raining in London?"]
-}

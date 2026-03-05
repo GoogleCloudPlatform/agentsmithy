@@ -14,6 +14,5 @@
 
 from .transcription.agent import root_agent as transcription_agent
 from .video_analysis.agent import root_agent as video_analysis_agent
-from .content_moderation.agent import root_agent as content_moderation_agent
 
-__all__ = ["transcription_agent", "video_analysis_agent", "content_moderation_agent"]
+__all__ = ["transcription_agent", "video_analysis_agent"]

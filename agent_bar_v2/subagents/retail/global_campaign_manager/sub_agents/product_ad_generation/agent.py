@@ -91,7 +91,7 @@ async def inline_data_processing(callback_context: CallbackContext) -> None:
     return None
 
 
-product_ad_agent = Agent(
+root_agent = Agent(
         name="product_ad_agent",
         model="gemini-2.5-flash",
         description=(

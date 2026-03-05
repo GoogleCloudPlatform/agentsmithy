@@ -13,7 +13,7 @@
 # limitations under the License.
 # prompt.py
 
-GLOBAL_CAMPAIGN_MANAGER_INSTRUCTIONS = """
+SYSTEM_INSTRUCTION = """
 ## GOAL
 You are a Global Campaign Manager Agent. Your goal is to launch an ad for a 
 product and then localize it to different regions/languages. To do so, you have 
