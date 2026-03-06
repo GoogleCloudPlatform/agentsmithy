@@ -24,6 +24,11 @@ dependencies = [
     "google-cloud-translate",
     "google-cloud-vision",
     "google-cloud-speech",
+    "gcsfs>=2024.11.0",
+    "google-cloud-logging>=3.12.0,<4.0.0",
+    "google-cloud-aiplatform[evaluation]==1.130.0",
+    "fastapi>=0.115.8,<1.0.0",
+    "asyncpg>=0.30.0,<1.0.0",
 ]
 
 [build-system]

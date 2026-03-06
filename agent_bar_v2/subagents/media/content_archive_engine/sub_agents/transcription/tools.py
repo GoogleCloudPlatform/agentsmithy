@@ -30,10 +30,8 @@ from google.api_core import client_options
 from google.cloud import speech_v2 as cloud_speech
 from google.genai import types
 
-load_dotenv()
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
-LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
-BUCKET_NAME = os.getenv("GCS_BUCKET")
+from ...config import PROJECT_ID, LOCATION, BUCKET_NAME
+
 GCS_OUTPUT_PATH = "transcription_agent_output"
 DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
 DEFAULT_SPEECH_MODEL = "chirp"

@@ -48,7 +48,7 @@ In a separate terminal, use `curl` to set the initial context for your session:
 # Cross industry and legal guardian use case
 curl -X POST http://localhost:8000/apps/agent_bar_v2/users/user/sessions/s_123 \
      -H "Content-Type: application/json" \
-     -d '{ "user_id": "123", "industry_id": "cross", "use_case_id": "legal_guardian" }'
+     -d '{ "user_id": "123", "industry_id": "cross", "use_case_id": "meeting_intelligence" }'
 
 # Delete the session
 curl -X DELETE http://localhost:8000/apps/agent_bar_v2/users/user/sessions/s_123

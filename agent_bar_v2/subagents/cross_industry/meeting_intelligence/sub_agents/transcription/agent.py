@@ -16,7 +16,6 @@
 
 import os
 
-from dotenv import load_dotenv
 from google.adk.agents import LlmAgent
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.tools import LongRunningFunctionTool, load_artifacts
@@ -29,10 +28,7 @@ from .tools import (
     write_synopsis,
 )
 
-load_dotenv()
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
-LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
-BUCKET_NAME = os.getenv("GCS_BUCKET")
+from ...config import PROJECT_ID, LOCATION, BUCKET_NAME
 
 
 async def inline_data_processing(callback_context: CallbackContext) -> None:

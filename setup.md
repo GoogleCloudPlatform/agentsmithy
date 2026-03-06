@@ -8,7 +8,8 @@ gcloud services enable \
     cloudbuild.googleapis.com \
     cloudresourcemanager.googleapis.com \
     iam.googleapis.com \
-    storage.googleapis.com
+    storage.googleapis.com \
+    speech.googleapis.com
 ```
 
 ## Enrable requirements for sub agents
@@ -37,6 +38,13 @@ adk deploy agent_engine \
         --project=$PROJECT_ID \
         --region=$LOCATION_ID \
         --display_name="Agent Bar v2" \
+        agent_bar_v2
+
+adk deploy agent_engine \
+        --project=$PROJECT_ID \
+        --region=$LOCATION_ID \
+        --display_name="Agent Bar v2" \
+        --requirements_file=requirements.txt \
         agent_bar_v2
 ```
 
