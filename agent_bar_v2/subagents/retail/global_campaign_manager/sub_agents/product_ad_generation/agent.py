@@ -12,25 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime
 import os
-from zoneinfo import ZoneInfo
-
+import google.auth
 from google.adk.agents import Agent
 from google.adk.models import Gemini
-from google.adk.agents.callback_context import CallbackContext
-import google.auth
-import google.cloud.storage as storage
 
 from .config import BUCKET_NAME, LOCATION, PROJECT_ID
 from . import prompts
 from . import tools
+from .callbacks import inline_data_processing
+
 
 _, project_id = google.auth.default()
 os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
 os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
-
 
 if not PROJECT_ID or not LOCATION or not BUCKET_NAME:
     raise EnvironmentError(
@@ -39,65 +35,6 @@ if not PROJECT_ID or not LOCATION or not BUCKET_NAME:
     )
 
 print(f"Loaded config: Project={PROJECT_ID}, Location={LOCATION}, Bucket={BUCKET_NAME}")
-
-
-async def inline_data_processing(callback_context: CallbackContext) -> None:
-    """
-    Processes uploaded files, uploads original images to GCS, and saves the
-    GCS path to the agent's state.
-    """
-    invocation_id = callback_context.invocation_id
-    user_content = callback_context.user_content
-    storage_client = storage.Client()
-    bucket = storage_client.bucket(BUCKET_NAME)
-
-    if user_content and user_content.parts:
-        for i, part in enumerate(user_content.parts):
-            if part.inline_data:
-                mime_type = part.inline_data.mime_type
-                if not mime_type:
-                    continue
-
-                if mime_type.startswith("image/"):
-                    if isinstance(part.inline_data.display_name, str):
-                        display_name = "_".join(
-                            part.inline_data.display_name.split(".")[:-1]
-                        )
-                    else:
-                        display_name = "image"
-
-                    filename = f"{display_name}_{invocation_id}_{i}.png"
-
-                    # Save artifact for logs
-                    await callback_context.save_artifact(filename, part)
-
-                    # Upload original image to GCS
-                    image_gcs_uri = None
-                    try:
-                        blob = bucket.blob(f"ad_agent_inputs/{filename}")
-                        print(f"[Callback] Uploading ORIGINAL {filename} to GCS")
-                        # Use the original image data directly
-                        blob.upload_from_string(
-                            part.inline_data.data,
-                            content_type=mime_type,
-                        )
-                        image_gcs_uri = f"gs://{BUCKET_NAME}/ad_agent_inputs/{filename}"
-                        print(f"[Callback] Image GCS URI: {image_gcs_uri}")
-                    except Exception as e:
-                        print(f"[Callback] Could not upload the image file to GCS: {e}")
-
-                    # Save the GCS path to the agent's state
-                    if image_gcs_uri:
-                        callback_context.state["image_gcs_uri"] = image_gcs_uri
-                        callback_context.state["image_mime_type"] = mime_type
-
-                else:
-                    print(
-                        f"[Callback] Found inline data with unhandled MIME type: {mime_type}. Skipping."
-                    )
-    else:
-        print("[Callback] No user content or parts found.")
-    return None
 
 
 AGENT_NAME = "product_ad_agent"
