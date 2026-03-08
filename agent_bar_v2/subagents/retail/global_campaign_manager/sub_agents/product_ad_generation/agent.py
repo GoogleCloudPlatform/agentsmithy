@@ -1,21 +1,30 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import datetime
 import os
 from zoneinfo import ZoneInfo
 
 from google.adk.agents import Agent
+from google.adk.models import Gemini
 from google.adk.agents.callback_context import CallbackContext
-# from google.adk.apps import App
 import google.auth
 import google.cloud.storage as storage
 
 from .config import BUCKET_NAME, LOCATION, PROJECT_ID
-from .prompt import PRODUCT_AD_AGENT_INSTRUCTIONS
-from .tools import (
-    generate_and_display_images,
-    generate_music_from_prompt,
-    produce_final_video_with_sound,
-    save_script_to_state,
-)
+from . import prompts
+from . import tools
 
 _, project_id = google.auth.default()
 os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
@@ -91,24 +100,19 @@ async def inline_data_processing(callback_context: CallbackContext) -> None:
     return None
 
 
+AGENT_NAME = "product_ad_agent"
+AGENT_DESCRIPTION = "You are a Product Ad Generation Agent, a helpful AI agent and creative partner that generates multi-scene video advertisements. Your process is interactive and split into precise steps."
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model="gemini-2.5-flash",
+)
+
 root_agent = Agent(
-        name="product_ad_agent",
-        model="gemini-2.5-flash",
-        description=(
-            "You are a Product Ad Generation Agent, a helpful AI agent and "
-            "creative partner that generates multi-scene video advertisements. "
-            "Your process is interactive and split into precise steps."
-        ),
-        instruction=PRODUCT_AD_AGENT_INSTRUCTIONS,
-        tools=[
-            # NEW Tool for Act 1:
-            save_script_to_state,
-            # NEW Tool for Act 2:
-            generate_and_display_images,
-            # NEW Tool for Act 3:
-            generate_music_from_prompt,
-            # NEW Tool for Act 4:
-            produce_final_video_with_sound,
-        ],
-        before_agent_callback=inline_data_processing,
-    )
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
+    before_agent_callback=inline_data_processing,
+)
