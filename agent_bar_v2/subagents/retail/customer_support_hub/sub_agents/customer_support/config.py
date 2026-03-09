@@ -11,20 +11,3 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-"""Defines tools for the Router Agent"""
-
-
-def escalation_contact_number() -> str:
-    """Provides contact number to transfer and escalate
-    issues to human customer support.
-
-    Returns:
-        Contact phone number.
-    """
-
-    return "888-000-0000"
-
-tools = [
-    escalation_contact_number
-]

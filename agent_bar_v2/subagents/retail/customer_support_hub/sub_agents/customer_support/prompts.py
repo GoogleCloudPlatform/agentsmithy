@@ -1,6 +1,20 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """Defines the prompts for router the agents."""
 
-SYSTEM_INSTRUCTIONS = """
+SYSTEM_INSTRUCTION = """
     You are a friendly, empathetic, retail Customer Service agent.
     Upon starting a new conversation, you should greet the user and
     explain that you are a customer service agent able to help with returning damaged products,
