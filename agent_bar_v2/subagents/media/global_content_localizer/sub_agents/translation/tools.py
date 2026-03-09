@@ -7,7 +7,7 @@ import uuid
 import google.cloud.storage as storage
 from dotenv import load_dotenv
 from fpdf import FPDF
-from google.adk.tools import ToolContext
+from google.adk.tools import ToolContext, LongRunningFunctionTool, load_artifacts
 from google.cloud import translate_v3 as translate
 from google.cloud import vision
 from google.cloud import speech_v2 as cloud_speech
@@ -18,15 +18,7 @@ import subprocess
 import tempfile
 import time
 
-load_dotenv()
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
-LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
-BUCKET_NAME = os.getenv("GCS_BUCKET")
-GCS_OUTPUT_PATH = "translation_agent_output"
-DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
-DEFAULT_SPEECH_MODEL = "chirp"
-VALID_STT_MODELS = {"chirp", "chirp_2", "chirp_telephony"}
-
+from .config import PROJECT_ID, LOCATION, BUCKET_NAME, GCS_OUTPUT_PATH, DEFAULT_GEMINI_MODEL, DEFAULT_SPEECH_MODEL, VALID_STT_MODELS
 
 async def translate_text_with_model(
     source_language: str,
@@ -809,3 +801,16 @@ Synopsis:"""
             retries += 1
     print("Gemini could not annotate file.")
     return {"status": "error", "message": "Gemini could not correct the transcript."}
+
+
+tools = [
+    LongRunningFunctionTool(translate_text_with_model),
+    write_results_gcs,
+    LongRunningFunctionTool(pic_to_text),
+    LongRunningFunctionTool(detect_language),
+    LongRunningFunctionTool(extract_audio),
+    LongRunningFunctionTool(transcribe_batch_gcs_input_inline_output_v2),
+    LongRunningFunctionTool(fix_transcripts_llm),
+    LongRunningFunctionTool(write_synopsis),
+    load_artifacts,
+]
