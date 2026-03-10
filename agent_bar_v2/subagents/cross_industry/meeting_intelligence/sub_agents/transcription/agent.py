@@ -16,7 +16,7 @@
 
 from google.adk.agents import Agent
 from google.adk.models import Gemini
-from google.generativeai import types
+from google.genai import types
 
 from . import prompts
 from . import tools
