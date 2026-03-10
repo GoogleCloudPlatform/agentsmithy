@@ -6,7 +6,7 @@ dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 load_dotenv(dotenv_path)
 
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover
-from ..subagents.hcls.medical_search_agent.agent import root_agent as hcls_research
+from ..subagents.hcls.medical_search_agent.agent import root_agent as medical_search_agent
 from ..subagents.hcls.research_question_agent.agent import root_agent as research_question_writer
 from ..subagents.hcls.hypothesis_agent.agent import root_agent as hypothesis_writer
 from ..subagents.hcls.cardiology_consult.agent import root_agent as cardiology_consult
@@ -26,7 +26,7 @@ from ..subagents.retail.customer_support_hub.sub_agents.customer_support.agent i
 
 
 from ..subagents.media.content_archive_engine.sub_agents.content_moderation.agent import root_agent as content_moderation
-from ..subagents.media.content_archive_engine.sub_agents.transcription.agent import root_agent as transcription
+
 from ..subagents.media.content_archive_engine.sub_agents.video_analysis.agent import root_agent as video_analysis
 
 from ..subagents.media.global_content_localizer.sub_agents.translation.agent import root_agent as translation_agent
@@ -65,7 +65,7 @@ from google.adk.tools.agent_tool import AgentTool
 
 AGENT_REGISTRY_MAP = {
     # from hcls
-    "hcls_researcher": hcls_research,
+    "medical_search_agent": medical_search_agent,
     "research_question_writer": research_question_writer,
     "hypothesis_writer": hypothesis_writer,
     "provider_directory_search":provider_directory_search,
@@ -84,7 +84,7 @@ AGENT_REGISTRY_MAP = {
     "conversational_shopping_assistant": conversational_shopping_assistant,
     # from media
     "content_moderation": content_moderation,
-    "transcription": transcription,
+    "transcription": meeting_transcription,
     "video_analysis": video_analysis,
     "translation_agent": translation_agent,
     # from cross industry
@@ -102,7 +102,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
     "hcls": {
         "research_accelerator":{
             "prompt": HCLS_RESEARCH_ACCELERATOR_PROMPT,
-            "agents":["hcls_researcher", "research_question_writer", "hypothesis_writer"],
+            "agents":["medical_search_agent", "research_question_writer", "hypothesis_writer"],
         },
             
         "provider_search_agent": {
