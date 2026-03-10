@@ -12,4 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .agent import root_agent
+"""Configuration for the Transcription Agent."""
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
+LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
+BUCKET_NAME = os.getenv("GCS_BUCKET")

@@ -30,10 +30,9 @@ from google.genai import types
 from google.genai.types import Part
 from pydantic import BaseModel, Field
 
-load_dotenv()
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
-LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
-BUCKET_NAME = os.getenv("GCS_BUCKET")
+from google.adk.tools import LongRunningFunctionTool, load_artifacts
+
+from .config import PROJECT_ID, LOCATION, BUCKET_NAME
 
 
 async def explicit_content_video_intelligence(
@@ -683,3 +682,13 @@ Output:
         "status": "error",
         "message": "Gemini could not generate a valid response. ",
     }
+
+tools = [
+    LongRunningFunctionTool(explicit_content_video_intelligence),
+    LongRunningFunctionTool(content_moderation_video),
+    LongRunningFunctionTool(content_moderation_transcript),
+    LongRunningFunctionTool(write_json_to_bigquery),
+    LongRunningFunctionTool(write_results_gcs),
+    LongRunningFunctionTool(profanity_correction),
+    load_artifacts,
+]
