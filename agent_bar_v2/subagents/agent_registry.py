@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-# Construct the path to the .env file in the parent directory (agent_bar_v2)
-dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+# Construct the path to the .env file in the root directory
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
 load_dotenv(dotenv_path)
 
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover
