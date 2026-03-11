@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .transcription.agent import root_agent as transcription_agent
+from ....cross_industry.meeting_intelligence.sub_agents.transcription.agent import root_agent as transcription_agent
 from .video_analysis.agent import root_agent as video_analysis_agent
 from .content_moderation.agent import root_agent as content_moderation_agent
 
