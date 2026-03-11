@@ -15,6 +15,7 @@
 """Tools for Transcription Agent"""
 
 import json
+import logging
 import os
 import subprocess
 import tempfile
