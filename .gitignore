@@ -218,3 +218,5 @@ __marimo__/
 
 .adk
 llms-full.txt
+
+test_*

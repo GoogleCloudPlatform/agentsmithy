@@ -32,7 +32,7 @@ from google.genai import types
 from .config import BUCKET_NAME, LOCATION, PROJECT_ID
 GCS_OUTPUT_PATH = "transcription_agent_output"
 DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
-DEFAULT_SPEECH_MODEL = "chirp"
+DEFAULT_SPEECH_MODEL = "chirp_2"
 VALID_STT_MODELS = {"chirp", "chirp_2", "chirp_telephony"}
 
 
@@ -79,6 +79,7 @@ async def extract_audio(
                     f.write(video_part.inline_data.data)
 
             elif video_gcs_uri:
+                logging.info(f"Loading audio from gcs video file {video_gcs_uri}")
                 bucket_name, blob_name = video_gcs_uri[5:].split("/", 1)
                 source_filename = os.path.basename(blob_name)
                 source_file_path = os.path.join(temp_dir, source_filename)
@@ -86,6 +87,7 @@ async def extract_audio(
                 bucket = storage_client.bucket(bucket_name)
                 blob = bucket.blob(blob_name)
                 blob.download_to_filename(source_file_path)
+                
             else:
                 return {
                     "status": "error",
@@ -96,6 +98,7 @@ async def extract_audio(
             base, _ = os.path.splitext(os.path.basename(source_file_path))
             output_filename = f"{base}.wav"
             output_file_path = os.path.join(temp_dir, output_filename)
+            
 
             subprocess.run(
                 [
@@ -120,18 +123,23 @@ async def extract_audio(
             dest_bucket = storage_client.bucket(BUCKET_NAME)
             dest_blob = dest_bucket.blob(gcs_path)
             dest_blob.upload_from_filename(output_file_path)
+            # update the state
+            tool_context.state['audio_gcs_uri'] = f"gs://{BUCKET_NAME}/{gcs_path}"
+            logging.info(f"Audio uploaded to gcs bucket and path {BUCKET_NAME}/{gcs_path}")
 
             return {
-                "status": "success",
+                "status": "success, audio extracted and uploaded to GCS, audio_gcs_uri=gcs://{BUCKET_NAME}/{gcs_path}",
             }
 
-        except subprocess.CalledProcessError:
+        except subprocess.CalledProcessError as e:
             # Catches errors specifically from the ffmpeg command
+            logging.error(f"Error: {e}")
             return {
                 "status": "error",
                 "message": "Audio extraction failed due to an internal error.",
             }
-        except Exception:
+        except Exception as e:
+            logging.error(f"Error: {e}")
             # Catches all other errors (GCS download, file write, etc.)
             return {
                 "status": "error",
@@ -168,6 +176,7 @@ async def transcribe_batch_gcs_input_inline_output_v2(
 
     # If a local file (artifact) is provided, upload it to GCS first.
     if artifact_name:
+        logging.info(f"Transcribing audio from local artifact: {artifact_name}")
         try:
             audio_part = await tool_context.load_artifact(artifact_name)
 
@@ -210,6 +219,11 @@ async def transcribe_batch_gcs_input_inline_output_v2(
             "status": "error",
             "message": "Please provide the audio you want to transcribe by uploading a file or specifying a gs:// URI.",
         }
+
+    logging.info(f"Transcribing audio from gcs uri: {audio_gcs_uri}")
+    # reading from the state
+    audio_gcs_uri = tool_context.state['audio_gcs_uri']
+    logging.info(f"Audio gcs uri: {audio_gcs_uri}")
 
     # Validate the selected STT model
     if model not in VALID_STT_MODELS:
@@ -290,8 +304,8 @@ async def transcribe_batch_gcs_input_inline_output_v2(
 
         # 7. Wait for the operation to complete and get the response.
         response = operation.result(timeout=3600)
-    except Exception:
-        print("Could not transcribe audio file.")
+    except Exception as e:
+        logging.error(f"Could not transcribe audio file: {e}")
         return {"status": "error", "message": "Could not transcribe the audio file."}
 
     # 8. Function to sort the transcription results by time offset.
@@ -475,8 +489,8 @@ async def write_results_gcs(
                 if os.path.exists(local_temp_file_path):
                     os.remove(local_temp_file_path)
                     print("Successfully deleted temporary file.")
-    except Exception:
-        print("An error occurred.")
+    except Exception as e:
+        logging.error(f"An error occurred: {e}") 
         return {"status": "error", "message": "Failed to write results to GCS."}
 
 

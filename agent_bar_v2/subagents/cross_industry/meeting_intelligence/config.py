@@ -13,3 +13,9 @@
 # limitations under the License.
 
 """Configuration settings for the Use Case Agent."""
+
+import os
+
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
+LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
+BUCKET_NAME = os.getenv("GCS_BUCKET_MEETING_INTELLIGENCE")
