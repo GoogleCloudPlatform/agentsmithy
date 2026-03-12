@@ -165,6 +165,10 @@
             "customer_support_hub": [
                 "customer_support",
                 "conversational_shopping_assistant"
+            ],
+            "intelligent_inventory_manager": [
+                "nl2sql",
+                "catalog_enrichment"
             ]
         },
         "media": {
