@@ -23,6 +23,7 @@ import google.auth
 
 from .prompts import SYSTEM_INSTRUCTIONS
 from .sub_agents.nl2sql.agent import nl2sql_agent
+from .sub_agents.catalog_enrichment.agent import catalog_enrichment_agent
 
 
 _, project_id = google.auth.default()
@@ -39,5 +40,5 @@ root_agent = Agent(
             "agent that can manage inventory for retail companies. "
         ),
         instruction=SYSTEM_INSTRUCTIONS,
-        sub_agents=[nl2sql_agent],
+        sub_agents=[nl2sql_agent, catalog_enrichment_agent],
     )
