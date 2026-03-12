@@ -1,3 +1,5 @@
+"""Defines tools for Catalog Enrichment agent."""
+
 import logging
 import os
 import uuid

@@ -1,4 +1,4 @@
-"""Defines tools for retail concierge agent."""
+"""Defines tools for NL2SQL agent."""
 
 import logging
 import os

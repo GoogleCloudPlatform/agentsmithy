@@ -1,4 +1,4 @@
-"""Defining the Retail Concierge Agent."""
+"""Defining the NL2SQL agent."""
 
 from google.adk.agents import Agent
 

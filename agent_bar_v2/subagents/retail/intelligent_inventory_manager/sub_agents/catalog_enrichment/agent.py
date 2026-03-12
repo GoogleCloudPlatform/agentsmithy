@@ -1,3 +1,4 @@
+"""Defining the Catalog Enrichment agent."""
 from google.adk.agents import Agent
 
 from .prompts import SYSTEM_INSTRUCTIONS
