@@ -1,0 +1,105 @@
+{
+  "eval_set_id": "content_archive_engine_eval",
+  "name": "Content Archive Engine Eval",
+  "description": "Content Archive Engine Eval",
+  "eval_cases": [
+    {
+      "eval_id": "136a5a61-f81e-45eb-9f39-50a11c107a26",
+      "conversation": [
+        {
+          "invocation_id": "e-b11911ff-a058-4f81-8870-322516043e43",
+          "user_content": {
+            "parts": [
+              {
+                "text": "hi"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello! How can I assist you with your video archives today?\n"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-0b8e468d-031e-49ce-ac61-8c0a95d5c3ae",
+          "user_content": {
+            "parts": [
+              {
+                "text": "what can you do?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I can help you monetize your video archives! I have three specialized agents:\n\n1.  **Video Transcription Agent**: Generates transcripts, closed captions, and searchable metadata from video audio.\n2.  **Video Moments Agent**: Identifies viral clips, highlights, and key moments for social media sharing.\n3.  **Content Moderation Agent**: Screens for inappropriate content, hate speech, violence, or copyright issues.\n\nHow can I help you unlock the value of your content?\n"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-d1203f52-ed54-40a9-96f9-bc861f753f50",
+          "user_content": {
+            "parts": [
+              {
+                "text": "can you run content moderation on: gs://agent-catalog-meg/Cosmos_Laundromat.mp4"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The Content Moderation Agent has screened \"gs://agent-catalog-meg/Cosmos_Laundromat.mp4\".\n\nHere are the findings:\n\n*   **Explicit Content Detection (Video Intelligence API):** No explicit content was detected.\n*   **Content Moderation (LLM):**\n    *   **Profanity:** A profanity violation was detected between 00:05:04 and 00:05:06 due to the use of an offensive swear word.\n    *   **Inappropriate Content:** An inappropriate content violation was detected between 00:09:54 and 00:09:57, as the video shows a character smoking a cigarette."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-b9066cbb-b3c0-4469-8a91-9c83fb7769be",
+                "args": {
+                  "request": "gs://agent-catalog-meg/Cosmos_Laundromat.mp4"
+                },
+                "name": "video_moderation_agent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-b9066cbb-b3c0-4469-8a91-9c83fb7769be",
+                "name": "video_moderation_agent",
+                "response": {
+                  "result": "I have analyzed the video `gs://agent-catalog-meg/Cosmos_Laundromat.mp4` for explicit content and other moderation violations.\n\nHere are the results:\n\n**Explicit Content Detection (Video Intelligence API):**\n*   No explicit content was detected in the video.\n\n**Content Moderation (LLM):**\n*   **Profanity:** A profanity violation was detected between 00:05:04 and 00:05:06. The description states: \"The sheep uses the offensive swear word 'fucking'.\"\n*   **Inappropriate Content:** An inappropriate content violation was detected between 00:09:54 and 00:09:57. The description states: \"The video shows a character smoking a cigarette.\""
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "content_archive_engine",
+        "user_id": "user",
+        "state": {}
+      }
+    }
+  ]
+}

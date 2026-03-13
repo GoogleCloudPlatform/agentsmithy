@@ -1,0 +1,268 @@
+{
+  "id": "136a5a61-f81e-45eb-9f39-50a11c107a26",
+  "appName": "content_archive_engine",
+  "userId": "user",
+  "state": {},
+  "events": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "hi"
+          }
+        ],
+        "role": "user"
+      },
+      "invocationId": "e-b11911ff-a058-4f81-8870-322516043e43",
+      "author": "user",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "id": "d134e07a-0edf-4862-8788-79f83754196d",
+      "timestamp": 1772751724.504696
+    },
+    {
+      "modelVersion": "gemini-2.5-flash",
+      "content": {
+        "parts": [
+          {
+            "text": "Hello! How can I assist you with your video archives today?\n"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "usageMetadata": {
+        "candidatesTokenCount": 14,
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 14
+          }
+        ],
+        "promptTokenCount": 535,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 535
+          }
+        ],
+        "totalTokenCount": 549,
+        "trafficType": "ON_DEMAND"
+      },
+      "avgLogprobs": -0.1925999777657645,
+      "invocationId": "e-b11911ff-a058-4f81-8870-322516043e43",
+      "author": "content_archive_engine",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "id": "68dd4c16-f836-4670-a4eb-8c9cfe7a6b5e",
+      "timestamp": 1772751724.524771
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "what can you do?"
+          }
+        ],
+        "role": "user"
+      },
+      "invocationId": "e-0b8e468d-031e-49ce-ac61-8c0a95d5c3ae",
+      "author": "user",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "id": "be13bac3-a225-4bfe-935b-0433bc20d402",
+      "timestamp": 1772751733.689199
+    },
+    {
+      "modelVersion": "gemini-2.5-flash",
+      "content": {
+        "parts": [
+          {
+            "text": "I can help you monetize your video archives! I have three specialized agents:\n\n1.  **Video Transcription Agent**: Generates transcripts, closed captions, and searchable metadata from video audio.\n2.  **Video Moments Agent**: Identifies viral clips, highlights, and key moments for social media sharing.\n3.  **Content Moderation Agent**: Screens for inappropriate content, hate speech, violence, or copyright issues.\n\nHow can I help you unlock the value of your content?\n"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "usageMetadata": {
+        "candidatesTokenCount": 100,
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 100
+          }
+        ],
+        "promptTokenCount": 554,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 554
+          }
+        ],
+        "totalTokenCount": 654,
+        "trafficType": "ON_DEMAND"
+      },
+      "avgLogprobs": -0.07726696014404297,
+      "invocationId": "e-0b8e468d-031e-49ce-ac61-8c0a95d5c3ae",
+      "author": "content_archive_engine",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "id": "c15b7ff7-f6eb-474f-b18d-6ee030f17a5e",
+      "timestamp": 1772751733.70596
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "can you run content moderation on: gs://agent-catalog-meg/Cosmos_Laundromat.mp4"
+          }
+        ],
+        "role": "user"
+      },
+      "invocationId": "e-d1203f52-ed54-40a9-96f9-bc861f753f50",
+      "author": "user",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "id": "e4ec29d9-f230-4303-ad0c-25534a9b8b82",
+      "timestamp": 1772751820.361839
+    },
+    {
+      "modelVersion": "gemini-2.5-flash",
+      "content": {
+        "parts": [
+          {
+            "functionCall": {
+              "id": "adk-b9066cbb-b3c0-4469-8a91-9c83fb7769be",
+              "args": {
+                "request": "gs://agent-catalog-meg/Cosmos_Laundromat.mp4"
+              },
+              "name": "video_moderation_agent"
+            },
+            "thoughtSignature": "CucCAY89a1-1NWubiwTwd3rCxdO18HdfRMRbpSj_kmS6RZiPEq4RtjBiwB2oNdrRosZ85mdDY5DkND-m-ZZkmu1RHdfrxTzr6Lth7U2jHBIoiN1cwoIBkfvby4O0tAqSkiceu327T5EW3zI0SzLRvAneUEbehXaT2y1QK0JkJAb3kZOBulB0MA61RHYidVO6LVogadt89MZdhuyLC9C6qO40i9LeAITSBgIrBRxWjE4jYNd9ImKe-KEJLg3eAp8bBqRZzdGGD560CC_WWvmYqifMUxeRXZlzukYka5cO7FHmuWjHYhZPGVw6l9gEVV_ugk4o3CPUln_ZBVw4y7oU0QmrBnhp044gVIb-Ss_zY4gwbTBHHQrF5wB4KHQi90zrS1A01zAKxXxuQyxhq4DcSq7EfdKQ9J8BXbmChrlPG5504nYg0yE1qMj5-stHZUDYIHDNRGEVF7BClt2OxwVC-CZr3hcmTyWATYM="
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "usageMetadata": {
+        "candidatesTokenCount": 24,
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 24
+          }
+        ],
+        "promptTokenCount": 678,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 678
+          }
+        ],
+        "thoughtsTokenCount": 71,
+        "totalTokenCount": 773,
+        "trafficType": "ON_DEMAND"
+      },
+      "avgLogprobs": -0.3000553051630656,
+      "invocationId": "e-d1203f52-ed54-40a9-96f9-bc861f753f50",
+      "author": "content_archive_engine",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "longRunningToolIds": [],
+      "id": "e1ec2209-fade-46ae-8990-c93eeff35c2d",
+      "timestamp": 1772751820.376575
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "functionResponse": {
+              "id": "adk-b9066cbb-b3c0-4469-8a91-9c83fb7769be",
+              "name": "video_moderation_agent",
+              "response": {
+                "result": "I have analyzed the video `gs://agent-catalog-meg/Cosmos_Laundromat.mp4` for explicit content and other moderation violations.\n\nHere are the results:\n\n**Explicit Content Detection (Video Intelligence API):**\n*   No explicit content was detected in the video.\n\n**Content Moderation (LLM):**\n*   **Profanity:** A profanity violation was detected between 00:05:04 and 00:05:06. The description states: \"The sheep uses the offensive swear word 'fucking'.\"\n*   **Inappropriate Content:** An inappropriate content violation was detected between 00:09:54 and 00:09:57. The description states: \"The video shows a character smoking a cigarette.\""
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocationId": "e-d1203f52-ed54-40a9-96f9-bc861f753f50",
+      "author": "content_archive_engine",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "id": "fe20b2a4-f970-4745-8401-6025c7ebde28",
+      "timestamp": 1772752046.851399
+    },
+    {
+      "modelVersion": "gemini-2.5-flash",
+      "content": {
+        "parts": [
+          {
+            "text": "The Content Moderation Agent has screened \"gs://agent-catalog-meg/Cosmos_Laundromat.mp4\".\n\nHere are the findings:\n\n*   **Explicit Content Detection (Video Intelligence API):** No explicit content was detected.\n*   **Content Moderation (LLM):**\n    *   **Profanity:** A profanity violation was detected between 00:05:04 and 00:05:06 due to the use of an offensive swear word.\n    *   **Inappropriate Content:** An inappropriate content violation was detected between 00:09:54 and 00:09:57, as the video shows a character smoking a cigarette."
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "usageMetadata": {
+        "candidatesTokenCount": 153,
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 153
+          }
+        ],
+        "promptTokenCount": 950,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 950
+          }
+        ],
+        "totalTokenCount": 1103,
+        "trafficType": "ON_DEMAND"
+      },
+      "avgLogprobs": -0.09683382744882621,
+      "invocationId": "e-d1203f52-ed54-40a9-96f9-bc861f753f50",
+      "author": "content_archive_engine",
+      "actions": {
+        "stateDelta": {},
+        "artifactDelta": {},
+        "requestedAuthConfigs": {},
+        "requestedToolConfirmations": {}
+      },
+      "id": "334bdb28-b790-4617-9f64-22c744363a3a",
+      "timestamp": 1772752046.868951
+    }
+  ],
+  "lastUpdateTime": 1772752046.868951
+}
