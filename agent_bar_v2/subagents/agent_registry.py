@@ -34,6 +34,7 @@ from ..subagents.media.global_content_localizer.sub_agents.translation.agent imp
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
 from ..subagents.cross_industry.legal_guardian.sub_agents.contract_review.agent import root_agent as contract_review
 from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.proposal_writer.agent import root_agent as proposal_writer
+from ..subagents.cross_industry.storage_agent.agent import root_agent as storage_agent
 from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.product_ad_generation.agent import root_agent as product_ad_generation
 from ..subagents.cross_industry.meeting_intelligence.sub_agents.transcription.agent import root_agent as meeting_transcription
 from ..subagents.cross_industry.meeting_intelligence.sub_agents.video_analysis.agent import root_agent as meeting_video_analysis
@@ -92,6 +93,7 @@ AGENT_REGISTRY_MAP = {
     "contract_review": contract_review,
     "proposal_writer": proposal_writer,
     "product_ad_generation": product_ad_generation,
+    "storage_access": storage_agent,
     "meeting_transcription": meeting_transcription,
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,
@@ -111,7 +113,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         },
         "clinical_handover": {
             "prompt": HCLS_CLINICAL_HANDOVER_PROMPT,
-            "agents":["patient_handover"],
+            "agents":["patient_handover", "storage_agent"],
         },
         "cardiology_consult_copilot":{
             "prompt": HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT,
