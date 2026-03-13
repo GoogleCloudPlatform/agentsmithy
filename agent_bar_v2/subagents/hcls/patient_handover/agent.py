@@ -31,7 +31,7 @@ AGENT_DESCRIPTION = "Provides shift handover and endorsement reports for medical
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model=os.environ.get("AGENT_MODEL_NAME", "gemini-2.5-flash"),
+    model="gemini-2.5-flash",
 )
 
 
