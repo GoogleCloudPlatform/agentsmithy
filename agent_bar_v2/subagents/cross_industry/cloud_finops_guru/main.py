@@ -21,7 +21,7 @@ load_dotenv(override=True)
 
 #from agent.sub_agents.struct_data.agent import struct_data_agent as root_agent
 
-from agent.agent import root_agent
+from agent import root_agent
 
 # Setup Logging
 logging.basicConfig(level=logging.INFO)
