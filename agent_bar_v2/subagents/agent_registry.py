@@ -39,6 +39,7 @@ from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.product_ad_gen
 from ..subagents.cross_industry.meeting_intelligence.sub_agents.transcription.agent import root_agent as meeting_transcription
 from ..subagents.cross_industry.meeting_intelligence.sub_agents.video_analysis.agent import root_agent as meeting_video_analysis
 from ..subagents.cross_industry.knowledge_graph_builder.agent import root_agent as knowledge_graph_builder
+from ..subagents.cross_industry.cloud_finops_guru.agent import root_agent as finops_optimizer
 
 # Prompts
 
@@ -51,6 +52,7 @@ from .fsi.banking_modernization_factory.prompts import SYSTEM_INSTRUCTION as BAN
 from .retail.global_campaign_manager.prompts import SYSTEM_INSTRUCTION as GLOBAL_CAMPAIGN_LAUNCHER_PROMPT
 from .retail.customer_support_hub.prompts import SYSTEM_INSTRUCTION as CUSTOMER_SUPPORT_HUB_PROMPT
 from .media.global_content_localizer.prompts import SYSTEM_INSTRUCTION as GLOBAL_CONTENT_LOCALIZER_PROMPT
+from .industry_prompts import CLOUD_FINOPS_GURU_PROMPT
 
 from .industry_prompts import (
     DEFAULT_PROMPT,
@@ -100,7 +102,7 @@ AGENT_REGISTRY_MAP = {
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,
     "knowledge_graph_builder": knowledge_graph_builder,
-   
+    "finops_optimizer": finops_optimizer,
 }
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
@@ -122,6 +124,21 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
             "prompt": HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT,
             "agents":["cardiology_consult"],
         }
+    },
+    "fsi": {
+        "holistic_investment_strategy":{
+            "prompt": HOLISTIC_INVESTMENT_STRATEGY_PROMPT,
+            "agents":["macro_agent", "earnings_agent", "finsights_agent"],
+        },
+        "banking_modernization_factory": {
+            "prompt": BANKING_MODERNIZATION_FACTORY_PROMPT,
+            "agents":["discovery_agent", "migration_agent"],
+        },
+        # this agent is delegating the work to a sub agent
+        "cyber_incident_response": {
+            "prompt": CYBER_INCIDENT_RESPONSE_PROMPT,
+            "agents":["cyber_incident_response"],
+        },
     },
     "fsi": {
         "holistic_investment_strategy":{
@@ -174,6 +191,10 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "knowledge_graph_builder": {
             "prompt": CROSSIN_KNOWLEDGE_GRAPH_BUILDER_PROMPT,
             "agents":["knowledge_graph_builder"],
+        },
+        "cloud_finops_guru": {
+            "prompt": CLOUD_FINOPS_GURU_PROMPT,
+            "agents":["finops_optimizer"],
         },
     },
 }
