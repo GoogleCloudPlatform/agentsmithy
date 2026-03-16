@@ -71,6 +71,7 @@ AGENT_REGISTRY_MAP = {
     "provider_directory_search":provider_directory_search,
     "patient_handover": patient_handover,
     "cardiology_consult":cardiology_consult,
+   
     #from fsi
     "macro_agent": macro_agent,
     "earnings_agent": earnings_agent,
@@ -78,7 +79,7 @@ AGENT_REGISTRY_MAP = {
     "discovery_agent": discovery_agent,
     "migration_agent": migration_agent,
     # from retail
-    # "product_ad_agent": product_ad_agent,
+    "product_ad_generation": product_ad_generation,
     "video_transcription_agent": video_transcription_agent,
     "customer_support": customer_support,
     "conversational_shopping_assistant": conversational_shopping_assistant,
@@ -91,7 +92,6 @@ AGENT_REGISTRY_MAP = {
     "contract_creation": contract_creation,
     "contract_review": contract_review,
     "proposal_writer": proposal_writer,
-    "product_ad_generation": product_ad_generation,
     "meeting_transcription": meeting_transcription,
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,
@@ -136,7 +136,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
     "retail":{
         "global_campaign_launcher": {
             "prompt": GLOBAL_CAMPAIGN_LAUNCHER_PROMPT,
-            "agents":["product_ad_agent", "video_transcription_agent"],
+            "agents":["product_ad_generation", "video_transcription_agent"],
         },
         "customer_support_hub": {
             "prompt": CUSTOMER_SUPPORT_HUB_PROMPT,

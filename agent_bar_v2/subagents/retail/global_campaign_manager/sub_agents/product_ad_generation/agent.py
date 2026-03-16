@@ -23,11 +23,7 @@ os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 
-if not PROJECT_ID or not LOCATION or not BUCKET_NAME:
-    raise EnvironmentError(
-        "Missing required environment variables (GOOGLE_CLOUD_PROJECT, "
-        "GOOGLE_CLOUD_LOCATION, GCS_BUCKET) in your .env file."
-    )
+ 
 
 print(f"Loaded config: Project={PROJECT_ID}, Location={LOCATION}, Bucket={BUCKET_NAME}")
 
