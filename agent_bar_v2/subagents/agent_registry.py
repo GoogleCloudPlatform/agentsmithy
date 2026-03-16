@@ -19,7 +19,7 @@ from ..subagents.fsi.banking_modernization_factory.discovery.agent import root_a
 from ..subagents.fsi.banking_modernization_factory.migration.agent import root_agent as migration_agent
 from ..subagents.fsi.cyber_incident_response.agent import root_agent as cyber_incident_response
 
-from ..subagents.retail.global_campaign_manager.sub_agents.product_ad_generation.agent import root_agent as retail_product_ad_generation
+# from ..subagents.retail.global_campaign_manager.sub_agents.product_ad_generation.agent import root_agent as retail_product_ad_generation
 from ..subagents.retail.global_campaign_manager.sub_agents.video_transcription.agent import root_agent as video_transcription_agent
 from ..subagents.retail.customer_support_hub.sub_agents.conversational_shopping_assistant.agent import root_agent as conversational_shopping_assistant
 from ..subagents.retail.customer_support_hub.sub_agents.customer_support.agent import root_agent as customer_support
