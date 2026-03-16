@@ -5,7 +5,7 @@ from google.genai import types
 from .prompt import INSTRUCTION_PROMPT
 from .tools.repo_analysis_tool import RepoAnalysisTools
 
-AGENT_DESCRIPTION = "Analyzes legacy codebases to identify business domains, logic, and dependencies for modernization."
+AGENT_DESCRIPTION = "Analyzes legacy codebases via GitHub repositories to identify business domains, logic, and dependencies for modernization."
 
 # Initialize the custom tool class
 tools_instance = RepoAnalysisTools()
