@@ -108,6 +108,7 @@ AGENT_REGISTRY_MAP = {
     "contract_review": contract_review,
     "proposal_writer": proposal_writer,
     "product_ad_generation": product_ad_generation,
+    "storage_access": storage_agent,
     "meeting_transcription": meeting_transcription,
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,

@@ -19,13 +19,12 @@ from zoneinfo import ZoneInfo
 
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
-#from google.adk.apps import App
 import google.auth
-import google.cloud.storage as storage
 
-from .sub_agents.product_ad_generation.agent import product_ad_agent
-from .sub_agents.video_transcription.agent import video_transcription_agent
-from .prompts import GLOBAL_CAMPAIGN_MANAGER_INSTRUCTIONS
+from .prompts import SYSTEM_INSTRUCTIONS
+from .sub_agents.nl2sql.agent import nl2sql_agent
+from .sub_agents.catalog_enrichment.agent import catalog_enrichment_agent
+
 
 _, project_id = google.auth.default()
 os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
@@ -34,12 +33,12 @@ os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 
 root_agent = Agent(
-        name="global_campaign_manager",
+        name="intelligent_inventory_manager",
         model="gemini-2.5-flash",
         description=(
-            "You are a Global Campaign Manager Agent, a helpful AI agent and "
-            "creative partner that generates multi-scene video advertisements. "
+            "You are an Intelligent Inventory Manager Agent, a helpful AI "
+            "agent that can manage inventory for retail companies. "
         ),
-        instruction=GLOBAL_CAMPAIGN_MANAGER_INSTRUCTIONS,
-        sub_agents=[product_ad_agent, video_transcription_agent],
+        instruction=SYSTEM_INSTRUCTIONS,
+        sub_agents=[nl2sql_agent, catalog_enrichment_agent],
     )
