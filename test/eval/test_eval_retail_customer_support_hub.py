@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.asyncio
-async def eval():
+async def test_eval():
     """Test the agent's basic ability via a session file."""
     await AgentEvaluator.evaluate(
         agent_module="agent_bar_v2",

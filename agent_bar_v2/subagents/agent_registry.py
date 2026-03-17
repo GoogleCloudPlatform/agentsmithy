@@ -1,12 +1,12 @@
 import os
 from dotenv import load_dotenv
 
-# Construct the path to the .env file in the parent directory (agent_bar_v2)
-dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+# Construct the path to the .env file in the root directory
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
 load_dotenv(dotenv_path)
 
 from ..subagents.hcls.patient_handover.agent import root_agent as patient_handover
-from ..subagents.hcls.medical_search_agent.agent import root_agent as hcls_research
+from ..subagents.hcls.medical_search_agent.agent import root_agent as medical_search_agent
 from ..subagents.hcls.research_question_agent.agent import root_agent as research_question_writer
 from ..subagents.hcls.hypothesis_agent.agent import root_agent as hypothesis_writer
 from ..subagents.hcls.cardiology_consult.agent import root_agent as cardiology_consult
@@ -19,21 +19,13 @@ from ..subagents.fsi.banking_modernization_factory.discovery.agent import root_a
 from ..subagents.fsi.banking_modernization_factory.migration.agent import root_agent as migration_agent
 from ..subagents.fsi.cyber_incident_response.agent import root_agent as cyber_incident_response
 
-from ..subagents.retail.global_campaign_manager.sub_agents.product_ad_generation.agent import (
-    root_agent as retail_product_ad_generation,
-)
-from ..subagents.retail.global_campaign_manager.sub_agents.video_transcription.agent import (
-    root_agent as video_transcription_agent,
-)
-from ..subagents.retail.customer_support_hub.sub_agents.conversational_shopping_assistant.agent import (
-    root_agent as conversational_shopping_assistant,
-)
+from ..subagents.retail.global_campaign_manager.sub_agents.product_ad_generation.agent import root_agent as retail_product_ad_generation
+from ..subagents.retail.global_campaign_manager.sub_agents.video_transcription.agent import root_agent as video_transcription_agent
+from ..subagents.retail.customer_support_hub.sub_agents.conversational_shopping_assistant.agent import root_agent as conversational_shopping_assistant
 from ..subagents.retail.customer_support_hub.sub_agents.customer_support.agent import root_agent as customer_support
 
 
-from ..subagents.media.content_archive_engine.sub_agents.content_moderation.agent import (
-    root_agent as content_moderation,
-)
+from ..subagents.media.content_archive_engine.sub_agents.content_moderation.agent import root_agent as content_moderation
 
 from ..subagents.media.content_archive_engine.sub_agents.video_analysis.agent import root_agent as video_analysis
 
@@ -81,7 +73,7 @@ from google.adk.tools.agent_tool import AgentTool
 
 AGENT_REGISTRY_MAP = {
     # from hcls
-    "hcls_researcher": hcls_research,
+    "medical_search_agent": medical_search_agent,
     "research_question_writer": research_question_writer,
     "hypothesis_writer": hypothesis_writer,
     "provider_directory_search": provider_directory_search,
@@ -94,13 +86,13 @@ AGENT_REGISTRY_MAP = {
     "discovery_agent": discovery_agent,
     "migration_agent": migration_agent,
     # from retail
-    # "product_ad_agent": product_ad_agent,
+    "product_ad_agent": retail_product_ad_generation,
     "video_transcription_agent": video_transcription_agent,
     "customer_support": customer_support,
     "conversational_shopping_assistant": conversational_shopping_assistant,
     # from media
     "content_moderation": content_moderation,
-    "transcription": transcription,
+    "transcription": meeting_transcription,
     "video_analysis": video_analysis,
     "translation_agent": translation_agent,
     # from cross industry
@@ -117,7 +109,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
     "hcls": {
         "research_accelerator": {
             "prompt": HCLS_RESEARCH_ACCELERATOR_PROMPT,
-            "agents": ["medical_search_agent", "research_question_writer", "hypothesis_writer"],
+            "agents":["medical_search_agent", "research_question_writer", "hypothesis_writer"],
         },
         "provider_search_agent": {
             "prompt": HCLS_PROVIDER_SEARCH_AGENT_PROMPT,

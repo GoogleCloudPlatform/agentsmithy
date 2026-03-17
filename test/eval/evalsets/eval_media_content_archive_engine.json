@@ -96,9 +96,12 @@
         }
       ],
       "session_input": {
-        "app_name": "content_archive_engine",
+        "app_name": "agent_bar_v2",
         "user_id": "user",
-        "state": {}
+        "state": {
+          "industry_id": "media",
+          "use_case_id": "content_archive_engine"
+        }
       }
     }
   ]

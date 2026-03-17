@@ -15,6 +15,7 @@
 """Tools for Transcription Agent"""
 
 import json
+import logging
 import os
 import subprocess
 import tempfile
@@ -22,7 +23,6 @@ import time
 import uuid
 
 import google.cloud.storage as storage
-from dotenv import load_dotenv
 from fpdf import FPDF
 from google import genai
 from google.adk.tools import ToolContext
@@ -30,11 +30,7 @@ from google.api_core import client_options
 from google.cloud import speech_v2 as cloud_speech
 from google.genai import types
 
-import logging
-
-from ...config import PROJECT_ID, BUCKET_NAME
-
-LOCATION = "us-central1"
+from .config import BUCKET_NAME, LOCATION, PROJECT_ID
 GCS_OUTPUT_PATH = "transcription_agent_output"
 DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
 DEFAULT_SPEECH_MODEL = "chirp_2"
@@ -590,3 +586,15 @@ Synopsis:"""
             retries += 1
     print("Gemini could not annotate file.")
     return {"status": "error", "message": "Gemini could not correct the transcript."}
+
+
+from google.adk.tools import LongRunningFunctionTool, load_artifacts
+
+tools = [
+    LongRunningFunctionTool(transcribe_batch_gcs_input_inline_output_v2),
+    LongRunningFunctionTool(fix_transcripts_llm),
+    LongRunningFunctionTool(extract_audio),
+    LongRunningFunctionTool(write_results_gcs),
+    LongRunningFunctionTool(write_synopsis),
+    load_artifacts,
+]

@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,26 @@
 
 """Research question agent improving the research agent."""
 
-from google.adk import Agent
+from google.adk.agents import Agent
+from google.adk.models import Gemini
 
-from . import prompt
+from . import prompts
+from . import tools
+
+
+AGENT_NAME = "research_question_agent"
+AGENT_DESCRIPTION = "Research question agent improving the research agent."
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model="gemini-2.5-flash",
+)
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
-    name="research_question_agent",
-    instruction=prompt.RQ_PROMPT,
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
     output_key="research_question",
 )

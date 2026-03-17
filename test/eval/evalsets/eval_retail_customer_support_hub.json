@@ -182,9 +182,12 @@
         }
       ],
       "session_input": {
-        "app_name": "customer_support_hub",
+        "app_name": "agent_bar_v2",
         "user_id": "user",
-        "state": {}
+        "state": {
+          "industry_id": "cross",
+          "use_case_id": "customer_support_hub"
+        }
       }
     }
   ]

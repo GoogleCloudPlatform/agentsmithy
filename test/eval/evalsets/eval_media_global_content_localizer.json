@@ -130,9 +130,12 @@
         }
       ],
       "session_input": {
-        "app_name": "global_content_localizer",
+        "app_name": "agent_bar_v2",
         "user_id": "user",
-        "state": {}
+        "state": {
+          "industry_id": "media",
+          "use_case_id": "global_content_localizer"
+        }
       }
     }
   ]

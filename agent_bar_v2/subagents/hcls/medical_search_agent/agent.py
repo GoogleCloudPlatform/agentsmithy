@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,86 +14,26 @@
 
 """Search agent for retrieving and summarizing articles from pubmed."""
 
-import time
-from io import StringIO
-import os
-import certifi
+from google.adk.agents import Agent
+from google.adk.models import Gemini
 
-from Bio import Entrez, Medline
-from google.adk import Agent
+from . import prompts
+from . import tools
 
-from . import prompt
 
-os.environ['SSL_CERT_FILE'] = certifi.where()
+AGENT_NAME = "medical_search_agent"
+AGENT_DESCRIPTION = "Search agent for retrieving and summarizing articles from pubmed."
 
-def search_pubmed(
-    search_string: str,
-    email: str,
-    limit: int,
-) -> list:
-    """
-    Fetches articles with abstracts for a search_string from pubmed.
-
-    Args:
-        search_string: The string for the search (e.g., "Treatment for KRAS G13D Breast Cancer")
-        email: The email to be given to the Entrez API (e.g., "admin@website.com")
-        limit: The maximum number of articles to fetch
-
-    Returns:
-        On success: A list of dictionaries with the PMID id as key and a dictionary of
-        the Medline content as value.
-        On error: A list containing the error of the search, either "Error connecting to Pubmed"
-        or "Could not find any articles"
-    """
-    print(
-        f"--- Tool called: Fetching {limit} articles for {search_string} via Pubmed API ---"
-    )
-    # Always provide an email to identify yourself to the API.
-    # This is a requirement from NCBI.
-    Entrez.email = email  # type: ignore
-
-    # Use Entrez.esearch to perform the search
-    try:
-        handle = Entrez.esearch(db="pubmed", term=search_string, retmax=limit)
-        id_list = Entrez.read(handle)["IdList"]
-        handle.close()
-    except ConnectionError as e:
-        return [f"Error connecting to Pubmed: {e}"]
-
-    records = []
-
-    # If id_list is empty
-    if not id_list:
-        return ["Could not find any articles"]
-
-    # Use Entrez.efetch to retrieve the full details of the articles
-    # Convert from
-    for id in id_list:
-        try:
-            handle = Entrez.efetch(
-                db="pubmed", id=id, rettype="medline", retmode="text"
-            )
-            data = handle.read()
-            handle.close()
-            record = list(Medline.parse(StringIO(data)))
-            records.append(
-                {
-                    "pmid": id,
-                    "article": record,
-                }
-            )
-        except ConnectionError as e:
-            return [f"Error connecting to Pubmed: {e}"]
-
-        time.sleep(1)
-
-    return records
-
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model="gemini-2.5-flash",
+)
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
-    name="medical_search_agent",
-    instruction=prompt.SEARCH_PROMPT,
-    tools=[search_pubmed],
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
     output_key="pubmed_results",
 )

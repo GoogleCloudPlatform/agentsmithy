@@ -1,51 +1,33 @@
-import json
-from google.adk.agents import LlmAgent
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from google.adk.agents import Agent
+from google.adk.models import Gemini
 from google.genai import types
 
+from . import prompts
+from . import tools
 
-from .prompt import SYSTEM_INSTRUCTIONS
-from .mock_logs import MOCK_LOGS
 
+AGENT_NAME = "log_scanner"
 AGENT_DESCRIPTION = "Scans and analyzes network logs to identify security threats and anomalies."
 
 
-def get_logs(filter_ip: str = None) -> str:
-    """
-    Retrieves network logs, optionally filtering by source or destination IP.
-    
-    Args:
-        filter_ip: Optional IP address to filter logs by.
-        
-    Returns:
-        JSON string of filtered logs.
-    """
-    if filter_ip:
-        filtered_logs = [
-            log for log in MOCK_LOGS 
-            if log.get("source_ip") == filter_ip or log.get("destination_ip") == filter_ip
-        ]
-        return json.dumps(filtered_logs, indent=2)
-    return json.dumps(MOCK_LOGS, indent=2)
-
-
-def get_unique_ips() -> str:
-    """
-    Retrieves a list of all unique IP addresses found in the logs.
-
-    Returns:
-        JSON string of unique IP addresses.
-    """
-    ips = set()
-    for log in MOCK_LOGS:
-        if "source_ip" in log:
-            ips.add(log["source_ip"])
-        if "destination_ip" in log:
-            ips.add(log["destination_ip"])
-    return json.dumps(list(ips), indent=2)
-
-root_agent = LlmAgent(
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
     model="gemini-2.5-flash",
-    generate_content_config=types.GenerateContentConfig(
+    generation_config=types.GenerateContentConfig(
         temperature=0.2,
         top_p=0.95,
         max_output_tokens=65536,
@@ -68,8 +50,13 @@ root_agent = LlmAgent(
             ),
         ],
     ),
-    name="log_scanner",
+    retry_options=types.HttpRetryOptions(attempts=3),
+)
+
+root_agent = Agent(
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
     description=AGENT_DESCRIPTION,
-    instruction=SYSTEM_INSTRUCTIONS,
-    tools=[get_logs, get_unique_ips],
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
 )

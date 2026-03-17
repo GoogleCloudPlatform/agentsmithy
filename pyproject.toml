@@ -75,7 +75,8 @@ reportUnknownVariableType = false
 failOnWarnings = false
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["test"]
+python_functions = ["test_*", "eval"]
 
 [tool.ruff]
 fix = true

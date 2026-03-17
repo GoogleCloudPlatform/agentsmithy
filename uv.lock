@@ -1,4 +1,5 @@
 version = 1
+<<<<<<< HEAD
 revision = 3
 requires-python = ">=3.13"
 resolution-markers = [
@@ -17,6 +18,12 @@ source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-sta
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/absl-py/absl_py-2.4.0.tar.gz", hash = "sha256:8c6af82722b35cf71e0f4d1d47dcaebfff286e27110a99fc359349b247dfb5d4" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/absl-py/absl_py-2.4.0-py3-none-any.whl", hash = "sha256:88476fd881ca8aab94ffa78b7b6c632a782ab3ba1cd19c9bd423abc4fb4cd28d" },
+=======
+requires-python = ">=3.13"
+resolution-markers = [
+    "python_full_version >= '3.14'",
+    "python_full_version < '3.14'",
+>>>>>>> origin
 ]
 
 [[package]]
@@ -24,6 +31,7 @@ name = "agent-bar-v2"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+<<<<<<< HEAD
     { name = "asyncpg" },
     { name = "biopython" },
     { name = "fastapi" },
@@ -33,6 +41,13 @@ dependencies = [
     { name = "google-cloud-aiplatform", extra = ["evaluation"] },
     { name = "google-cloud-bigquery" },
     { name = "google-cloud-logging" },
+=======
+    { name = "biopython" },
+    { name = "fpdf" },
+    { name = "google-adk" },
+    { name = "google-cloud-aiplatform" },
+    { name = "google-cloud-bigquery" },
+>>>>>>> origin
     { name = "google-cloud-speech" },
     { name = "google-cloud-storage", version = "3.4.1", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, marker = "python_full_version >= '3.14'" },
     { name = "google-cloud-storage", version = "3.9.0", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, marker = "python_full_version < '3.14'" },
@@ -47,20 +62,28 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "deptry" },
+<<<<<<< HEAD
     { name = "google-adk", extra = ["eval"] },
+=======
+>>>>>>> origin
     { name = "ipykernel" },
     { name = "ipython" },
     { name = "mypy" },
     { name = "pre-commit" },
     { name = "pytest" },
+<<<<<<< HEAD
     { name = "pytest-asyncio" },
     { name = "pytest-cov" },
     { name = "pytest-dotenv" },
+=======
+    { name = "pytest-cov" },
+>>>>>>> origin
     { name = "ruff" },
 ]
 
 [package.metadata]
 requires-dist = [
+<<<<<<< HEAD
     { name = "asyncpg", specifier = ">=0.30.0,<1.0.0" },
     { name = "biopython" },
     { name = "fastapi", specifier = ">=0.115.8,<1.0.0" },
@@ -71,6 +94,13 @@ requires-dist = [
     { name = "google-cloud-aiplatform", extras = ["evaluation"], specifier = "==1.130.0" },
     { name = "google-cloud-bigquery" },
     { name = "google-cloud-logging", specifier = ">=3.12.0,<4.0.0" },
+=======
+    { name = "biopython" },
+    { name = "fpdf" },
+    { name = "google-adk" },
+    { name = "google-cloud-aiplatform" },
+    { name = "google-cloud-bigquery" },
+>>>>>>> origin
     { name = "google-cloud-speech" },
     { name = "google-cloud-storage" },
     { name = "google-cloud-translate" },
@@ -84,19 +114,27 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "deptry", specifier = ">=0.23.0" },
+<<<<<<< HEAD
     { name = "google-adk", extras = ["eval"] },
+=======
+>>>>>>> origin
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "ipython", specifier = ">=8.36.0" },
     { name = "mypy", specifier = ">=1.16.0" },
     { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "pytest", specifier = ">=8.3.5" },
+<<<<<<< HEAD
     { name = "pytest-asyncio" },
     { name = "pytest-cov", specifier = ">=4.0.0" },
     { name = "pytest-dotenv" },
+=======
+    { name = "pytest-cov", specifier = ">=4.0.0" },
+>>>>>>> origin
     { name = "ruff", specifier = ">=0.11.5" },
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "aiohappyeyeballs"
 version = "2.6.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -186,6 +224,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "aiosqlite"
 version = "0.22.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -257,6 +297,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "asyncpg"
 version = "0.31.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -289,6 +330,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "attrs"
 version = "25.4.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -692,13 +735,18 @@ wheels = [
 
 [[package]]
 name = "fastapi"
+<<<<<<< HEAD
 version = "0.123.10"
+=======
+version = "0.135.1"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "annotated-doc" },
     { name = "pydantic" },
     { name = "starlette" },
     { name = "typing-extensions" },
+<<<<<<< HEAD
 ]
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/fastapi/fastapi-0.123.10.tar.gz", hash = "sha256:624d384d7cda7c096449c889fc776a0571948ba14c3c929fa8e9a78cd0b0a6a8" }
 wheels = [
@@ -733,6 +781,13 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/fastuuid/fastuuid-0.14.0-cp314-cp314-musllinux_1_1_x86_64.whl", hash = "sha256:ec27778c6ca3393ef662e2762dba8af13f4ec1aaa32d08d77f71f2a70ae9feb8" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/fastuuid/fastuuid-0.14.0-cp314-cp314-win32.whl", hash = "sha256:e23fc6a83f112de4be0cc1990e5b127c27663ae43f866353166f87df58e73d06" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/fastuuid/fastuuid-0.14.0-cp314-cp314-win_amd64.whl", hash = "sha256:df61342889d0f5e7a32f7284e55ef95103f2110fee433c2ae7c2c0956d76ac8a" },
+=======
+    { name = "typing-inspection" },
+]
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/fastapi/fastapi-0.135.1.tar.gz", hash = "sha256:d04115b508d936d254cea545b7312ecaa58a7b3a0f84952535b4c9afae7668cd" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/fastapi/fastapi-0.135.1-py3-none-any.whl", hash = "sha256:46e2fc5745924b7c840f71ddd277382af29ce1cdb7d5eab5bf697e3fb9999c9e" },
+>>>>>>> origin
 ]
 
 [[package]]
@@ -751,6 +806,7 @@ source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-sta
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/fpdf/fpdf-1.7.2.tar.gz", hash = "sha256:125840783289e7d12552b1e86ab692c37322e7a65b96a99e0ea86cca041b6779" }
 
 [[package]]
+<<<<<<< HEAD
 name = "frozenlist"
 version = "1.8.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -855,6 +911,10 @@ wheels = [
 [[package]]
 name = "google-adk"
 version = "1.21.0"
+=======
+name = "google-adk"
+version = "1.26.0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "aiosqlite" },
@@ -863,11 +923,19 @@ dependencies = [
     { name = "click" },
     { name = "fastapi" },
     { name = "google-api-python-client" },
+<<<<<<< HEAD
+=======
+    { name = "google-auth", extra = ["pyopenssl"] },
+>>>>>>> origin
     { name = "google-cloud-aiplatform", extra = ["agent-engines"] },
     { name = "google-cloud-bigquery" },
     { name = "google-cloud-bigquery-storage" },
     { name = "google-cloud-bigtable" },
     { name = "google-cloud-discoveryengine" },
+<<<<<<< HEAD
+=======
+    { name = "google-cloud-pubsub" },
+>>>>>>> origin
     { name = "google-cloud-secret-manager" },
     { name = "google-cloud-spanner" },
     { name = "google-cloud-speech" },
@@ -875,6 +943,10 @@ dependencies = [
     { name = "google-cloud-storage", version = "3.9.0", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, marker = "python_full_version < '3.14'" },
     { name = "google-genai" },
     { name = "graphviz" },
+<<<<<<< HEAD
+=======
+    { name = "httpx" },
+>>>>>>> origin
     { name = "jsonschema" },
     { name = "mcp" },
     { name = "opentelemetry-api" },
@@ -900,6 +972,7 @@ dependencies = [
     { name = "watchdog" },
     { name = "websockets" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-adk/google_adk-1.21.0.tar.gz", hash = "sha256:c1080df4d7d0de606578e163f1f74953a70cc85f05c353d73b462010191630c1" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-adk/google_adk-1.21.0-py3-none-any.whl", hash = "sha256:88ba4a2f7e1288e87a7b3d0f114c471a48c4ca6551270c2997ec61a03eee15ed" },
@@ -911,6 +984,11 @@ eval = [
     { name = "pandas" },
     { name = "rouge-score" },
     { name = "tabulate" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-adk/google_adk-1.26.0.tar.gz", hash = "sha256:29ec8636025848716246228b595749f785ddc83fb3982052ec92ae871f12fcd8" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-adk/google_adk-1.26.0-py3-none-any.whl", hash = "sha256:1a74c6b25f8f4d4098e1a01118b8eefcdf7b3741ba07993093a773bc6775b4d5" },
+>>>>>>> origin
 ]
 
 [[package]]
@@ -918,9 +996,13 @@ name = "google-api-core"
 version = "2.25.2"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 resolution-markers = [
+<<<<<<< HEAD
     "python_full_version >= '3.14' and sys_platform == 'win32'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+=======
+    "python_full_version >= '3.14'",
+>>>>>>> origin
 ]
 dependencies = [
     { name = "google-auth", marker = "python_full_version >= '3.14'" },
@@ -945,9 +1027,13 @@ name = "google-api-core"
 version = "2.30.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 resolution-markers = [
+<<<<<<< HEAD
     "python_full_version < '3.14' and sys_platform == 'win32'",
     "python_full_version < '3.14' and sys_platform == 'emscripten'",
     "python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+=======
+    "python_full_version < '3.14'",
+>>>>>>> origin
 ]
 dependencies = [
     { name = "google-auth", marker = "python_full_version < '3.14'" },
@@ -999,6 +1085,12 @@ wheels = [
 ]
 
 [package.optional-dependencies]
+<<<<<<< HEAD
+=======
+pyopenssl = [
+    { name = "pyopenssl" },
+]
+>>>>>>> origin
 requests = [
     { name = "requests" },
 ]
@@ -1017,6 +1109,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "google-auth-oauthlib"
 version = "1.3.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1032,6 +1125,10 @@ wheels = [
 [[package]]
 name = "google-cloud-aiplatform"
 version = "1.130.0"
+=======
+name = "google-cloud-aiplatform"
+version = "1.140.0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "docstring-parser" },
@@ -1047,17 +1144,29 @@ dependencies = [
     { name = "proto-plus" },
     { name = "protobuf" },
     { name = "pydantic" },
+<<<<<<< HEAD
     { name = "shapely" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-aiplatform/google_cloud_aiplatform-1.130.0.tar.gz", hash = "sha256:f66aeb23f0a6848fc2d5bbdf1b5777c3cf8e06056f73ef815317abf89d5a0262" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-aiplatform/google_cloud_aiplatform-1.130.0-py2.py3-none-any.whl", hash = "sha256:f578ccee55655dd9e2300cfcafb178e47c3dfdcf746ad465234b875d3e955929" },
+=======
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-aiplatform/google_cloud_aiplatform-1.140.0.tar.gz", hash = "sha256:ea7eb1870b4cf600f8c2472102e21c3a1bcaf723d6e49f00ed51bc6b88d54fff" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-aiplatform/google_cloud_aiplatform-1.140.0-py2.py3-none-any.whl", hash = "sha256:e94493a2682b9d17efa7146a53bb3665bf1595c3394fd3d0f45d18f71623fddc" },
+>>>>>>> origin
 ]
 
 [package.optional-dependencies]
 agent-engines = [
     { name = "cloudpickle" },
+<<<<<<< HEAD
+=======
+    { name = "google-cloud-iam" },
+>>>>>>> origin
     { name = "google-cloud-logging" },
     { name = "google-cloud-trace" },
     { name = "opentelemetry-exporter-gcp-logging" },
@@ -1068,6 +1177,7 @@ agent-engines = [
     { name = "pydantic" },
     { name = "typing-extensions" },
 ]
+<<<<<<< HEAD
 evaluation = [
     { name = "jsonschema" },
     { name = "litellm" },
@@ -1077,6 +1187,8 @@ evaluation = [
     { name = "scikit-learn" },
     { name = "tqdm" },
 ]
+=======
+>>>>>>> origin
 
 [[package]]
 name = "google-cloud-appengine-logging"
@@ -1194,6 +1306,27 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+=======
+name = "google-cloud-iam"
+version = "2.21.0"
+source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
+dependencies = [
+    { name = "google-api-core", version = "2.25.2", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, extra = ["grpc"], marker = "python_full_version >= '3.14'" },
+    { name = "google-api-core", version = "2.30.0", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, extra = ["grpc"], marker = "python_full_version < '3.14'" },
+    { name = "google-auth" },
+    { name = "grpc-google-iam-v1" },
+    { name = "grpcio" },
+    { name = "proto-plus" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-iam/google_cloud_iam-2.21.0.tar.gz", hash = "sha256:fc560527e22b97c6cbfba0797d867cf956c727ba687b586b9aa44d78e92281a3" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-iam/google_cloud_iam-2.21.0-py3-none-any.whl", hash = "sha256:1b4a21302b186a31f3a516ccff303779638308b7c801fb61a2406b6a0c6293c4" },
+]
+
+[[package]]
+>>>>>>> origin
 name = "google-cloud-logging"
 version = "3.14.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1233,6 +1366,30 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+=======
+name = "google-cloud-pubsub"
+version = "2.35.0"
+source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
+dependencies = [
+    { name = "google-api-core", version = "2.25.2", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, extra = ["grpc"], marker = "python_full_version >= '3.14'" },
+    { name = "google-api-core", version = "2.30.0", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, extra = ["grpc"], marker = "python_full_version < '3.14'" },
+    { name = "google-auth" },
+    { name = "grpc-google-iam-v1" },
+    { name = "grpcio" },
+    { name = "grpcio-status" },
+    { name = "opentelemetry-api" },
+    { name = "opentelemetry-sdk" },
+    { name = "proto-plus" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-pubsub/google_cloud_pubsub-2.35.0.tar.gz", hash = "sha256:2c0d1d7ccda52fa12fb73f34b7eb9899381e2fd931c7d47b10f724cdfac06f95" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/google-cloud-pubsub/google_cloud_pubsub-2.35.0-py3-none-any.whl", hash = "sha256:c32e4eb29e532ec784b5abb5d674807715ec07895b7c022b9404871dec09970d" },
+]
+
+[[package]]
+>>>>>>> origin
 name = "google-cloud-resource-manager"
 version = "1.16.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1315,9 +1472,13 @@ name = "google-cloud-storage"
 version = "3.4.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 resolution-markers = [
+<<<<<<< HEAD
     "python_full_version >= '3.14' and sys_platform == 'win32'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+=======
+    "python_full_version >= '3.14'",
+>>>>>>> origin
 ]
 dependencies = [
     { name = "google-api-core", version = "2.25.2", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, marker = "python_full_version >= '3.14'" },
@@ -1337,9 +1498,13 @@ name = "google-cloud-storage"
 version = "3.9.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 resolution-markers = [
+<<<<<<< HEAD
     "python_full_version < '3.14' and sys_platform == 'win32'",
     "python_full_version < '3.14' and sys_platform == 'emscripten'",
     "python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+=======
+    "python_full_version < '3.14'",
+>>>>>>> origin
 ]
 dependencies = [
     { name = "google-api-core", version = "2.30.0", source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }, marker = "python_full_version < '3.14'" },
@@ -1355,6 +1520,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "google-cloud-storage-control"
 version = "1.10.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1373,6 +1539,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "google-cloud-trace"
 version = "1.18.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1528,6 +1696,10 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp313-cp313-macosx_11_0_universal2.whl", hash = "sha256:aa6ac98bdfd716a749b84d4034486863fd81c3abde9aa3cf8eff9127981a4ae4" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp313-cp313-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:ab0c7e7901a00bc0a7284907273dc165b32e0d109a6713babd04471327ff7986" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp313-cp313-manylinux_2_24_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:d248d8c23c67d2291ffd47af766e2a3aa9fa1c6703155c099feb11f526c63a92" },
+<<<<<<< HEAD
+=======
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp313-cp313-manylinux_2_24_s390x.manylinux_2_28_s390x.whl", hash = "sha256:ccd21bb86944ca9be6d967cf7691e658e43417782bce90b5d2faeda0ff78a7dd" },
+>>>>>>> origin
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b6997d360a4e6a4e936c0f9625b1c20416b8a0ea18a8e19cabbefc712e7397ab" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:64970c33a50551c7c50491671265d8954046cb6e8e2999aacdd60e439b70418a" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:1a9172f5bf6bd88e6ba5a84e0a68afeac9dc7b6b412b245dd64f52d83c81e55b" },
@@ -1536,6 +1708,10 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314-macosx_11_0_universal2.whl", hash = "sha256:8d1658d7291f9859beed69a776c10822a0a799bc4bfe1bd4272bb60e62507dab" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:18cb1b7337bca281915b3c5d5ae19f4e76d35e1df80f4ad3c1a7be91fadf1082" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314-manylinux_2_24_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:c2e47408e8ce1c6f1ceea0dffcdf6ebb85cc09e55c7af407c99f1112016e45e9" },
+<<<<<<< HEAD
+=======
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314-manylinux_2_24_s390x.manylinux_2_28_s390x.whl", hash = "sha256:e3cb43ce200f59483eb82949bf1835a99cf43d7571e900d7c8d5c62cdf25d2f9" },
+>>>>>>> origin
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:63d10328839d1973e5ba35e98cccbca71b232b14051fd957b6f8b6e8e80d0506" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:8e4ab3cfb02993c8cc248ea73d7dae6cec0253e9afa311c9b37e603ca9fad2ce" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:94ad81f0fd3c0c0681a018a976e5c2bd2ca2d9d94895f23e7bb1af4e8af4e2d5" },
@@ -1544,6 +1720,10 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314t-macosx_11_0_universal2.whl", hash = "sha256:e26e72bec7ab387ac80caa7496e0f908ff954f31065b0ffc1f8ecb1338b11b54" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314t-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:8b466dff7a4ffda6ca975979bab80bdadde979e29fc947ac3be4451428d8b0e4" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314t-manylinux_2_24_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:b8bddc5b73c9720bea487b3bffdb1840fe4e3656fba3bd40aa1489e9f37877ff" },
+<<<<<<< HEAD
+=======
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314t-manylinux_2_24_s390x.manylinux_2_28_s390x.whl", hash = "sha256:59b3e2c40f6706b05a9cd299c836c6aa2378cabe25d021acd80f13abf81181cf" },
+>>>>>>> origin
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314t-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b26b0f4428b871a751968285a1ac9648944cea09807177ac639b030bddebcea4" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314t-musllinux_1_2_aarch64.whl", hash = "sha256:1fb39a11ee2e4d94be9a76671482be9398560955c9e568550de0224e41104727" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/greenlet/greenlet-3.3.2-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:20154044d9085151bc309e7689d6f7ba10027f8f5a8c0676ad398b951913d89e" },
@@ -1631,6 +1811,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "hf-xet"
 version = "1.4.2"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1663,6 +1844,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "httpcore"
 version = "1.0.9"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1712,6 +1895,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "huggingface-hub"
 version = "1.7.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1732,6 +1916,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "identify"
 version = "2.6.17"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1840,6 +2026,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -1912,6 +2099,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "jsonschema"
 version = "4.26.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2015,6 +2204,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "litellm"
 version = "1.82.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2038,6 +2228,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "mako"
 version = "1.3.10"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2050,6 +2242,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "markdown-it-py"
 version = "4.0.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2062,6 +2255,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "markupsafe"
 version = "3.0.3"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2151,6 +2346,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "mdurl"
 version = "0.1.2"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2160,6 +2356,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "mmh3"
 version = "5.2.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2226,6 +2424,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "multidict"
 version = "6.7.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2307,6 +2506,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "mypy"
 version = "1.19.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2352,6 +2553,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "nltk"
 version = "3.9.3"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2367,6 +2569,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "nodeenv"
 version = "1.10.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2426,6 +2630,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "oauthlib"
 version = "3.3.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2456,14 +2661,24 @@ wheels = [
 [[package]]
 name = "opentelemetry-api"
 version = "1.37.0"
+=======
+name = "opentelemetry-api"
+version = "1.38.0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "importlib-metadata" },
     { name = "typing-extensions" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-api/opentelemetry_api-1.37.0.tar.gz", hash = "sha256:540735b120355bd5112738ea53621f8d5edb35ebcd6fe21ada3ab1c61d1cd9a7" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-api/opentelemetry_api-1.37.0-py3-none-any.whl", hash = "sha256:accf2024d3e89faec14302213bc39550ec0f4095d1cf5ca688e1bfb1c8612f47" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-api/opentelemetry_api-1.38.0.tar.gz", hash = "sha256:f4c193b5e8acb0912b06ac5b16321908dd0843d75049c091487322284a3eea12" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-api/opentelemetry_api-1.38.0-py3-none-any.whl", hash = "sha256:2891b0197f47124454ab9f0cf58f3be33faca394457ac3e09daba13ff50aa582" },
+>>>>>>> origin
 ]
 
 [[package]]
@@ -2513,19 +2728,33 @@ wheels = [
 
 [[package]]
 name = "opentelemetry-exporter-otlp-proto-common"
+<<<<<<< HEAD
 version = "1.37.0"
+=======
+version = "1.38.0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "opentelemetry-proto" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-common/opentelemetry_exporter_otlp_proto_common-1.37.0.tar.gz", hash = "sha256:c87a1bdd9f41fdc408d9cc9367bb53f8d2602829659f2b90be9f9d79d0bfe62c" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-common/opentelemetry_exporter_otlp_proto_common-1.37.0-py3-none-any.whl", hash = "sha256:53038428449c559b0c564b8d718df3314da387109c4d36bd1b94c9a641b0292e" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-common/opentelemetry_exporter_otlp_proto_common-1.38.0.tar.gz", hash = "sha256:e333278afab4695aa8114eeb7bf4e44e65c6607d54968271a249c180b2cb605c" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-common/opentelemetry_exporter_otlp_proto_common-1.38.0-py3-none-any.whl", hash = "sha256:03cb76ab213300fe4f4c62b7d8f17d97fcfd21b89f0b5ce38ea156327ddda74a" },
+>>>>>>> origin
 ]
 
 [[package]]
 name = "opentelemetry-exporter-otlp-proto-http"
+<<<<<<< HEAD
 version = "1.37.0"
+=======
+version = "1.38.0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "googleapis-common-protos" },
@@ -2536,21 +2765,37 @@ dependencies = [
     { name = "requests" },
     { name = "typing-extensions" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-http/opentelemetry_exporter_otlp_proto_http-1.37.0.tar.gz", hash = "sha256:e52e8600f1720d6de298419a802108a8f5afa63c96809ff83becb03f874e44ac" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-http/opentelemetry_exporter_otlp_proto_http-1.37.0-py3-none-any.whl", hash = "sha256:54c42b39945a6cc9d9a2a33decb876eabb9547e0dcb49df090122773447f1aef" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-http/opentelemetry_exporter_otlp_proto_http-1.38.0.tar.gz", hash = "sha256:f16bd44baf15cbe07633c5112ffc68229d0edbeac7b37610be0b2def4e21e90b" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-exporter-otlp-proto-http/opentelemetry_exporter_otlp_proto_http-1.38.0-py3-none-any.whl", hash = "sha256:84b937305edfc563f08ec69b9cb2298be8188371217e867c1854d77198d0825b" },
+>>>>>>> origin
 ]
 
 [[package]]
 name = "opentelemetry-proto"
+<<<<<<< HEAD
 version = "1.37.0"
+=======
+version = "1.38.0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "protobuf" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-proto/opentelemetry_proto-1.37.0.tar.gz", hash = "sha256:30f5c494faf66f77faeaefa35ed4443c5edb3b0aa46dad073ed7210e1a789538" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-proto/opentelemetry_proto-1.37.0-py3-none-any.whl", hash = "sha256:8ed8c066ae8828bbf0c39229979bdf583a126981142378a9cbe9d6fd5701c6e2" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-proto/opentelemetry_proto-1.38.0.tar.gz", hash = "sha256:88b161e89d9d372ce723da289b7da74c3a8354a8e5359992be813942969ed468" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-proto/opentelemetry_proto-1.38.0-py3-none-any.whl", hash = "sha256:b6ebe54d3217c42e45462e2a1ae28c3e2bf2ec5a5645236a490f55f45f1a0a18" },
+>>>>>>> origin
 ]
 
 [[package]]
@@ -2570,29 +2815,49 @@ wheels = [
 
 [[package]]
 name = "opentelemetry-sdk"
+<<<<<<< HEAD
 version = "1.37.0"
+=======
+version = "1.38.0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "opentelemetry-api" },
     { name = "opentelemetry-semantic-conventions" },
     { name = "typing-extensions" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-sdk/opentelemetry_sdk-1.37.0.tar.gz", hash = "sha256:cc8e089c10953ded765b5ab5669b198bbe0af1b3f89f1007d19acd32dc46dda5" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-sdk/opentelemetry_sdk-1.37.0-py3-none-any.whl", hash = "sha256:8f3c3c22063e52475c5dbced7209495c2c16723d016d39287dfc215d1771257c" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-sdk/opentelemetry_sdk-1.38.0.tar.gz", hash = "sha256:93df5d4d871ed09cb4272305be4d996236eedb232253e3ab864c8620f051cebe" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-sdk/opentelemetry_sdk-1.38.0-py3-none-any.whl", hash = "sha256:1c66af6564ecc1553d72d811a01df063ff097cdc82ce188da9951f93b8d10f6b" },
+>>>>>>> origin
 ]
 
 [[package]]
 name = "opentelemetry-semantic-conventions"
+<<<<<<< HEAD
 version = "0.58b0"
+=======
+version = "0.59b0"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "opentelemetry-api" },
     { name = "typing-extensions" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-semantic-conventions/opentelemetry_semantic_conventions-0.58b0.tar.gz", hash = "sha256:6bd46f51264279c433755767bb44ad00f1c9e2367e1b42af563372c5a6fa0c25" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-semantic-conventions/opentelemetry_semantic_conventions-0.58b0-py3-none-any.whl", hash = "sha256:5564905ab1458b96684db1340232729fce3b5375a06e140e8904c78e4f815b28" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-semantic-conventions/opentelemetry_semantic_conventions-0.59b0.tar.gz", hash = "sha256:7a6db3f30d70202d5bf9fa4b69bc866ca6a30437287de6c510fb594878aed6b0" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/opentelemetry-semantic-conventions/opentelemetry_semantic_conventions-0.59b0-py3-none-any.whl", hash = "sha256:35d3b8833ef97d614136e253c1da9342b4c3c083bbaf29ce31d572a1c3825eed" },
+>>>>>>> origin
 ]
 
 [[package]]
@@ -2605,6 +2870,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "pandas"
 version = "3.0.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2649,6 +2915,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "parso"
 version = "0.8.6"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2671,7 +2939,11 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
+<<<<<<< HEAD
     { name = "ptyprocess", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+=======
+    { name = "ptyprocess" },
+>>>>>>> origin
 ]
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pexpect/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f" }
 wheels = [
@@ -2783,6 +3055,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "propcache"
 version = "0.4.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -2852,6 +3125,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "proto-plus"
 version = "1.27.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3095,6 +3370,21 @@ crypto = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+=======
+name = "pyopenssl"
+version = "25.3.0"
+source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
+dependencies = [
+    { name = "cryptography" },
+]
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pyopenssl/pyopenssl-25.3.0.tar.gz", hash = "sha256:c981cb0a3fd84e8602d7afc209522773b94c1c2446a3c710a75b06fe1beae329" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pyopenssl/pyopenssl-25.3.0-py3-none-any.whl", hash = "sha256:1fda6fc034d5e3d179d39e59c1895c9faeaf40a79de5fc4cbbfbe0d36f4a77b6" },
+]
+
+[[package]]
+>>>>>>> origin
 name = "pyparsing"
 version = "3.3.2"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3120,6 +3410,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "pytest-asyncio"
 version = "1.3.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3132,6 +3423,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "pytest-cov"
 version = "7.0.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3146,6 +3439,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "pytest-dotenv"
 version = "0.5.2"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3159,6 +3453,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "python-dateutil"
 version = "2.9.0.post0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3307,6 +3603,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "regex"
 version = "2026.2.28"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3379,6 +3676,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "requests"
 version = "2.32.5"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3394,6 +3693,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "requests-oauthlib"
 version = "2.0.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3407,6 +3707,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "requirements-parser"
 version = "0.13.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3419,6 +3721,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "rich"
 version = "14.3.3"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3444,6 +3747,8 @@ dependencies = [
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/rouge-score/rouge_score-0.1.2.tar.gz", hash = "sha256:c7d4da2683e68c9abf0135ef915d63a46643666f848e558a1b9f7ead17ff0f04" }
 
 [[package]]
+=======
+>>>>>>> origin
 name = "rpds-py"
 version = "0.30.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3522,6 +3827,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "ruamel-yaml"
 version = "0.19.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3531,6 +3837,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "ruff"
 version = "0.15.5"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3556,6 +3864,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "scikit-learn"
 version = "1.8.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3697,6 +4006,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "six"
 version = "1.17.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3805,11 +4116,16 @@ wheels = [
 
 [[package]]
 name = "starlette"
+<<<<<<< HEAD
 version = "0.50.0"
+=======
+version = "0.52.1"
+>>>>>>> origin
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
 dependencies = [
     { name = "anyio" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/starlette/starlette-0.50.0.tar.gz", hash = "sha256:a2a17b22203254bcbc2e1f926d2d55f3f9497f769416b3190768befe598fa3ca" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/starlette/starlette-0.50.0-py3-none-any.whl", hash = "sha256:9e5391843ec9b6e472eed1365a78c8098cfceb7a74bfd4d6b1c0c0095efb3bca" },
@@ -3822,6 +4138,11 @@ source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-sta
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/tabulate/tabulate-0.10.0.tar.gz", hash = "sha256:e2cfde8f79420f6deeffdeda9aaec3b6bc5abce947655d17ac662b126e48a60d" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/tabulate/tabulate-0.10.0-py3-none-any.whl", hash = "sha256:f0b0622e567335c8fabaaa659f1b33bcb6ddfe2e496071b743aa113f8774f2d3" },
+=======
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/starlette/starlette-0.52.1.tar.gz", hash = "sha256:834edd1b0a23167694292e94f597773bc3f89f362be6effee198165a35d62933" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/starlette/starlette-0.52.1-py3-none-any.whl", hash = "sha256:0029d43eb3d273bc4f83a08720b4912ea4b071087a3b48db01b7c839f7954d74" },
+>>>>>>> origin
 ]
 
 [[package]]
@@ -3834,6 +4155,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "threadpoolctl"
 version = "3.6.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3909,6 +4231,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "tornado"
 version = "6.5.4"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3928,6 +4252,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "tqdm"
 version = "4.67.3"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3940,6 +4265,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "traitlets"
 version = "5.14.3"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3949,6 +4276,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "typer"
 version = "0.24.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -3964,6 +4292,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "typing-extensions"
 version = "4.15.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -4102,6 +4432,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "yarl"
 version = "1.23.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
@@ -4188,6 +4519,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> origin
 name = "zipp"
 version = "3.23.0"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
