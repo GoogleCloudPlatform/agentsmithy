@@ -53,6 +53,9 @@ from ..subagents.cross_industry.meeting_intelligence.sub_agents.transcription.ag
 from ..subagents.cross_industry.meeting_intelligence.sub_agents.video_analysis.agent import (
     root_agent as meeting_video_analysis,
 )
+from ..subagents.cross_industry.knowledge_graph_builder.agent import (
+    root_agent as knowledge_graph_builder,
+)
 
 # Prompts
 
