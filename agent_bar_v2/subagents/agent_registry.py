@@ -57,6 +57,10 @@ from ..subagents.cross_industry.knowledge_graph_builder.agent import (
     root_agent as knowledge_graph_builder,
 )
 
+from ..subagents.cross_industry.storage_agent.agent import (
+    root_agent as storage_access,
+)
+
 # Prompts
 
 from .cross_industry.meeting_intelligence.prompts import SYSTEM_INSTRUCTION as CROSSIN_MEETING_INTELLIGENCE_PROMPT
@@ -116,6 +120,7 @@ AGENT_REGISTRY_MAP = {
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,
     "knowledge_graph_builder": knowledge_graph_builder,
+    "storage_access": storage_access,
    
 }
 
