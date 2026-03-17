@@ -185,7 +185,7 @@
         "app_name": "agent_bar_v2",
         "user_id": "user",
         "state": {
-          "industry_id": "cross",
+          "industry_id": "retail",
           "use_case_id": "customer_support_hub"
         }
       }
