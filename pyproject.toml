@@ -26,7 +26,11 @@ dependencies = [
     "google-cloud-speech",
     "gcsfs>=2024.11.0",
     "google-cloud-logging>=3.12.0,<4.0.0",
-    "google-cloud-aiplatform[evaluation]==1.130.0",
+    "google-cloud-aiplatform[evaluation]==1.130.0",    
+    "pyarrow",
+    "langchain-google-spanner",
+    "langchain-google-vertexai",
+    "langchain-text-splitters",
     "fastapi>=0.115.8,<1.0.0",
     "asyncpg>=0.30.0,<1.0.0",
 ]
