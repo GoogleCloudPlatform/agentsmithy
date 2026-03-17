@@ -31,7 +31,7 @@ from . import tools
 root_agent = Agent(
     name="Graph_Orchestrator_Agent",
     model="gemini-2.5-flash",
-    description="A master agent that orchestrates intelligent tools to build and query knowledge graphs.",
+    description="An entrypoint for executing intelligent tools that build and query knowledge graphs.",
     instruction=SYSTEM_INSTRUCTION,
     tools=tools.tools,
 )
