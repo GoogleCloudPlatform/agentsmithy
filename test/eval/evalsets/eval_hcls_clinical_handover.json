@@ -1,0 +1,285 @@
+{
+  "eval_set_id": "agent_bar_v2_eval",
+  "name": "Agent Bar V2 Eval",
+  "description": "Agent Bar V2 Eval",
+  "eval_cases": [
+    {
+      "eval_id": "s_123",
+      "conversation": [
+        {
+          "invocation_id": "e-4d2d144a-ea8f-476e-8582-04b94aefb48b",
+          "user_content": {
+            "parts": [
+              {
+                "text": "hi, what do you do?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I can help draft handoff reports for patients in a clinical environment. I can access patient data from an external source and use it to create these reports."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-8d28c6b3-5301-48b6-adaf-accc498e4567",
+          "user_content": {
+            "parts": [
+              {
+                "text": "load patient data"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "To load patient data, I first need to update the list of patients in the system. After that, you can specify a patient ID to load their specific data.\n\nTo update the patients, I will need to call the `list_blobs_tool` with `bucket_name='ai-agent-bar-data'` and `prefix='clinical_handover/patients'`.\n\nWould you like me to proceed with updating the patient list?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-c4b2f731-24b0-411b-9652-18310e1514bf",
+          "user_content": {
+            "parts": [
+              {
+                "text": "proceed"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The patient list has been updated. Please provide the patient ID (e.g., MHID123456789) for which you'd like to load data."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-09727773-fa3d-4ad4-b95a-9d1d9e8e2109",
+                "args": {
+                  "request": "list_blobs_tool(bucket_name='ai-agent-bar-data', prefix='clinical_handover/patients', key_name='patients')"
+                },
+                "name": "ctxts__GcsAgent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-09727773-fa3d-4ad4-b95a-9d1d9e8e2109",
+                "name": "ctxts__GcsAgent",
+                "response": {
+                  "result": "Here are the files found in `gs://ai-agent-bar-data/clinical_handover/patients`:\n\n* \ud83d\udcc4 `gs://ai-agent-bar-data/clinical_handover/patients/`\n* \ud83d\udcc4 `gs://ai-agent-bar-data/clinical_handover/patients/MHID123456789.txt`"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-4763a75c-03a5-4dab-93fc-b383baab6e54",
+          "user_content": {
+            "parts": [
+              {
+                "text": "great, now create a handoff report for patient ID MHID123456789"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I can create a shift endorsement report for patient MHID123456789. To do this, I need to know the start and end times of the shift you'd like the report for. Please provide these."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-3aebc074-9e4a-4e43-9b1f-fa2c50c82147",
+                "args": {
+                  "request": "get_file_contents(bucket_name='ai-agent-bar-data', blob_name='MHID123456789.txt', key_name='patient_data')"
+                },
+                "name": "ctxts__GcsAgent"
+              },
+              {
+                "id": "adk-639ae663-bb49-4a3e-890b-8c5f5de40966",
+                "args": {
+                  "request": "get_file_contents(bucket_name='ai-agent-bar-data', blob_name='clinical_handover/patients/MHID123456789.txt', key_name='patient_data')"
+                },
+                "name": "ctxts__GcsAgent"
+              },
+              {
+                "id": "adk-010d2f41-5ea2-4b04-a59f-279420278960",
+                "args": {
+                  "request": "list available schedules"
+                },
+                "name": "ctxts__patient_handover_assistant"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-3aebc074-9e4a-4e43-9b1f-fa2c50c82147",
+                "name": "ctxts__GcsAgent",
+                "response": {
+                  "result": "\u274c The file `MHID123456789.txt` was not found in the bucket `ai-agent-bar-data`.\n`gs://ai-agent-bar-data/MHID123456789.txt`"
+                }
+              },
+              {
+                "id": "adk-639ae663-bb49-4a3e-890b-8c5f5de40966",
+                "name": "ctxts__GcsAgent",
+                "response": {
+                  "result": "\u2705 Here are the details of the file:\n\n*   Bucket: `ai-agent-bar-data`\n*   File: `clinical_handover/patients/MHID123456789.txt`\n*   GCS URI: \ud83d\udd17 `gs://ai-agent-bar-data/clinical_handover/patients/MHID123456789.txt`\n\nThe file content has been saved to the tool context state as 'patient_data'."
+                }
+              },
+              {
+                "id": "adk-010d2f41-5ea2-4b04-a59f-279420278960",
+                "name": "ctxts__patient_handover_assistant",
+                "response": {
+                  "result": "Here are the patients in the system:\n* MHID123456789\n\nI can generate a shift endorsement report for you. Please tell me the patient ID and the start and end times of the shift you'd like the report for."
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-7c9cdfee-5a6b-46b6-8074-bf8b46368b43",
+          "user_content": {
+            "parts": [
+              {
+                "text": "list available schedules"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Okay, I see there's a shift available:\n\n*   **2024-06-07 from 07:30:00 to 19:30:00**\n\nYou previously asked to create a handoff report for patient ID MHID123456789. Would you like me to draft a handover report for patient **MHID123456789** for the shift **2024-06-07 from 07:30:00 to 19:30:00**?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-df504d1d-e4ff-45de-8153-6a3a4da20bfa",
+                "args": {
+                  "request": "list available schedules"
+                },
+                "name": "ctxts__patient_handover_assistant"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-df504d1d-e4ff-45de-8153-6a3a4da20bfa",
+                "name": "ctxts__patient_handover_assistant",
+                "response": {
+                  "result": "Hello! I'm your patient shift handover assistant. My purpose is to help streamline the shift handover process by automatically generating comprehensive reports for you.\n\nHere are the currently available shifts:\n* 2024-06-07 from 07:30:00 to 19:30:00\n\nHere are the patients in the system:\n* MHID123456789\n\nHow can I help you today?"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-3136c4e7-8949-4896-9f20-5b05633757f5",
+          "user_content": {
+            "parts": [
+              {
+                "text": "yes"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The handover report for patient MHID123456789 for the shift 2024-06-07 from 07:30:00 to 19:30:00 has been generated and summarized above.\n\nThe full report details include:\n\n*   **Patient Identification:** MH-ID123456789, MALE, 74 years old, Admitting Doctors: Dr. ABC, Dr. XYZ\n*   **Situation:** Admitted with pyelonephritis, septic shock, acute on CKD. History of S/P PPI and S/P permanent Pacemaker implantation. Planned for emergency DJ stenting. Current issues: septic shock on noradrenaline, metabolic acidosis, altered sensorium, paroxysmal ventricular tachycardia, and AOCKD oliguria. Vitals and skin assessment provided. Diet: NPO. Foley's Catheter present.\n*   **Background:** Medical History/Comorbidities: S/P PPI, BPH, ?CIRRHOSIS OF LIVER / NAFLD, CKD on conservative management, Hypothyroid, B/L LOWER LIMB CELLULITIS S/P B/L WOUND DEBRIDEMENT, Diabetes Mellitus, Hypertension, Type AV block- S/P permanent Pacemaker implantation, Cholelithiasis. Reasons for Admission: Abdominal pain, vomiting, fever, generalized weakness, reduced oral intake, anuria/oliguria, altered sensorium.\n*   **Assessments:** Vitals (Temp, Pulse, BP, Respiration, SpO2, GCS), Intake/Output (NPO, positive fluid balance, oliguria), Pain score (2), Fall Score (7), Pressure score (15 - Braden Scale).\n*   **Recommendations:**\n    *   **To-Do activities:** Nephrology, Urology, Cardiology opinions/reviews; NPO; Plan for DJ stenting; Continue inj noradrenaline; F/U urine and blood culture; Administer inj meropenem 2g IV stat infusion; Glycemic control: start insulin infusion if GRBS > 180 mg/dl; Incentive spirometry, Chest physiotherapy; Maintain positive fluid balance; Secure arterial line and dialysis catheter; Change pacemaker mode to DOO mode; Monitor total fluid intake as per IVC status; Perform intake output charting; RRT sos; Monitor ABG; Inform sos; Repeat Renal panel 1 tomo morning.\n    *   **Medications to be administered:** PANTOCID, ECOSPRIN-AV, NORMAL SALINE, RL, REFRESH TEARS, CANDID DUSTING POWDER, LOX, TEGADERM IV DRESSING KIT, STERILE GLOVES, ICUBAC-H, NOR 4MG.\n    *   **Other actions for next shift nurse:** Meatal hygiene, daily bathing with 4% chlorhexidine, teach fall prevention measures, perform fall risk assessment, keep side rails up, close monitoring of the patient, provide maximum assistance in mobilization, keep all needed belongings near patient, monitor hemodynamics.\n*   **Transfer/Movements:** Patient shifted to OT for emergency DJ stenting.\n\nThe raw input data and the endorsement report are saved as `MHID123456789-1717770600-1717813800-raw-inputs.txt` and `MHID123456789-1717770600-1717813800-endorsement.md` respectively.\n\nDo you need any further assistance with this patient's report, or would you like to generate a report for another patient or shift?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-57815c20-e3de-4aa4-91cb-620d89f59fa9",
+                "args": {
+                  "request": "draft a handover report for patient MHID123456789 for the shift 2024-06-07 from 07:30:00 to 19:30:00"
+                },
+                "name": "ctxts__patient_handover_assistant"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-57815c20-e3de-4aa4-91cb-620d89f59fa9",
+                "name": "ctxts__patient_handover_assistant",
+                "response": {
+                  "result": "The handover report for patient MHID123456789 for the shift 2024-06-07 from 07:30:00 to 19:30:00 has been generated.\n\nHere's a summary of the report:\n\n**Patient Identification:**\n*   Patient Id: MH-ID123456789\n*   Gender and Age: MALE, 74 years old\n*   Admitting Doctors: Dr. ABC, Dr. XYZ\n\n**Situation:**\n*   Patient admitted on 13/01/2025 with pyelonephritis, septic shock, and acute on CKD.\n*   History of S/P PPI (3/5/22) and S/P permanent Pacemaker implantation (3.5.22).\n*   Planned for emergency DJ stenting and shifted to OT at 15:50.\n*   HD catheter and arterial line inserted.\n*   Current issues include septic shock on noradrenaline, metabolic acidosis, altered sensorium (conscious and drowsy, GCS E3V5M6), paroxysmal ventricular tachycardia, and AOCKD oliguria.\n*   Vitals: Temp 98.5F, Pulse 108/min, RR 20/min, BP 90/60 mmHg on noradrenaline, SpO2 95% on RA.\n*   Skin: Redness, discoloration, and cellulitis present on both legs.\n*   Diet: NPO.\n*   Foley's Catheter: Present (14 F FOLEYS CATH).\n\n**Background:**\n*   **Medical History/Comorbidities:** S/P PPI, BPH, ?CIRRHOSIS OF LIVER / NAFLD, CKD on conservative management, Hypothyroid, B/L LOWER LIMB CELLULITIS S/P B/L WOUND DEBRIDEMENT, Diabetes Mellitus, Hypertension, Type AV block- S/P permanent Pacemaker implantation, Cholelithiasis.\n*   **Reasons for Admission:** Abdominal pain, vomiting, fever, generalized weakness, reduced oral intake, anuria/oliguria, altered sensorium.\n\n**Assessments:**\n*   Vitals: Temp: 98.5 F, Pulse: 108/min, BP: 90/60 mmHg, Respiration: 20/min, SpO2: 97% on Room Air, GCS: E3V5M6.\n*   Intake/Output: NPO. Fluid balance positive. Oliguria.\n*   Pain score: 2 (on Numeric Pain Scale 0-10).\n*   Fall Score: 7.\n*   Pressure score: 15 (Braden Scale).\n\n**Recommendations:**\n*   **To-Do activities:** Nephrology, Urology, Cardiology opinions/reviews; NPO; Plan for DJ stenting; Continue inj noradrenaline; F/U urine and blood culture; Administer inj meropenem 2g IV stat infusion; Glycemic control: start insulin infusion if GRBS > 180 mg/dl; Incentive spirometry, Chest physiotherapy; Maintain positive fluid balance; Secure arterial line and dialysis catheter; Change pacemaker mode to DOO mode; Monitor total fluid intake as per IVC status; Perform intake output charting; RRT sos; Monitor ABG; Inform sos; Repeat Renal panel 1 tomo morning.\n*   **Medications to be administered:** PANTOCID, ECOSPRIN-AV, NORMAL SALINE, RL, REFRESH TEARS, CANDID DUSTING POWDER, LOX, TEGADERM IV DRESSING KIT, STERILE GLOVES, ICUBAC-H, NOR 4MG.\n*   **Other actions for next shift nurse:** Meatal hygiene, daily bathing with 4% chlorhexidine, teach fall prevention measures, perform fall risk assessment, keep side rails up, close monitoring of the patient, provide maximum assistance in mobilization, keep all needed belongings near patient, monitor hemodynamics.\n\n**Transfer/Movements:**\n*   Patient shifted to OT for emergency DJ stenting.\n\nThe raw input data used to generate this report can be found in `MHID123456789-1717770600-1717813800-raw-inputs.txt` and the endorsement report itself is in `MHID123456789-1717770600-1717813800-endorsement.md`."
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "agent_bar_v2",
+        "user_id": "u_123",
+        "state": {
+          "user_id": "123",
+          "industry_id": "hcls",
+          "use_case_id": "clinical_handover",
+          "root_prompt_overwrite": "New instructions here",
+          "patients": [
+            {
+              "name": "clinical_handover/patients/",
+              "size": 0,
+              "updated": "2026-03-05T21:44:49.921000+00:00",
+              "content_type": "text/plain",
+              "public_url": "https://storage.googleapis.com/ai-agent-bar-data/clinical_handover/patients/",
+              "gcs_uri": "gs://ai-agent-bar-data/clinical_handover/patients/"
+            },
+            {
+              "name": "clinical_handover/patients/MHID123456789.txt",
+              "size": 24508,
+              "updated": "2026-03-05T21:44:58.366000+00:00",
+              "content_type": "text/plain",
+              "public_url": "https://storage.googleapis.com/ai-agent-bar-data/clinical_handover/patients/MHID123456789.txt",
+              "gcs_uri": "gs://ai-agent-bar-data/clinical_handover/patients/MHID123456789.txt"
+            }
+          ],
+          "patient_data": "Admission Doctor : Dr. ABC\nAdmission Doctor : Dr. XYZ\nENCOUTERENTRIES\n13/01/2025^11:38:46^Nurse PQR^Critical Care Nurses^08 ICU MSB\nForms\nCAUTI Maintenance Bundle Checklist\nBundle Criteria : Morning Shift\nDay : D1\nRegular documentation for assessment for need of catheter :\nYES\nThe Urinary catheter has been continuously connected :\nYES\nDate &amp; time meatal hygiene done :\nYES\nDrainage bag emptied into a clean : YES\nContainer : YES\nHand hygiene performed for patient contact : YES\nCatheter secured : YES\nKeep the drianage bag above the floor, but below the bladder\nlevel to prevent reflux / contamination\n: YES\nScore : 0\nFall Risk Assessment Tool\nCategories\nTotal Fall Risk Score(sum of all points per category)\nAge : 70-79 Years 2\nElimination,Bowel and Urine : Incontinence- 2\nMedications:\nON 1 HIGH FALL RISK DRUG 3\nPatient care Equipment\n: One Present- 1\nMobility : Requires assisstance or supervision for\nmobility, transfer or ambulation\n2\nType of Assessment : Initial Assessment\nScore : 0\nPain Assessments\n: 10\nDate\n13/01/2025\nTime 11:53\nScore\n:\n2\nType of Assessment\nPain Assessment Scale\n:\nInitial Assessment\n:\nNumeric Pain Scale (0-10 Scale)\nNumeric Pain Scale\n:\n2\n```\n\n```\n2/7/25, 6:56 PM\nText\nAdditional Pain Assessment Details\nType : Not Applicable\nDuration : Not Applicable\nContinuous : Not Applicable\nTime : Not Applicable\nNURSING INITIAL ASSESSMENT NEW\nPatient Name : Satyendra kumar PAT\u041d\u0410\u041a\nMRN : ID123456789\nAge : 74\nGender : MALE\nPatient arrival Date : 13/01/2025\nPatient Arrival Time : 11:15\nAccompanied by Relative : Yes\nName of Relative :\nSAURADHA PATHALA\nRelationship with Patient : SON\nContact Number : 8884697221\nPrimary Language Spoken : ENGLISH\nInterpreter Needed : No\nRoom Orientation Given : Yes\nPatient Identification Band Fixed : Yes\nIf Yes Type Of Band : GREEN\nHeight(Cm) : 154\nWeight(Kgs) : 78\nChief Complaints : PATIENT PRESENTED WITH C/O ABDOMINAL\nPAIN, SUDDEN IN ONSET, DIFFUSE MORE IN UPPER ANDOMEN ASSOCIATED\nWITH ONE EPISODE OF VOMITING CONTAINING FOOD PARTICLES ON\n10/01/2025. ATTENDER ALSO GIVES H/O ONE EPISODE OF FEVER ON 10TH\nWHICH REDUCED WITH MEDICATIONS.\nH/O GENERALISED WEAKNESS SINCE LAST 3-4 DAYS ASSOCIATED WITH\nREDUCED ORAL INTAKE SINCE PAST 2 DAYS\nH/O NOT HAVING PASSED URINE SINCE YESTERDAY AFTERNOON AND LAST\nPASSED STOOLS YESTERDAY MORNING\nH/O ALTERED SENSORIUM SINCE TODAY MORNING\nPast History : : S/P PPI ( 3/5/22 )\nBPH\n? CIRRHOSIS OF LIVER\nCKD on conservative management\nhypothyroid on thyronorm 125 mcg\nB/L LOWER LIMB CELLULITIS S/P B/L WOUND DEBRIDEMENT ( 17/10/24-\n21/10/24)\nVital Assessment\n```\n\n```\n2/7/25, 6:56 PM\nTemp(F) : 98.2\nPulse/min : 82\nBlood Pressure(mmHg)\n: 94/66\nRespiration/min : 16\nSpo2(%) : 97\nGRBS (mg/dl)\n:\n158\nSkin Integrity\nText\n:\nRDNESS PRESENT ON BOTH LEG DISCOULOURATION\nPRESENT, CELLULITIS PRESENT\nOther Parameters\nValuable handover checklist completed : Yes\nBelongings\nDentures : No\nHearing Aid\n:\n: No\nNo\nEye Glasses/Contact Lens : No\nVulnerable : Yes\nRestraints :\nNo\nAny Known Allergies\n:\nNIL\nCurrent Medications\n:\nTAB THYRONORM 125mcg 1-0-0\nTAN DYTOR 10MG 1-0-0\nTAB UDILIV 300 1-0-1\nTAB FEBUTAZ 40 1-0-0\nTAB A TO Z GOLD 1-0-0\nTAB ALDACTONE 25MG 1-0-0\nTAB ECOSPRIN AV 75/10 0-0-1\nTAB NEBICARD 2.5MG 0-0-1\nTAB SILODOL D8 0-0-1\nTAB LIPAGLYN 4MG 0-0-1\nNOVORAPID INSULIN 12-12-10\nTUOJEO INSULIN 20UNITS AT NIGHT\nInformed the Doctor : Yes\nName of the Doctor : Dr. Rajavardhan R\nInvestigations Ordered\nDiet : NPO\nCollected Old records :\n:\nNIL\nNo\nIs the patient at risk for any of the following? If Yes,\ncomplete the risk assessment form.\nPressure Score : NO\nFall : NO\nDVT\n:\nNO\nAspiration : NO\nAbility to perform activities of daily living\nActivity\nBathing : Assisted\nDressing : Assisted\nEating : Assisted\nWalking : Assisted\n```\n\n```\n2/7/25, 6:56 PM\nToilet Use : Assisted\nText\nNursing needs(complete Nursing care plan based on the identified\nneeds)\nActual needs :\nSEPSIS\nPotential needs : PAIN / FALL\nAssessment Done By : Nurse PQR\nBMI : 32.89\nGeneral Physical Examination:\nPallor :\nNO\nIcterus : NO\nEdema : YES, NO\nClubbing : NO\nCyanosis : NO\nLymphadenopathy : NO\nScore :\n0\nQuestionnaires\nDate : 13/01/2025\nPatient&#39;s Indentification No. :\nSex\n: Male\nA\nEach Risk Factor Represents 1 Point\nmonth), Medical patient currently at bed rest\nTotal Tickmarks :\n2\nTotal Score A :\n2\nB Each Risk Factor Represents 2 Point\nTotal Tickmarks :\n1\nTotal Score B :\n2\nTotal Score (A+B+C+D+E)\n=\n:\n4\nIntravascular Access Lines\nStatus : Entered\nStatus\n:\nEntered\nScore\n:\n0\nIntravascular Access Type\nCentral IV TPA Intervention\n:\nID123456789\n: Sepsis (< 1\n: Age 60 74 years\n: Peripheral IV Line\nArterial Line Status\nPeripheral IV Activity\n: Site assessed\nPeripheral IV Assessment\nPeripheral IV Drainage Present\n: No\nPeripheral IV Condition : No Phlebitis\nCVC Site Assesst\n```\n\n```\n2/7/25, 6:56 PM\nText\nCatheter position corrected/withdrawn\nempty\nLumen color : PINK\nPeripheral IV No Phlebitis Score : 0\nADULT &amp; PAEDIATRIC\nCATEGORIES\nASPIRATION RISK ASSEMENT TOOL\nTOTAL SCORE\n:\n4\nScore\n:\n0\nAdult Pressure Ulcer Braden Scale\nSENSORY PERCEPTION\n:\n3\n3 Slightly Limited :\nY\nMOISTURE :\n3\n3 Occasionaly Moist :\nY\nACTIVITY :\n2\n2\nChair Bound :\nY\nMOBILITY : 3\n3 Slightly Limited :\nY\nNUTRITION :\n3\n3 Adequate :\nY\nTOTAL SCORE : 14\nForms\nNursing Safety Checks\nStatus\n: Entered\nSafety Checks : Alarm limits set,Oxygen,Suction,Air,Ambu-\nbag, Resus-bag,Emergency drugs (Expiry), Face mask ? S,M,L, x1 Oxygen\ncylinder, Room stocked and cleaned, Add humidifier, Fall\nprecautions, Infection control\nInvasive Lines : Not Applicable\nPatient ID : ID Band\nAllergies reviewed\n: Yes\n13/01/2025^11:38:53^Dr. ABC^IP Doctor Initial Assessment ^08\nICU MSB\nIP Initial Assessment\nStatus\n: Entered\nPatient Arrival Date\n:\nPatient Arrival Time\n:\n13/01/2025\n11:00\nChief Complaints : c/o pain abdomen x 2 days\nc/o fever x 2 days\nc/o reduced responsiveness x 1 days\nc/o recuced urine output x 1 day\n```\n\n```\n2/7/25, 6:56 PM\nText\nHistory of Presenting illness\n: PATIENT PRESENTED WITH C/O\nABDOMINAL PAIN, SUDDEN IN ONSET, DIFFUSE MORE IN UPPER ANDOMEN\nASSOCIATED WITH ONE EPISODE OF VOMITING CONTAINING FOOD PARTICLES\nON 10/01/2025. ATTENDER ALSO GIVES H/O ONE EPISODE OF FEVER ON 10TH\nWHICH REDUCED WITH MEDICATIONS.\nH/O GENERALISED WEAKNESS SINCE LAST 3-4 DAYS ASSOCIATED WITH\nREDUCED ORAL INTAKE SINCE PAST 2 DAYS\nH/O NOT HAVING PASSED URINE SINCE YESTERDAY AFTERNOON AND LAST\nPASSED STOOLS YESTERDAY MORNING\nH/O ALTERED SENSORIUM SINCE TODAY MORNING\nAllergy\n:\nPast Medical History : S/P PPI ( 3/5/22 )\nBPH\n? CIRRHOSIS OF LIVER\nCKD on conservative management\nhypothyroid on thyronorm 125 mcg\nPast Surgical History\nWOUND DEBRIDEMENT ( 17/10/24- 21/10/24 )\n: B/L LOWER LIMB CELLULITIS S/P B/L\nFamily History\n:\nSocial / Personal History\nMenstrual History :\n:\nPrevious Pregnancy :\nCurrent medications\nTAN DYTOR 10MG 1-0-0\n: TAB THYRONORM 125mcg 1-0-0\nTAB UDILIV 300 1-0-1\nTAB FEBUTAZ 40 1-0-0\nTAB A TO Z GOLD 1-0-0\nTAB ALDACTONE 25MG 1-0-0\nTAB ECOSPRIN AV 75/10 0-0-1\nTAB NEBICARD 2.5MG 0-0-1\nTAB SILODOL D8 0-0-1\nTAB LIPAGLYN 4MG 0-0-1\nNOVORAPID INSULIN 12-12-10\nTUOJEO INSULIN 20UNITS AT NIGHT\nPulse /min\n:\n81\nResp Rate/min : 19\nTemp F : 98.5\nBP mm Hg :\nRoom Air :\n96/40\nY\nGRBS mg/dL\n:\n158\nJVP\n:\nnormal\nPallor : NO\nIcterus : NO\nEdema : YES\n```\n\n```\n2/7/25, 6:56 PM\nClubbing : NO\nCyanosis : NO\nLymphadenopathy : NO\nPeripheral Pulse\n:\nText\n+\nOthers\n:\nCVS\n:\ns1s2+\nRS\n: b/l aee, NVBS\nPA\n: SOFT\nCNS\n:\nE3V2M5\nOthers\n: Generalised vitiligo\n:\nLocal Examination : B/L LOWER LIMB CELLULITIS\nProvisional Diagnosis\nacute on CKD\n: urosepsis with septic shock\nCare Plan : nephro review\narterial line\nSpo2 : 98\nDiet Plan :\nStatus : Entered\nScore :\n0\n13/01/2025^12:21:42^Dr Rajavardhan R^IP Doctor Initial Assessment\n^08 ICU MSB\nApache II scoring sheet\nA.ACUTE PHYSIOLOGY SCORE :\nB.Age\n:\n5\nC.CHRONIC HEALTH POINTS\n18\n:\n0\nAPACHEII SCORE=&quot;A(ACUTE&quot; PHYSIOLOGY SCORE)+B(AGE\nPOINTS)+C(CHRONIC HEALTH POINTS):\nDONE BY : Nurse STU\n: Curative\nCare plan and Special Needs\nStatus : Authorised\nCare Plan\nSpecial Needs required at discharge\nCare Plan Details : start meropnem\n23\n: Physiotherapy\nurology and nephrology opinion\nsecure art line and dialysis catheter\nStatus\n: Authorised\nScore\n:\n0\n13/01/2025^13:20:07^Dr. Gagan M^Critical Care Doctors^08 ICU MSB\nProcedure Notes\n:\nLEFT INTERNAL JUGULAR VEIN HD CATHETER\n```\n\n```\n2/7/25, 6:56 PM\nText\nThe left neck area was painted with Chlorhexidine\nWaited for two minutes\nLT Internal Jugular vein visualized\nwith USG\nLocal Anaesthesia given\nUSG guided needle\ninsertion into LT Internal Jugular vein done, guidewire inserted.\nThe position of guidewire was confirmed with USG.\nlumen HD catheter threaded over the guidewire.\nBackflow is present in all 3 ports.\nremoved.\ntaken.\nDressing done.\nDaily Notes\n:\nC/S/B Dr\nTriple\nGuidewire\nSutures\nRajavardhan/ Dr Gagan M ON 13/01/2025\nDiagnosis:\npyeloneohritis\nseptic shock\nacute on CKD\nHistory:\nPATIENT PRESENTED WITH C/O\nABDOMINAL PAIN, SUDDEN IN ONSET, DIFFUSE MORE IN UPPER ANDOMEN\nASSOCIATED WITH ONE EPISODE OF VOMITING CONTAINING FOOD PARTICLES\nON 10/01/2025. ATTENDER ALSO GIVES H/O ONE EPISODE OF FEVER ON 10TH\nWHICH REDUCED WITH MEDICATIONS.\nH/O GENERALISED WEAKNESS SINCE LAST 3-4 DAYS ASSOCIATED WITH\nREDUCED ORAL INTAKE SINCE PAST 2 DAYS\nH/O NOT HAVING PASSED URINE SINCE YESTERDAY AFTERNOON AND LAST\nPASSED STOOLS YESTERDAY MORNING\nH/O ALTERED SENSORIUM SINCE TODAY MORNING\nBPH\nComorbidities:\nS/P PPI ( 3/5/22 )\n? CIRRHOSIS OF LIVER\nCKD on conservative management\nhypothyroid on thyronorm 125 mcg.\nCurrent medications :\nTAB THYRONORM 125mcg 1-0-0\nTAN DYTOR 10MG 1-0-0\nTAB UDILIV 300 1-0-1\nTAB FEBUTAZ 40 1-0-0\nTAB A TO Z GOLD 1-0-0\nTAB ALDACTONE 25MG 1-0-0\nTAB ECOSPRIN AV 75/10 0-0-1\n```\n\n```\n2/7/25, 6:56 PM\nTAB NEBICARD 2.5MG 0-0-1\nTAB SILODOL D8 0-0-1\nTAB LIPAGLYN 4MG 0-0-1\nNOVORAPID INSULIN 12-12-10\nTUOJEO INSULIN 20UNITS AT NIGHT\nText\nIssues:\nseptic shock on noradrenaline\nmetabolic acidosis\naltered sensorium\nparoxysmal venticular tachycardia\nAOCKD oliguria\nct abdomen- Features are of concern for moderate pyelonephritis\nin the left kidney with hydroureteronephrosis. Renal papillary\nPossible\nnecrosis with ureteric obstruction cannot be excluded.\nmild pyelonephritis in the right kidney. Features of chronic\nliver disease.\nCholelithiasis\nO/E:\nRR-20/min\nScreening USG-\nown\nB- spo2- 95 on RA\nAuscultation- b/l aee, nvbs, s1s2 +\nNo effusion / consolidation\nNo B-lines\nC- HR-\nno\n108/min BP-90/60mmHg inj norad 10ml, peripheral pulses+\nD-E3V2M5 Pupils 2mm BERL\npedal edema\nE-Na 127\ncreat-5.97\nk-\n5.6\nurea 248\nG-GRBS-mg/dl\nTLC-4.09\nP/A- soft\nF- npo\nH-Hb\n9.2\nPlt count - 340\nI- afebrile\nMobilisation: no\nDVT prophylaxis: mechanical\nBed sore: no\nDeescalation: no\nPlan:\nnephrology opinion\nurology opinion\ncardiology review\nNPO\nplan for dj stenting\ncontinue inj noradrenaline\nf/u urine and blood culture\ninj meropenem 2g iv stat\ninfusion.\nGlycemic control, if GRBS &gt; 180 mg/dl- start insulin\nIncentive spirometry, Chest physiotherapy\nForms\nFluid balance-positive\n```\n\n```\n2/7/25, 6:56 PM\nCCM HandOver Note\nShift : Morning to Evening\nNote\n:\nseptic shock\nacute on CKD\nDiagnosis:\nText\npyeloneohritis\nHistory:\nPATIENT PRESENTED WITH C/O\nABDOMINAL PAIN, SUDDEN IN ONSET, DIFFUSE MORE IN UPPER ANDOMEN\nASSOCIATED WITH ONE EPISODE OF VOMITING CONTAINING FOOD PARTICLES\nON 10/01/2025. ATTENDER ALSO GIVES H/O ONE EPISODE OF FEVER ON 10TH\nWHICH REDUCED WITH MEDICATIONS.\nH/O GENERALISED WEAKNESS SINCE LAST 3-4 DAYS ASSOCIATED WITH\nREDUCED ORAL INTAKE SINCE PAST 2 DAYS\nH/O NOT HAVING PASSED URINE SINCE YESTERDAY AFTERNOON AND LAST\nPASSED STOOLS YESTERDAY MORNING\nH/O ALTERED SENSORIUM SINCE TODAY MORNING\nComorbidities:\nS/P PPI ( 3/5/22 )\nBPH\n? CIRRHOSIS OF LIVER\nCKD on conservative management\nhypothyroid on thyronorm 125 mcg.\nCurrent medications :\nTAB THYRONORM 125mcg 1-0-0\nTAN DYTOR 10MG 1-0-0\nTAB UDILIV 300 1-0-1\nTAB FEBUTAZ 40 1-0-0\nTAB A TO Z GOLD 1-0-0\nTAB ALDACTONE 25MG 1-0-0\nTAB ECOSPRIN AV 75/10 0-0-1\nTAB NEBICARD 2.5MG 0-0-1\nTAB SILODOL D8 0-0-1\nTAB LIPAGLYN 4MG 0-0-1\nNOVORAPID INSULIN 12-12-10\nTUOJEO INSULIN 20UNITS AT NIGHT\nIssues:\nseptic shock on noradrenaline\nmetabolic acidosis\naltered sensorium\n```\n\n```\n2/7/25, 6:56 PM\nText\nparoxysmal venticular tachycardia\nAOCKD oliguria\nct abdomen- Features are of concern for moderate pyelonephritis\nin the left kidney with hydroureteronephrosis. Renal papillary\nPossible\nnecrosis with ureteric obstruction cannot be excluded.\nmild pyelonephritis in the right kidney.\nFeatures of chronic\nliver disease.\nCholelithiasis\nnephrology\nPlan:\nopinion\nurology opinion\ncardiology review\n\u043f\u0440\u043e\nplan for dj stenting\ncontinue inj noradrenaline\nf/u urine and blood culture\ninj meropenem 2g iv stat\nGlycemic control, if GRBS &gt; 180 mg/dl- start insulin\ninfusion.\nIncentive spirometry, Chest physiotherapy\nFluid balance-positive\n: Dr.Shetty Sahanya Ramesh Suneetha\nHanded over to\n: Dr. Gagan M\nHand over by\n:\n0\nScore\nTreatment\n13/01/2025^14:07:19^DR. MAGESH BALAKRISHNAN^IP Doctor\nSheet CARDIOLOGY MSB\nProgress Notes :\nTHANKS FOR REFERENCE\n74 YEAR MALE\nS/P PPI- MAY 2022 (BOSTON)\nDIABETES MELLITUS ON INSULIN\nCKD ON MEDICAL MANAGEMENT\nHYPOTHYROID\nNO H/O CVA/ IHD\nADMITTED WITH PYELONEPHRITIS, ACUTE ON CKD\nPLANNED FOR DJ STENTING\nPATIENT IS IN ALTERED SENSORIUM\nECHO- NORMAL CHAMBER DIMENSIONS, CONCENTRIC LVH, MR-MILD, TR-MILD,\nPASP-46MMHG, MILD PAH, NO RWMA, ADEQUATE LV SYSTOLIC FUNCTION, LVEF-\n50%\n```\n\n```\n2/7/25, 6:56 PM\nText\nCREAT- 5.97; HB-9.2\nLAST DOSE TAB ECOSPRIN AV ON 11.1.25\nRCRI SCORE +2\nPATIENT CAN BE TAKEN UP FOR PROPOSED SURGERY UNDER MODERATE TO\nHIGH CARDIAC RISK FOR MACE EVENTS\nADVICE\nTO CHANGE PACEMAKER MODE TO DOO MODE (TEJA- 7036572420)\nCOUNSELED FAMILY\n13/01/2025^15:11:38^DR. PALLAVI PATRI^IP Doctor Treatment\nSheet NEPHROLOGY MSB\nProgress Notes\n72M\n:\nNephrology follow up\nType AV block- S/P permanent Pacemaker implantation-3.5.22\nDiabetes Mellitus\nHypertension\nHypothyroidism\nBPH\n22 years\nNAFLD -Cirrhosis of liver\n(B.Cr 0.84 9/2023)\nCurrent medications :\nTAB THYRONORM 125mcg 1-0-0\nTAN DYTOR 10MG 1-0-0\nTAB UDILIV 300 1-0-1\nTAB FEBUTAZ 40 1-0-0\nTAB A TO Z GOLD 1-0-0\nTAB ALDACTONE 25MG 1-0-0\nTAB ECOSPRIN AV 75/10 0-0-1\nTAB NEBICARD 2.5MG 0-0-1\nTAB SILODOL D8 0-0-1\nTAB LIPAGLYN 4MG 0-0-1\nNOVORAPID INSULIN 12-12-10\nTUOJEO INSULIN 20UNITS AT NIGHT\nHistory:\nPATIENT PRESENTED WITH C/O ABDOMINAL PAIN, SUDDEN IN ONSET,\nDIFFUSE MORE IN UPPER ANDOMEN ASSOCIATED WITH ONE EPISODE OF\nVOMITING CONTAINING FOOD PARTICLES ON 10/01/2025. ATTENDER ALSO\n```\n\n```\nText\n2/7/25, 6:56 PM\nGIVES H/O ONE EPISODE OF FEVER ON 10TH WHICH REDUCED WITH\nMEDICATIONS.\nH/O NOT HAVING PASSED URINE SINCE YESTERDAY AFTERNOON AND LAST\nPASSED STOOLS YESTERDAY MORNING\nH/O ALTERED SENSORIUM SINCE TODAY MORNING\nPt is shifted to OT for emergency DJ stenting\nLabs 13/1\nPro 2+ WBC 2861 RBC 81\nALB 2.13\nU 246 B 116 Cr 5.97 UA 8.2 Na 127.2 K 5.62\nHb 9.2 TC 40900 Pl 3.4 L\nECHO- NORMAL CHAMBER DIMENSIONS, CONCENTRIC LVH, MR-MILD, TR-MILD,\nPASP-46MMHG, MILD PAH, NO RWMA, ADEQUATE LV SYSTOLIC FUNCTION, LVEF-\n50%\nct kub\nFeatures are of concern for moderate pyelonephritis in the\nleft kidney with hydroureteronephrosis. Renal papillary necrosis\nwith ureteric obstruction cannot be excluded.\nPossible mild pyelonephritis in the right kidney.\nFeatures of chronic liver disease.\nCholelithiasis\nDiagnosis:\npyelonephritis\nseptic shock\nacute on CKD\nAdv\nTotal fluid intake as per IVC status\nIntake output charting\nRRT sos\nMonitor ABG\nInform sos\nTo repeat Renal panel 1 tomo morning\n13/01/2025^15:12:02^Nurse PQR^Critical Care Nurses^08 ICU\nMSB\nForms\nCAUTI Maintenance Bundle Checklist\nBundle Criteria : Evening Shift\nDay :\nD1\n```\n\n```\n2/7/25, 6:56 PM\nText\nRegular documentation for assessment for need of catheter :\nYES\nThe Urinary catheter has been continuously connected :\nYES\nDate &amp; time meatal hygiene done :\nYES\nDrainage bag emptied into a clean : YES\nContainer : YES\nHand hygiene performed for patient contact : YES\nCatheter secured : YES\nKeep the drianage bag above the floor, but below the bladder\nlevel to prevent reflux / contamination\n: YES\nScore :\n0\nFall Risk Assessment Tool\nCategories\nTotal Fall Risk Score(sum of all points per category)\nAge : 70-79 Years 2\nPatient care Equipment\nMobility : Requires assisstance or supervision for\nmobility, transfer or ambulation\nType of Assessment : Shift Assessment\n: 3 or more Present\n2\nScore :\n0\nPain Assessments\nDate\n13/01/2025\nTime 15:12\nScore\n:\n2\nType of Assessment\nPain Assessment Scale\n: Shift Assessment\n:\nNumeric Pain Scale (0-10 Scale)\nNumeric Pain Scale\n:\n2\nAdditional Pain Assessment Details\nCentral Line Maintenance Bundle Checklist\nBundle Criteria : Evening Shift\nDay :\nD1\nRemarks\n: hd catheter\nRegular assessment and documentation for Central Line\n:\nYES\nInspect the insertion site for sign of infection\nBath patients with a 4% chlorhexidine daily :\nYES\nYES\n:\n:\n:\n7\n3\n```\n\n```\n2/7/25, 6:56 PM\nText\nPerform hand hygiene before handling central line : YES\nScrub the hub using 70% alcohol swab or chlorhexidine. If\nmultiple hubs are accessed at a time use each hub separate swab :\nYES\nIf alcohol cap is used for closing the hub, while accessing the\nlumen scrub the hub is not necessary, but once alcohol cap is\nremoved replace with new alcohol caps :\nYES\nChange central line dressing every 7 days if chlorhexidine\nimpregnated dressing is used\n: NO\nIf gauze or plain transparent dressing is used, change every 48\nhours : YES\nChange administrations sets for continuous infusions every 4\ndays (label date and time on the set) : YES\nIf blood or blood products or fat emulsions are administered\nchange tubing every 24 hours : NO\nIf propofol infusion is used change set every 6 hours : NO\nScore :\n0\nIntravascular Access Lines\nStatus : Entered\nStatus\n:\nEntered\nScore\n:\n0\nIntravascular Access Type\nCentral IV TPA Intervention\n: Peripheral IV Line\nArterial Line Status\nPeripheral IV Activity\n: New insertion\nPeripheral IV Insertion Date : 13/01/2025\nPeripheral IV Insertion Time\n:\n14:00\nPeripheral IV Catheter Type\n: IV Cannula\nPeripheral IV Location : Right\nPeripheral IV Gauge\n:\n18 Gauge\nPeripheral IV Procedure Preparation : Handwashing\nobserved, Hand hygiene performed,Skin prepared with sterile\nsolution,Skin prepared with other\nPeripheral IV Insertion Indication\n: IV hydration/medication\nPeripheral IV Number Of Attempts : 1\nPeripheral IV Assessment\nNeed Assessment : Yes\nCare : Skin cleansed with chlorhexidine,Secured with steri-\nstrips\nSite Details : No complications\nDressing Type/Appearance :\nPeripheral IV Patency :\nDry, Transparent\nNo complications\n```\n\n```\n2/7/25, 6:56 PM\nText\nPeripheral IV Equipment used\n:\nManual\nReferred To IV Nurse\n:\nNo\nPeripheral IV Site\n:\nHand\nCVC Site Assesst\nCatheter position corrected/withdrawn\nPeripheral IV Procedure Result :\nempty\nSuccessful insertion\nIntravascular Access Lines\nStatus : Entered\nStatus : Entered\nScore :\n0\nIntravascular Access Type\nCentral IV TPA Intervention\n: Peripheral IV Line\nArterial Line Status\nPeripheral IV Activity\nPeripheral IV Assessment\n: Site assessed\nNeed Assessment : Yes\nSite Details : No complications\nDressing Type/Appearance :\nPeripheral IV Patency :\nCVC Site Assesst\nDry, Transparent\nNo complications\nCatheter position corrected/withdrawn\nempty\nIntravascular Access Lines\nStatus\n: Entered\nStatus\n:\nEntered\nScore :\n0\nIntravascular Access Type : Arterial Line\nCentral IV TPA Intervention\nArterial Line Activity : New insertion\nArterial Line Procedure Type :\nElective\nArterial Line Location : Left\nArterial Line Site : Radial artery\nArterial Line Insertion Date : 13/01/2025\nArterial Line Insertion Time : 12:00\n```\n\n```\n2/7/25, 6:56 PM\nArterial Line Patient Identified :\nText\nIdentification band\nArterial Line Procedure Preparation : Handwashing\nobserved, Handwashing verbalized, Invasive line cart used, Aseptic\ntechnique used,Skin dry at first puncture,Skin prepared with\nchlorhexidine/other\nArterial Line Sterile Field : Maintained\nArterial Line Performing Insertion : Dr Rajavardhan R\nArterial Line Assisting In Insertion\nArterial Line Status\n: karan singh\n: Accurate, optimally damped,Correlates with\nStatus\nmanual, Flushes easily,Good blood return\nCare/Troubleshoot : Air removed,Aspirated &amp;\nflushed, Connections secured, Leveled, zeroed, calibrated\nSite Condition : Within normal limits\nDressing Condition : Dry,Intact\nDressing :\nTransparent\nArterial Line Procedure Result :\nInsertion\nsuccessful, Dressing dated, Sterile dressing applied immediately\nPeripheral IV Assessment\nCVC Site Assesst\nCatheter position corrected/withdrawn\nempty\nIntravascular Access Lines\nStatus : Entered\nCentral IV Procedure Type\nCentral IV Access Type :\nCentral IV Number Of Lumens\nCentral IV Location\n: Elective\nDialysis catheter\n: Left\n: Triple lumen\nCentral IV Site : Internal jugular vein\nCentral IV Patient Identified :\nDate of Insertion :\n13/01/2025\nIdentification band\nStatus\n: Entered\nScore :\n0\nIntraVascular Access Type :\nCentral Line\nCentral IV Activity : New insertion\nTime of Insertion : 12:00\nCentral IV Reason For Insertion :\nplasmapheresis\nCVC Insertion Unit : 08 ICU MSB\nHemodialysis or\nCentral Guided Ultrasound Used : Yes\nCentral IV Radiographic Confirmation\n: Yes\n```\n\n```\n2/7/25, 6:56 PM\nCentral IV Performing Provider\nCentral IV Procedure Result\n:\nDr. Gagan M\nText\n:\nSuccessful insertion\nCentral IV Number Of Attempts :\n1\n: Handwashing\nCentral IV Procedure Preparation\nobserved, Handwashing verbalized,Invasive line cart used, Hand\nhygiene, Maximum Barrier Protection,Skin dry at first puncture,Skin\nprepared with chlorhexidine,Skin prepared with other\nCentral IV Sterile Field\nCentral IV MBP Compliance\nCentral IV TPA Intervention\n:\nMaintained\n: Yes\nArterial Line Status\nPeripheral IV Assessment\nCVC Site Assesst\nIs CVC Required : Yes\nLine Status : Accurate, optimally damped, Flushes easily, Good\nblood return\nSite Condition : Within normal limits\nDressing : Dry &amp; intact\nCare\n: Line flushed with saline\n: None\nLimb Temperature : Warm\nDrainage Description :\nPulse Distal To Insertion Site : Strong\nCatheter position corrected/withdrawn\nempty\nADULT &amp; PAEDIATRIC - ASPIRATION RISK ASSEMENT TOOL\nCATEGORIES\nEATING HABILTS : Needs assistance to eat 1\nTOTAL SCORE\n:\n1\nScore :\n0\nAdult Pressure Ulcer Braden Scale\nSENSORY PERCEPTION\n:\n4\n4\nNo Impairment :\nY\nMOISTURE\n:\n3\n3\nOccasionaly Moist :\nY\nACTIVITY : 1\n1 Bed Bound :\nY\nMOBILITY : 3\n3\nSlightly Limited :\nY\n```\n\n```\n2/7/25, 6:56 PM\nNUTRITION :\n2\nText\n2\nProbably Inadequate\n:\nY\nFRICTION AND SHEAR : 2\n2 Potiential Problem\nTOTAL SCORE : 15\n:\nY\nForms\nAdd Nursing Care Plan\nStatus\n: Authorised\nNursing Care Plan discussed with Patient\nPatient Measurable Goal for the day\nincidence of fall\n:\n: Yes\n:\nRisk for fall\npatient wont have\nNursing Diagnosis\n:\nEducation and comments: : teach fall prevention maesures\nNursing Interventions : perform fall risk assessment\nput on side rails always\nclose monitoring of the patient\nprovide maximum assistance in mobilization\nkeep all the needed belongings near to the patient\nmonitor hemodynamics\nteach fall prevention maesures\nEvaluation : Continue\n13/01/2025^15:59:22^Nurse PQR^Critical Care Nurses^08 ICU MSB\n13/01/2025^15:59:58^Nurse STU^Critical Care Nurses^08 ICU MSB\nReAssessment No\n:\nPATIENT SHIFTED TO \u041e\u0422 @ 15.50 HANDOVER GIVEN TO OT STAFF\nPATIENT IS CONCIOUS AND DROWSY\nPATIENT IS ON ROOM AIR SATURATION 97%\nGCSE3V5M6\nPUPILS R/L 2MM EQUALLY REACTING TO LIGHT\nSKIN INTACT LEFT LEG CELLULITIS PRESENT\nDIET NPO\nLINES AND TUBING\n20 G CANNULA PRESENT @ LEFT HAND FROM ER D1\n18 G CANNULA @ RIGHT HAND D1 FROM ICU\n14 F FOLEYS CATH FROM ER D1\nTRIPLE LUMEN HD CATH @ LEFT IJV FROM ICU D1\nINFUSION\n\n**MEDICATION ORDERS**\n\nDrug / Generic Item-Frequency-Instructions/Notes-Duration-OrderedBy-OrderedDate\nPANTOCID 40 MG/VIAL LYOPHILIZED POWDER FOR INJECTION-Once--2 Day(s)-Dr. ABC-13/01/2025\nECOSPRIN-AV 75 MG CAPSULE, 10 MG - 75 MG-Once--2 Day(s)-Dr. ABC-13/01/2025\nNORMAL SALINE (0.9%) solution for infusion [100ml]-4 Hourly ( Q4H)--1 Day(s)-Dr. ABC-13/01/2025\nRL 500 ML PVC Bottle solution for infusion, Claris-Every 6 Hrs(6 Hourly (Q6H))--1 Day(s)-Dr. ABC-13/01/2025\nNORMAL SALINE 09% W/V AQUA PULSE 500 ML-Every 6 Hrs(6 Hourly (Q6H))--1 Day(s)-Dr. ABC-13/01/2025\nREFRESH TEARS 0.5% W/V EYE DROPS 10 ML-Once--1 Day(s)-Dr. ABC-13/01/2025\nCANDID 1% W/W DUSTING POWDER 120 GM-Once--1 Day(s)-Dr. ABC-13/01/2025\nLOX 2% W/V 30 ML VIAL SOLUTION FOR INJECTION-Once--1 Day(s)-Dr. ABC-13/01/2025\nLOX 2% W/V JELLY 30 GM-Once--1 Day(s)-Dr. ABC-13/01/2025\nTEGADERM IV DRESSING KIT 6.5 CM X 7 CM, # 1683-Once--1 Day(s)-Nurse PQR-13/01/2025\n6.5STERILE GLOVES (SERJUN)-Once--1 Day(s)-Nurse PQR-13/01/2025\nICUBAC-H 1000 MG/VIAL FOR INJECTION-Every 8 Hrs(8 Hourly ( Q8H))--3 Day(s)-Dr. ABC-13/01/2025\nNOR 4MG-Once--1 Day(s)-Nurse STU-13/01/2025",
+          "shifts": [
+            {
+              "start_time": "2024-06-07T07:30:00",
+              "end_time": "2024-06-07T19:30:00"
+            }
+          ],
+          "section_model": "gemini-2.5-flash",
+          "summary_model": "gemini-2.5-flash"
+        }
+      }
+    }
+  ]
+}

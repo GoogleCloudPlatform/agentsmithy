@@ -3,6 +3,7 @@ import glob
 import os
 
 session_files = glob.glob('test/eval/evalsets/sessions/session-*.json')
+print(session_files)
 
 for filepath in session_files:
     filename = os.path.basename(filepath)
