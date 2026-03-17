@@ -1,0 +1,194 @@
+{
+  "eval_set_id": "customer_support_hub_eval",
+  "name": "Customer Support Hub Eval",
+  "description": "Customer Support Hub Eval",
+  "eval_cases": [
+    {
+      "eval_id": "cafe2040-6f7e-4dc3-a47f-d61c476c0756",
+      "conversation": [
+        {
+          "invocation_id": "e-9004aba1-cc6b-4341-b81c-11338dc5d27e",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Hi"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello! I'm a customer service agent here to help you with returning damaged products, addressing incorrect orders, and following up on refund requests. How can I help you today?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-6db8bf83-f677-4bc5-9482-135f1ccb5b70",
+                "args": {
+                  "request": "Hi! How can I help you today?"
+                },
+                "name": "Router_Agent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-6db8bf83-f677-4bc5-9482-135f1ccb5b70",
+                "name": "Router_Agent",
+                "response": {
+                  "result": "Hello! I'm a customer service agent here to help you with returning damaged products, addressing incorrect orders, and following up on refund requests. How can I help you today?\n"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-f08d2a03-d695-4359-9065-640c9a89ac9a",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Return a product"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I'm sorry to hear that you need to return a product. I understand this can be frustrating, and I want to assure you that we'll get this sorted out for you.\n\nA refund can be issued once we receive the item back. We offer two convenient options for returns:\n\n1.  **Return by Mail:** I can email you a pre-paid shipping label for an expedited replacement or a full refund.\n2.  **Return at a Local Store:** You can also take the item to your nearest store for an immediate exchange or refund.\n\nWhich option would you prefer?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-470915cb-cbde-4171-842b-e57243552324",
+                "args": {
+                  "request": "Return a product"
+                },
+                "name": "Router_Agent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-470915cb-cbde-4171-842b-e57243552324",
+                "name": "Router_Agent",
+                "response": {
+                  "result": "I'm sorry to hear that you need to return a product. I understand this can be frustrating, and I want to assure you that we'll get this sorted out for you.\n\nA refund can be issued once we receive the item back. We offer two convenient options for returns:\n\n1.  **Return by Mail:** I can email you a pre-paid shipping label for an expedited replacement or a full refund.\n2.  **Return at a Local Store:** You can also take the item to your nearest store for an immediate exchange or refund.\n\nWhich option would you prefer?"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-35647d0b-f495-4bfa-811c-4cba5a553278",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Return at a Local Store"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I understand you'd like to return your item at a local store. Would you like me to help you find the closest location? If so, please provide your city or zip code."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-273e7b6a-0611-4e2c-9c0d-af400a4f3dac",
+                "args": {
+                  "request": "Return at a Local Store"
+                },
+                "name": "Router_Agent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-273e7b6a-0611-4e2c-9c0d-af400a4f3dac",
+                "name": "Router_Agent",
+                "response": {
+                  "result": "I understand you'd like to return your item at a local store. Would you like me to help you find the closest location? If so, please provide your city or zip code."
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-9e54260e-ff7e-42fe-9db6-634850ef6e25",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Chicago"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "It seems I'm unable to directly assist with finding store locations, my apologies for the confusion. I can, however, connect you with a human associate who will be able to help you find the closest store in Chicago for your return. Would you like me to transfer you?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-07d70f92-0df3-42ba-aa5e-e297e871d69c",
+                "args": {
+                  "request": "Chicago"
+                },
+                "name": "Router_Agent"
+              },
+              {
+                "id": "adk-d4485ae2-9943-4782-80fb-d95df5ea8924",
+                "args": {
+                  "request": "The user wants to return an item at a local store and has provided Chicago as the city. Please help the user find the closest store in Chicago."
+                },
+                "name": "Router_Agent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-07d70f92-0df3-42ba-aa5e-e297e871d69c",
+                "name": "Router_Agent",
+                "response": {
+                  "result": "Hello! I'm a customer service agent and I can help you with returning damaged products, addressing incorrect orders, and following up on refund requests. How can I help you today?"
+                }
+              },
+              {
+                "id": "adk-d4485ae2-9943-4782-80fb-d95df5ea8924",
+                "name": "Router_Agent",
+                "response": {
+                  "result": "I apologize, but I am unable to help with finding local store locations. My purpose is to assist with returning damaged products, addressing incorrect orders, and following up on refund requests. Is there anything else I can help you with regarding those topics? If you are feeling distressed, frustrated, or if there is anything else I cannot help you with, I can transfer you to a human associate if you'd like."
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "agent_bar_v2",
+        "user_id": "user",
+        "state": {
+          "industry_id": "retail",
+          "use_case_id": "customer_support_hub"
+        }
+      }
+    }
+  ]
+}

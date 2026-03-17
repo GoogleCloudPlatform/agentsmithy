@@ -51,6 +51,10 @@ dev = [
     "mypy>=1.16.0",
     "deptry>=0.23.0",
     "pytest-cov>=4.0.0",
+    "google-adk[eval]",
+    "pytest-asyncio",
+    "pytest-dotenv",
+    "pytest-html"
 ]
 
 [tool.agent_packs]
@@ -76,7 +80,8 @@ reportUnknownVariableType = false
 failOnWarnings = false
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["test"]
+python_functions = ["test_*", "eval"]
 
 [tool.ruff]
 fix = true

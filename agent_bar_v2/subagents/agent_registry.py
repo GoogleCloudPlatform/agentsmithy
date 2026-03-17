@@ -19,13 +19,21 @@ from ..subagents.fsi.banking_modernization_factory.discovery.agent import root_a
 from ..subagents.fsi.banking_modernization_factory.migration.agent import root_agent as migration_agent
 from ..subagents.fsi.cyber_incident_response.agent import root_agent as cyber_incident_response
 
-from ..subagents.retail.global_campaign_manager.sub_agents.product_ad_generation.agent import root_agent as retail_product_ad_generation
-from ..subagents.retail.global_campaign_manager.sub_agents.video_transcription.agent import root_agent as video_transcription_agent
-from ..subagents.retail.customer_support_hub.sub_agents.conversational_shopping_assistant.agent import root_agent as conversational_shopping_assistant
+from ..subagents.retail.global_campaign_manager.sub_agents.product_ad_generation.agent import (
+    root_agent as retail_product_ad_generation,
+)
+from ..subagents.retail.global_campaign_manager.sub_agents.video_transcription.agent import (
+    root_agent as video_transcription_agent,
+)
+from ..subagents.retail.customer_support_hub.sub_agents.conversational_shopping_assistant.agent import (
+    root_agent as conversational_shopping_assistant,
+)
 from ..subagents.retail.customer_support_hub.sub_agents.customer_support.agent import root_agent as customer_support
 
 
-from ..subagents.media.content_archive_engine.sub_agents.content_moderation.agent import root_agent as content_moderation
+from ..subagents.media.content_archive_engine.sub_agents.content_moderation.agent import (
+    root_agent as content_moderation,
+)
 
 from ..subagents.media.content_archive_engine.sub_agents.video_analysis.agent import root_agent as video_analysis
 
@@ -33,12 +41,18 @@ from ..subagents.media.global_content_localizer.sub_agents.translation.agent imp
 
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
 from ..subagents.cross_industry.legal_guardian.sub_agents.contract_review.agent import root_agent as contract_review
-from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.proposal_writer.agent import root_agent as proposal_writer
-from ..subagents.cross_industry.storage_agent.agent import root_agent as storage_agent
-from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.product_ad_generation.agent import root_agent as product_ad_generation
-from ..subagents.cross_industry.meeting_intelligence.sub_agents.transcription.agent import root_agent as meeting_transcription
-from ..subagents.cross_industry.meeting_intelligence.sub_agents.video_analysis.agent import root_agent as meeting_video_analysis
-from ..subagents.cross_industry.knowledge_graph_builder.agent import root_agent as knowledge_graph_builder
+from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.proposal_writer.agent import (
+    root_agent as proposal_writer,
+)
+from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.product_ad_generation.agent import (
+    root_agent as product_ad_generation,
+)
+from ..subagents.cross_industry.meeting_intelligence.sub_agents.transcription.agent import (
+    root_agent as meeting_transcription,
+)
+from ..subagents.cross_industry.meeting_intelligence.sub_agents.video_analysis.agent import (
+    root_agent as meeting_video_analysis,
+)
 
 # Prompts
 
@@ -59,8 +73,8 @@ from .industry_prompts import (
     MEDIA_CONTENT_ARCHIVE_ENGINE_PROMPT,
     HCLS_PROVIDER_SEARCH_AGENT_PROMPT,
     HCLS_CLINICAL_HANDOVER_PROMPT,
-    HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT ,
-    CYBER_INCIDENT_RESPONSE_PROMPT
+    HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT,
+    CYBER_INCIDENT_RESPONSE_PROMPT,
 )
 
 from google.adk.tools.agent_tool import AgentTool
@@ -71,10 +85,10 @@ AGENT_REGISTRY_MAP = {
     "medical_search_agent": medical_search_agent,
     "research_question_writer": research_question_writer,
     "hypothesis_writer": hypothesis_writer,
-    "provider_directory_search":provider_directory_search,
+    "provider_directory_search": provider_directory_search,
     "patient_handover": patient_handover,
-    "cardiology_consult":cardiology_consult,
-    #from fsi
+    "cardiology_consult": cardiology_consult,
+    # from fsi
     "macro_agent": macro_agent,
     "earnings_agent": earnings_agent,
     "finsights_agent": finsights_agent,
@@ -95,7 +109,6 @@ AGENT_REGISTRY_MAP = {
     "contract_review": contract_review,
     "proposal_writer": proposal_writer,
     "product_ad_generation": product_ad_generation,
-    "storage_access": storage_agent,
     "meeting_transcription": meeting_transcription,
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,
@@ -105,71 +118,70 @@ AGENT_REGISTRY_MAP = {
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
     "hcls": {
-        "research_accelerator":{
+        "research_accelerator": {
             "prompt": HCLS_RESEARCH_ACCELERATOR_PROMPT,
-            "agents":["medical_search_agent", "research_question_writer", "hypothesis_writer"],
+            "agents": ["medical_search_agent", "research_question_writer", "hypothesis_writer"],
         },
-            
         "provider_search_agent": {
             "prompt": HCLS_PROVIDER_SEARCH_AGENT_PROMPT,
-            "agents":["provider_directory_search"],
+            "agents": ["provider_directory_search"],
         },
         "clinical_handover": {
             "prompt": HCLS_CLINICAL_HANDOVER_PROMPT,
             "agents":["patient_handover", "storage_access"],
         },
-        "cardiology_consult_copilot":{
+        "cardiology_consult_copilot": {
             "prompt": HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT,
-            "agents":["cardiology_consult"],
-        }
+            "agents": ["cardiology_consult"],
+        },
     },
     "fsi": {
-        "holistic_investment_strategy":{
+        "holistic_investment_strategy": {
             "prompt": HOLISTIC_INVESTMENT_STRATEGY_PROMPT,
-            "agents":["macro_agent", "earnings_agent", "finsights_agent"],
+            "agents": ["macro_agent", "earnings_agent", "finsights_agent"],
         },
         "banking_modernization_factory": {
             "prompt": BANKING_MODERNIZATION_FACTORY_PROMPT,
-            "agents":["discovery_agent", "migration_agent"],
+            "agents": ["discovery_agent", "migration_agent"],
         },
         # this agent is delegating the work to a sub agent
         "cyber_incident_response": {
             "prompt": CYBER_INCIDENT_RESPONSE_PROMPT,
-            "agents":["cyber_incident_response"],
+            "agents": ["cyber_incident_response"],
         },
     },
-    "retail":{
+    "retail": {
         "global_campaign_launcher": {
             "prompt": GLOBAL_CAMPAIGN_LAUNCHER_PROMPT,
-            "agents":["product_ad_agent", "video_transcription_agent"],
+            "agents": ["product_ad_agent", "video_transcription_agent"],
         },
         "customer_support_hub": {
             "prompt": CUSTOMER_SUPPORT_HUB_PROMPT,
-            "agents":["customer_support", "conversational_shopping_assistant"],
+            "agents": ["customer_support", "conversational_shopping_assistant"],
         },
     },
-    "media":{
+    "media": {
         "content_archive_engine": {
             "prompt": MEDIA_CONTENT_ARCHIVE_ENGINE_PROMPT,
-            "agents":["content_moderation", "transcription", "video_analysis"],
+            "agents": ["content_moderation", "transcription", "video_analysis"],
         },
         "global_content_localizer": {
             "prompt": GLOBAL_CONTENT_LOCALIZER_PROMPT,
-            "agents":["translation_agent"],
+            "agents": ["translation_agent"],
         },
     },
     "cross": {
         "legal_guardian": {
             "prompt": CROSSIN_LEGAL_GUARDIAN_PROMPT,
-            "agents":["contract_review"],
+            "agents": ["contract_review"],
         },
         "proposal_pitch_factory": {
             "prompt": CROSSIN_PROPOSAL_PITCH_FACTORY_PROMPT,
-            "agents":["proposal_writer", "product_ad_generation"],
+            "agents": ["proposal_writer", "product_ad_generation"],
         },
         "meeting_intelligence": {
             "prompt": CROSSIN_MEETING_INTELLIGENCE_PROMPT,
-            "agents":["meeting_transcription", "meeting_video_analysis"],
+            "agents": ["meeting_transcription", "meeting_video_analysis"],
         },
         "knowledge_graph_builder": {
             "prompt": CROSSIN_KNOWLEDGE_GRAPH_BUILDER_PROMPT,
@@ -185,7 +197,6 @@ def get_prompt_for_industry(industry_id: str, use_case_id: str) -> str:
         return INDUSTRY_USE_CASE_AGENTS_MAP.get(industry_id).get(use_case_id).get("prompt")
     except Exception:
         return DEFAULT_PROMPT
-
 
 
 def get_sub_agents(agents_id: [str]):
@@ -243,8 +254,7 @@ def main():
         ],
         "default_industry_use_cases": {
             industry_id: {
-                use_case_id: use_case_config["agents"]
-                for use_case_id, use_case_config in industry_config.items()
+                use_case_id: use_case_config["agents"] for use_case_id, use_case_config in industry_config.items()
             }
             for industry_id, industry_config in INDUSTRY_USE_CASE_AGENTS_MAP.items()
         },
