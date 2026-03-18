@@ -20,7 +20,8 @@ import os
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT")
 PROJECT_LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION")
 BUCKET_NAME = os.environ.get("GCS_BUCKET")
-BQ_DATASET_ID = os.environ.get("BQ_DATASET_ID", "")
-SPANNER_INSTANCE = os.environ.get("SPANNER_INSTANCE", "")
-SPANNER_DATABASE = os.environ.get("SPANNER_DATABASE", "")
-GRAPH_NAME = os.environ.get("GRAPH_NAME", "")
+
+BQ_DATASET_ID = os.environ.get("BQ_DATASET_ID")
+SPANNER_INSTANCE = os.environ.get("SPANNER_INSTANCE")
+SPANNER_DATABASE = os.environ.get("SPANNER_DATABASE")
+GRAPH_NAME = os.environ.get("GRAPH_NAME")
