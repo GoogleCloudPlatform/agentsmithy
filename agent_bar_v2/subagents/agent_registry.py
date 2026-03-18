@@ -11,7 +11,6 @@ from ..subagents.hcls.research_question_agent.agent import root_agent as researc
 from ..subagents.hcls.hypothesis_agent.agent import root_agent as hypothesis_writer
 from ..subagents.hcls.cardiology_consult.agent import root_agent as cardiology_consult
 from ..subagents.hcls.provider_directory_search.agent import root_agent as provider_directory_search
-
 from ..subagents.fsi.holistic_investment_strategy.economics.agent import root_agent as macro_agent
 from ..subagents.fsi.holistic_investment_strategy.earnings.agent import root_agent as earnings_agent
 from ..subagents.fsi.holistic_investment_strategy.finsights.agent import root_agent as finsights_agent
@@ -30,15 +29,17 @@ from ..subagents.retail.customer_support_hub.sub_agents.conversational_shopping_
 )
 from ..subagents.retail.customer_support_hub.sub_agents.customer_support.agent import root_agent as customer_support
 
+from ..subagents.retail.intelligent_inventory_manager.sub_agents.catalog_enrichment.agent import (
+    catalog_enrichment_agent,
+)
+from ..subagents.retail.intelligent_inventory_manager.sub_agents.nl2sql.agent import nl2sql_agent
 
 from ..subagents.media.content_archive_engine.sub_agents.content_moderation.agent import (
     root_agent as content_moderation,
 )
 
 from ..subagents.media.content_archive_engine.sub_agents.video_analysis.agent import root_agent as video_analysis
-
 from ..subagents.media.global_content_localizer.sub_agents.translation.agent import root_agent as translation_agent
-
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
 from ..subagents.cross_industry.legal_guardian.sub_agents.contract_review.agent import root_agent as contract_review
 
@@ -75,7 +76,7 @@ from .fsi.banking_modernization_factory.prompts import SYSTEM_INSTRUCTION as BAN
 from .retail.global_campaign_manager.prompts import SYSTEM_INSTRUCTION as GLOBAL_CAMPAIGN_LAUNCHER_PROMPT
 from .retail.customer_support_hub.prompts import SYSTEM_INSTRUCTION as CUSTOMER_SUPPORT_HUB_PROMPT
 from .media.global_content_localizer.prompts import SYSTEM_INSTRUCTION as GLOBAL_CONTENT_LOCALIZER_PROMPT
-from .industry_prompts import CLOUD_FINOPS_GURU_PROMPT
+from .retail.intelligent_inventory_manager.prompts import SYSTEM_INSTRUCTION as INTELLIGENT_INVENTORY_MANAGER_PROMPT
 
 from .industry_prompts import (
     DEFAULT_PROMPT,
@@ -86,6 +87,7 @@ from .industry_prompts import (
     HCLS_CLINICAL_HANDOVER_PROMPT,
     HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT,
     CYBER_INCIDENT_RESPONSE_PROMPT,
+    CLOUD_FINOPS_GURU_PROMPT,
 )
 
 from google.adk.tools.agent_tool import AgentTool
@@ -110,6 +112,8 @@ AGENT_REGISTRY_MAP = {
     "video_transcription_agent": video_transcription_agent,
     "customer_support": customer_support,
     "conversational_shopping_assistant": conversational_shopping_assistant,
+    "catalog_enrichment_agent": catalog_enrichment_agent,
+    "nl2sql_agent": nl2sql_agent,
     # from media
     "content_moderation": content_moderation,
     "transcription": meeting_transcription,
@@ -170,6 +174,10 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "customer_support_hub": {
             "prompt": CUSTOMER_SUPPORT_HUB_PROMPT,
             "agents": ["customer_support", "conversational_shopping_assistant"],
+        },
+        "intelligent_inventory_manager": {
+            "prompt": INTELLIGENT_INVENTORY_MANAGER_PROMPT,
+            "agents": ["catalog_enrichment_agent", "nl2sql_agent"],
         },
     },
     "media": {
