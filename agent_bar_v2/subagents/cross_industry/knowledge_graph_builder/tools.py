@@ -29,7 +29,7 @@ from langchain_community.graphs.graph_document import (
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_spanner import SpannerGraphStore, SpannerGraphQAChain, SpannerGraphStore
-from langchain_google_vertexai import VertexAIEmbeddings
+from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
 
 from .config import (
     PROJECT_ID,
