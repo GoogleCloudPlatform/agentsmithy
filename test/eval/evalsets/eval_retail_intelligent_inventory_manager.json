@@ -1,0 +1,272 @@
+{
+  "eval_set_id": "intelligent_inventory_manager_eval",
+  "name": "Intelligent Inventory Manager Eval",
+  "description": "Intelligent Inventory Manager Eval",
+  "eval_cases": [
+    {
+      "eval_id": "991c3ac6-2f7a-44fe-b280-879e701e2c81",
+      "conversation": [
+        {
+          "invocation_id": "e-f0b3d186-39c2-4b17-abae-f8f06348acc3",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Hi"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello! I'm your Intelligent Inventory Manager. I can help you with your retail catalog in two ways:\n1. **Search & Locate**: Find existing products in your catalog, check prices, and locate them in nearby stores.\n2. **Catalog Enrichment**: Add new items (SKUs) to the catalog and generate compelling descriptions for them."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-ed1e90d9-0333-4ad2-8d58-46c6e3fdabd1",
+          "user_content": {
+            "parts": [
+              {
+                "text": "I want to search the catalog"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Welcome! I am your NL2SQL agent. I can help you search our catalog for specific products, filter by price, and locate them in-store. If you need to add a *new* item to the catalog, I can hand you over to our Catalog Enrichment specialist.\n\nTo begin, what product would you like to search for? Here are some examples:\n- \"red cups under $10\"\n- \"couches for 4 people\"\n- \"holiday themed kitchen items\"\n\nYou can include price filters in your search query. After you've found a product you like, I can help you find a store location that sells it and even place an order for you."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-8000b628-bf0d-4f43-97a7-1d9062e945c9",
+                "args": {
+                  "agent_name": "nl2sql"
+                },
+                "name": "transfer_to_agent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-8000b628-bf0d-4f43-97a7-1d9062e945c9",
+                "name": "transfer_to_agent",
+                "response": {
+                  "result": null
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-5b9f8a51-9de5-4746-982c-38063f31ffa8",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Rugs for the living room"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here are the most relevant results for \"Rugs for the living room\":\n\n| Index | Product Name | Product ID | Brand | List Price |\n|---|---|---|---|---|\n| 0 | Surya Forum FM-7007 Area Rug | 219b86e5a851a45aab6c3d4ecc092227 | Surya | 792.0 |\n| 1 | J & M Home Fashions Golden Jute Rug | 009126a5ea96d5ffdaea417117638f29 | J & M Home Fashions | 50.56 |\n| 2 | Surya Tamira TAM1001 Indoor Area Rug | aa3ab9e3aeb52b5ae52078abaa90ac97 | Surya | 129.6 |\n| 3 | Safavieh Cambridge Sam Zig Zag Stripes Area Rug or Runner | 63fec364195e09d6d058e469e58ef39c | Safavieh | 52.65 |\n| 4 | Surya Camel CME2000 Kids Indoor Area Rug | 25e0de0716b8c9704367d39cf0d5f111 | Surya | 920.0 |\n| 5 | Safavieh Kids Moroccan Area Rug or Runner | 13b57791733ed861af999bb8bbf8a0be | Safavieh | 93.75 |\n| 6 | Safavieh Soho Arthur Abstract Floral Area Rug Or Runner | 5630fc683d2a0325e5e94abad457d070 | Safavieh | 112.51 |\n| 7 | Safavieh Chatham Jahn Geometric Diamonds Area Rug or Runner | f342b1284dd3b3f003633ea0b6d18a25 | Safavieh | 187.99 |\n| 8 | Surya Anthracite ATE800 Indoor Area Rug | e4212b888782fd109659e52f82d35ae2 | Surya | 65.0 |\n| 9 | Safavieh Cambridge Percival Zig Zag Stripes Area Rug or Runner | 742e061587c08f4b309e62f0e2838f23 | Safavieh | 145.5 |\n\nWould you like to see if there are any stores nearby that have one of these products available? If so, please select a product from the table by its index number (e.g., \"select 0\"). Otherwise, you can provide a new search query."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-be1f979a-1866-4209-aa27-cc8474c6b676",
+                "args": {
+                  "search_term": "Rugs for the living room"
+                },
+                "name": "search_product_table_v2"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-be1f979a-1866-4209-aa27-cc8474c6b676",
+                "name": "search_product_table_v2",
+                "response": {
+                  "result": "| Index | Product Name | Product ID | Brand | List Price |\n|--------------|--------------|--------------|-------|------------|\n| 0 | Surya Forum FM-7007 Area Rug | 219b86e5a851a45aab6c3d4ecc092227 | Surya | 792.0 |\n| 1 | J & M Home Fashions Golden Jute Rug | 009126a5ea96d5ffdaea417117638f29 | J & M Home Fashions | 50.56 |\n| 2 | Surya Tamira TAM1001 Indoor Area Rug | aa3ab9e3aeb52b5ae52078abaa90ac97 | Surya | 129.6 |\n| 3 | Safavieh Cambridge Sam Zig Zag Stripes Area Rug or Runner | 63fec364195e09d6d058e469e58ef39c | Safavieh | 52.65 |\n| 4 | Surya Camel CME2000 Kids Indoor Area Rug | 25e0de0716b8c9704367d39cf0d5f111 | Surya | 920.0 |\n| 5 | Safavieh Kids Moroccan Area Rug or Runner | 13b57791733ed861af999bb8bbf8a0be | Safavieh | 93.75 |\n| 6 | Safavieh Soho Arthur Abstract Floral Area Rug Or Runner | 5630fc683d2a0325e5e94abad457d070 | Safavieh | 112.51 |\n| 7 | Safavieh Chatham Jahn Geometric Diamonds Area Rug or Runner | f342b1284dd3b3f003633ea0b6d18a25 | Safavieh | 187.99 |\n| 8 | Surya Anthracite ATE800 Indoor Area Rug | e4212b888782fd109659e52f82d35ae2 | Surya | 65.0 |\n| 9 | Safavieh Cambridge Percival Zig Zag Stripes Area Rug or Runner | 742e061587c08f4b309e62f0e2838f23 | Safavieh | 145.5 |\n"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-dcef7f4a-77eb-4680-9406-600e2e04d4ba",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Only show ones under $300"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here are the most relevant results for \"Rugs for the living room\" under $300:\n\n| Index | Product Name | Product ID | Brand | List Price |\n|---|---|---|---|---|\n| 0 | J & M Home Fashions Golden Jute Rug | 009126a5ea96d5ffdaea417117638f29 | J & M Home Fashions | 50.56 |\n| 1 | Surya Tamira TAM1001 Indoor Area Rug | aa3ab9e3aeb52b5ae52078abaa90ac97 | Surya | 129.6 |\n| 2 | Safavieh Cambridge Sam Zig Zag Stripes Area Rug or Runner | 63fec364195e09d6d058e469e58ef39c | Safavieh | 52.65 |\n| 3 | Safavieh Kids Moroccan Area Rug or Runner | 13b57791733ed861af999bb8bbf8a0be | Safavieh | 93.75 |\n| 4 | Safavieh Soho Arthur Abstract Floral Area Rug Or Runner | 5630fc683d2a0325e5e94abad457d070 | Safavieh | 112.51 |\n| 5 | Safavieh Chatham Jahn Geometric Diamonds Area Rug or Runner | f342b1284dd3b3f003633ea0b6d18a25 | Safavieh | 187.99 |\n| 6 | Surya Anthracite ATE800 Indoor Area Rug | e4212b888782fd109659e52f82d35ae2 | Surya | 65.0 |\n| 7 | Safavieh Cambridge Percival Zig Zag Stripes Area Rug or Runner | 742e061587c08f4b309e62f0e2838f23 | Safavieh | 145.5 |\n| 8 | Surya Riley RLY502 Indoor Area Rug | 8d596b44c72b9007cbe21bf51acbf30c | Surya | 36.6 |\n| 9 | Surya Houseman HSM4032 Indoor Area Rug | 1be91d3d92c8ba96ce5158f3b878ad0f | Surya | 120.99 |\n\nWould you like to see if there are any stores nearby that have one of these products available? If so, please select a product from the table by its index number (e.g., \"select 0\"). Otherwise, you can provide a new search query."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-da8ddd1b-0b2d-4d48-9fc2-03610ab9c751",
+                "args": {
+                  "filter": "list_price < 300",
+                  "search_term": "Rugs for the living room"
+                },
+                "name": "search_product_table_v2"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-da8ddd1b-0b2d-4d48-9fc2-03610ab9c751",
+                "name": "search_product_table_v2",
+                "response": {
+                  "result": "| Index | Product Name | Product ID | Brand | List Price |\n|--------------|--------------|--------------|-------|------------|\n| 0 | J & M Home Fashions Golden Jute Rug | 009126a5ea96d5ffdaea417117638f29 | J & M Home Fashions | 50.56 |\n| 1 | Surya Tamira TAM1001 Indoor Area Rug | aa3ab9e3aeb52b5ae52078abaa90ac97 | Surya | 129.6 |\n| 2 | Safavieh Cambridge Sam Zig Zag Stripes Area Rug or Runner | 63fec364195e09d6d058e469e58ef39c | Safavieh | 52.65 |\n| 3 | Safavieh Kids Moroccan Area Rug or Runner | 13b57791733ed861af999bb8bbf8a0be | Safavieh | 93.75 |\n| 4 | Safavieh Soho Arthur Abstract Floral Area Rug Or Runner | 5630fc683d2a0325e5e94abad457d070 | Safavieh | 112.51 |\n| 5 | Safavieh Chatham Jahn Geometric Diamonds Area Rug or Runner | f342b1284dd3b3f003633ea0b6d18a25 | Safavieh | 187.99 |\n| 6 | Surya Anthracite ATE800 Indoor Area Rug | e4212b888782fd109659e52f82d35ae2 | Surya | 65.0 |\n| 7 | Safavieh Cambridge Percival Zig Zag Stripes Area Rug or Runner | 742e061587c08f4b309e62f0e2838f23 | Safavieh | 145.5 |\n| 8 | Surya Riley RLY502 Indoor Area Rug | 8d596b44c72b9007cbe21bf51acbf30c | Surya | 36.6 |\n| 9 | Surya Houseman HSM4032 Indoor Area Rug | 1be91d3d92c8ba96ce5158f3b878ad0f | Surya | 120.99 |\n"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-36858396-848f-4836-af6e-0662a0c7adbb",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Thank you! Now I want to enrich part of this catalog"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hi there! I'm the Catalog Enrichment Agent. I can help you add new SKUs to our database. Just provide me with the product name, brand, and price, and I'll generate a compelling description and stage the item for your review."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-d546b8d5-23e7-44d8-b30b-21ebab95bf73",
+                "args": {
+                  "agent_name": "catalog_enrichment"
+                },
+                "name": "transfer_to_agent"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-d546b8d5-23e7-44d8-b30b-21ebab95bf73",
+                "name": "transfer_to_agent",
+                "response": {
+                  "result": null
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-4260054c-e93f-4146-807b-2286ffe65c25",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Add in a new purple rug from the brand Cymbal costing $150"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Your new product, the Purple Rug from Cymbal, has been staged for review with a price of $150.00. Here are the details:\n\n| Product Name | Product ID | Brand | List Price | Description |\n|---|---|---|---|---|\n| Purple Rug | ca5412d1-64e0-4e22-80a1-fb7ac2f3e320 | Cymbal | 150 | Add a touch of elegance and warmth to your living space with this beautiful purple rug from Cymbal. Its plush texture and rich color will create a cozy and inviting atmosphere in any room. |\n\nIt will be added to the catalog after review."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-2d8c2e04-eb92-498d-90a2-0c559a1d5ee1",
+                "args": {
+                  "description": "Add a touch of elegance and warmth to your living space with this beautiful purple rug from Cymbal. Its plush texture and rich color will create a cozy and inviting atmosphere in any room.",
+                  "list_price": 150,
+                  "brand": "Cymbal",
+                  "product_name": "Purple Rug"
+                },
+                "name": "add_product_to_catalog"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-2d8c2e04-eb92-498d-90a2-0c559a1d5ee1",
+                "name": "add_product_to_catalog",
+                "response": {
+                  "result": "### Pending Catalog Enrichment Review\nThe following product has been staged for review before being added to the catalog table:\n\n| Product Name | Product ID | Brand | List Price | Description |\n|--------------|--------------|-------|------------|-------------|\n| Purple Rug | ca5412d1-64e0-4e22-80a1-fb7ac2f3e320 | Cymbal | 150 | Add a touch of elegance and warmth to your living ... |\n"
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-7c026bb9-28ed-4a16-b4be-e27c7b5f3d73",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Thanks that will be all."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "You're welcome! I'm here to help if you need to add any more products in the future."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "agent_bar_v2",
+        "user_id": "user",
+        "state": {
+          "industry_id": "retail",
+          "use_case_id": "inventory_manager"
+        }
+      }
+    }
+  ]
+}
