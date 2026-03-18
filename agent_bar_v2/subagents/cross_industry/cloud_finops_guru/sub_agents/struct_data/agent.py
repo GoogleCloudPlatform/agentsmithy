@@ -5,11 +5,12 @@ from google.genai import types
 
 from .tools import bigquery_toolset
 from .prompt import prompt
+from ...config import ROOT_AGENT_MODEL
 
 logger = logging.getLogger(__name__)
 
 struct_data_agent = Agent(
-   model=os.getenv("ROOT_AGENT_MODEL", "gemini-2.5-flash"),
+   model=ROOT_AGENT_MODEL,
    name="struct_data_agent",
    include_contents='none',
    description="Technical agent that executes SQL queries on GCP BigQuery billing tables to find cost evidence.",

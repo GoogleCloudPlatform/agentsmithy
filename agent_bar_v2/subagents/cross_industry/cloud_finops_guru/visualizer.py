@@ -3,14 +3,14 @@ import os
 from google.adk.agents import LlmAgent
 from google.adk.code_executors import VertexAiCodeExecutor
 
+from .config import ROOT_AGENT_MODEL, GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION
+
 visual_specialist = LlmAgent(
     name="visual_specialist",
-    model=os.getenv("ROOT_AGENT_MODEL"),
-    include_contents='none',
+    model=ROOT_AGENT_MODEL,
+    include_contents="none",
     code_executor=VertexAiCodeExecutor(
-        project=os.getenv("GOOGLE_CLOUD_PROJECT"),
-        location=os.getenv("GOOGLE_CLOUD_LOCATION"),
-        return_artifacts=True 
+        project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION, return_artifacts=True
     ),
     instruction="""
     ROLE: You are a SILENT Senior Data Scientist & Visualization Expert. Your only output should be the generated chart.
@@ -37,5 +37,5 @@ visual_specialist = LlmAgent(
     4. **Output Requirements**:
        - Save the image as 'forensic_chart.png' using `plt.savefig('forensic_chart.png', dpi=300, bbox_inches='tight')`.
        - Respond ONLY with the text: "Visual generated as forensic_chart.png."
-    """
+    """,
 )

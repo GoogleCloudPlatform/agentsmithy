@@ -13,11 +13,13 @@ from .sub_agents.struct_data.agent import struct_data_agent
 from .sub_agents.unstruct_data.agent import unstruct_data_agent
 from .visualizer import visual_specialist
 
+from .config import ROOT_AGENT_MODEL
+
 logger = logging.getLogger(__name__)
 
 finops_synthesis_agent = LlmAgent(
     name="finops_synthesis_agent",
-    model=os.getenv("ROOT_AGENT_MODEL", "gemini-2.5-flash"),
+    model=ROOT_AGENT_MODEL,
     instruction="""
     You are the Senior GCP Forensic Architect. 
     Analyze the following data for waste:
@@ -36,7 +38,7 @@ finops_synthesis_agent = LlmAgent(
 
 intent_router = LlmAgent(
     name="IntentRouter",
-    model=os.getenv("ROOT_AGENT_MODEL", "gemini-2.5-flash"),
+    model=ROOT_AGENT_MODEL,
     instruction="""
     You are a strict routing switchboard. 
     
@@ -164,7 +166,7 @@ class FinOpsOrchestrator(BaseAgent):
             logger.info(f"[{self.name}] Handling as a General Knowledge Query with Search Grounding.")
             general_agent = LlmAgent(
                 name="GeneralKnowledge",
-                model=os.getenv("ROOT_AGENT_MODEL", "gemini-2.5-flash"),
+                model=ROOT_AGENT_MODEL,
                 instruction="""
                 You are a highly capable GCP cloud assistant. 
                 Always use the Google Search tool to find the most up-to-date documentation, pricing, or technical definitions before answering. 

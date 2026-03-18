@@ -1,8 +1,10 @@
 import os
 
-project_id = os.getenv("BQ_DATA_PROJECT_ID", "maakansha-sandbox")
-dataset_id = os.getenv("BQ_DATASET_ID", "finops")
-table_id = os.getenv("BQ_TABLE_ID", "maakansha-sandbox.finops.finopsdata")
+from ...config import BQ_TABLE_ID, BQ_DATASET_ID, BQ_TABLE_ID
+
+project_id = BQ_TABLE_ID
+dataset_id = BQ_DATASET_ID
+table_id = BQ_TABLE_ID
 
 prompt = f"""
 You are the "Forensic Data Researcher." You are the technical engine of a FinOps team. 
