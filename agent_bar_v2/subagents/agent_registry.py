@@ -53,12 +53,20 @@ from ..subagents.cross_industry.meeting_intelligence.sub_agents.transcription.ag
 from ..subagents.cross_industry.meeting_intelligence.sub_agents.video_analysis.agent import (
     root_agent as meeting_video_analysis,
 )
+from ..subagents.cross_industry.knowledge_graph_builder.agent import (
+    root_agent as knowledge_graph_builder,
+)
+
+from ..subagents.cross_industry.storage_agent.agent import (
+    root_agent as storage_access,
+)
 
 # Prompts
 
 from .cross_industry.meeting_intelligence.prompts import SYSTEM_INSTRUCTION as CROSSIN_MEETING_INTELLIGENCE_PROMPT
 from .cross_industry.legal_guardian.prompts import SYSTEM_INSTRUCTION as CROSSIN_LEGAL_GUARDIAN_PROMPT
 from .cross_industry.proposal_pitch_factory.prompts import SYSTEM_INSTRUCTION as CROSSIN_PROPOSAL_PITCH_FACTORY_PROMPT
+from .cross_industry.knowledge_graph_builder.prompts import SYSTEM_INSTRUCTION as CROSSIN_KNOWLEDGE_GRAPH_BUILDER_PROMPT
 from .fsi.holistic_investment_strategy.prompts import SYSTEM_INSTRUCTION as HOLISTIC_INVESTMENT_STRATEGY_PROMPT
 from .fsi.banking_modernization_factory.prompts import SYSTEM_INSTRUCTION as BANKING_MODERNIZATION_FACTORY_PROMPT
 from .retail.global_campaign_manager.prompts import SYSTEM_INSTRUCTION as GLOBAL_CAMPAIGN_LAUNCHER_PROMPT
@@ -111,6 +119,9 @@ AGENT_REGISTRY_MAP = {
     "meeting_transcription": meeting_transcription,
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,
+    "knowledge_graph_builder": knowledge_graph_builder,
+    "storage_access": storage_access,
+   
 }
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
@@ -125,7 +136,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         },
         "clinical_handover": {
             "prompt": HCLS_CLINICAL_HANDOVER_PROMPT,
-            "agents": ["patient_handover"],
+            "agents":["patient_handover", "storage_access"],
         },
         "cardiology_consult_copilot": {
             "prompt": HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT,
@@ -179,6 +190,10 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         "meeting_intelligence": {
             "prompt": CROSSIN_MEETING_INTELLIGENCE_PROMPT,
             "agents": ["meeting_transcription", "meeting_video_analysis"],
+        },
+        "knowledge_graph_builder": {
+            "prompt": CROSSIN_KNOWLEDGE_GRAPH_BUILDER_PROMPT,
+            "agents":["knowledge_graph_builder"],
         },
     },
 }
