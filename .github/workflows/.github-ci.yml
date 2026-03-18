@@ -1,0 +1,45 @@
+name: AgentSmithy CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - stage
+      - dev
+  pull_request:
+    branches:
+      - main
+      - stage
+      - dev
+  merge_group:
+    branches:
+      - main
+      - stage
+      - dev
+
+jobs:
+  test:
+    # Official language image. Look for the different tagged releases at:
+    # https://hub.docker.com/r/library/python/tags/
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Check for licenses
+      run: |
+        ./license_check.sh
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip3 install poetry
+        poetry install --directory Runtime_env/
+    - name: Lint with pylint
+      run: |
+        pip3 install pylint
+        pylint --jobs=0 $(git ls-files '*.py') --rcfile=.pylintrc
+    # - name: Test with pytest
+    #   run: |
+    #     pytest tests
