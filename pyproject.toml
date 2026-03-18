@@ -21,6 +21,7 @@ dependencies = [
     "google-cloud-bigquery",
     "google-cloud-videointelligence",
     "fpdf",
+    "google-genai",
     "google-cloud-translate",
     "google-cloud-vision",
     "google-cloud-speech",

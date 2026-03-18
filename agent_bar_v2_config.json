@@ -124,6 +124,11 @@
             "id": "cyber_incident_response",
             "name": "cyber_incident_response",
             "description": "Orchestrates cyber incident response by scanning logs, analyzing threats, and drafting incident reports."
+        },
+        {
+            "id": "finops_optimizer",
+            "name": "cloud_finops_guru",
+            "description": "Senior GCP Forensic Architect that analyzes data for waste, patterns, and provides optimization recommendations."
         }
     ],
     "default_industry_use_cases": {
@@ -188,6 +193,9 @@
             "meeting_intelligence": [
                 "meeting_transcription",
                 "meeting_video_analysis"
+            ],
+            "cloud_finops_guru": [
+                "finops_optimizer"
             ]
         }
     }

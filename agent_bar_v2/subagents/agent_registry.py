@@ -41,6 +41,9 @@ from ..subagents.media.global_content_localizer.sub_agents.translation.agent imp
 
 from ..subagents.cross_industry.contract_creation.agent import root_agent as contract_creation
 from ..subagents.cross_industry.legal_guardian.sub_agents.contract_review.agent import root_agent as contract_review
+
+from ..subagents.cross_industry.cloud_finops_guru.agent import root_agent as finops_optimizer
+
 from ..subagents.cross_industry.proposal_pitch_factory.sub_agents.proposal_writer.agent import (
     root_agent as proposal_writer,
 )
@@ -72,6 +75,7 @@ from .fsi.banking_modernization_factory.prompts import SYSTEM_INSTRUCTION as BAN
 from .retail.global_campaign_manager.prompts import SYSTEM_INSTRUCTION as GLOBAL_CAMPAIGN_LAUNCHER_PROMPT
 from .retail.customer_support_hub.prompts import SYSTEM_INSTRUCTION as CUSTOMER_SUPPORT_HUB_PROMPT
 from .media.global_content_localizer.prompts import SYSTEM_INSTRUCTION as GLOBAL_CONTENT_LOCALIZER_PROMPT
+from .industry_prompts import CLOUD_FINOPS_GURU_PROMPT
 
 from .industry_prompts import (
     DEFAULT_PROMPT,
@@ -120,8 +124,8 @@ AGENT_REGISTRY_MAP = {
     "meeting_video_analysis": meeting_video_analysis,
     "cyber_incident_response": cyber_incident_response,
     "knowledge_graph_builder": knowledge_graph_builder,
+    "finops_optimizer": finops_optimizer,
     "storage_access": storage_access,
-   
 }
 
 INDUSTRY_USE_CASE_AGENTS_MAP = {
@@ -136,7 +140,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         },
         "clinical_handover": {
             "prompt": HCLS_CLINICAL_HANDOVER_PROMPT,
-            "agents":["patient_handover", "storage_access"],
+            "agents": ["patient_handover", "storage_access"],
         },
         "cardiology_consult_copilot": {
             "prompt": HCLS_CARDIOLOGY_CONSULT_COPILOT_PROMPT,
@@ -193,7 +197,11 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
         },
         "knowledge_graph_builder": {
             "prompt": CROSSIN_KNOWLEDGE_GRAPH_BUILDER_PROMPT,
-            "agents":["knowledge_graph_builder"],
+            "agents": ["knowledge_graph_builder"],
+        },
+        "cloud_finops_guru": {
+            "prompt": CLOUD_FINOPS_GURU_PROMPT,
+            "agents": ["finops_optimizer"],
         },
     },
 }
