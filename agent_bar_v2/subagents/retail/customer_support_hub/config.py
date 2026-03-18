@@ -20,7 +20,7 @@ import os
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT") #GOOGLE_CLOUD_PROJECT=ai-agent-bar-2026-stage
 LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION") #GOOGLE_CLOUD_LOCATION=us-central1
 
-GOOGLE_GENAI_USE_VERTEXAI=true
+#GOOGLE_GENAI_USE_VERTEXAI=true
 
 # Vertex AI Search
 DATASTORE_ID=retail-site-search_1773188929137
