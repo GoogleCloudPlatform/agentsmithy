@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from injector import Binder, Injector, SingletonScope
 from google.adk.agents import BaseAgent, SequentialAgent
@@ -10,7 +11,8 @@ from .sub_agents.answer_generation_agent.agent import get_answer_generation_agen
 
 # Configuration and Dependency Injection
 CURRENT_DIR = Path(__file__).parent
-CSV_PATH = CURRENT_DIR / "data" / "world_bank_data_2025.csv"
+BUCKET_NAME = os.getenv("GCS_BUCKET", "agent-bar-sample-data")
+CSV_PATH = f"gs://{BUCKET_NAME}/fsi/economics/data/world_bank_data_2025.csv"
 
 def configure_macro_agent(binder: Binder) -> None:
     binder.bind(AgentConfig, to=AgentConfig(), scope=SingletonScope)

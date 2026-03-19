@@ -13,10 +13,16 @@ class DataSource(BaseModel):
 
 class DataProvider:
     """Provider for macro economic data from a SQLite database."""
-    def __init__(self, csv_data: Path, db_path: str | Path | None = None) -> None:
+    def __init__(self, csv_data: str | Path, db_path: str | Path | None = None) -> None:
         self.csv_data = csv_data
         self.db_path = "file::memory:?cache=shared" if db_path is None else str(db_path)
-        self.table_name = csv_data.stem
+        
+        # Handle table name from GCS URI or local Path
+        if isinstance(csv_data, str) and csv_data.startswith("gs://"):
+            self.table_name = Path(csv_data.split("/")[-1]).stem
+        else:
+            self.table_name = Path(csv_data).stem
+            
         self._load_data_from_csv(csv_data)
         
         self.data_sources = [
@@ -44,7 +50,7 @@ class DataProvider:
             )
         ]
 
-    def _load_data_from_csv(self, csv_path: Path) -> None:
+    def _load_data_from_csv(self, csv_path: str | Path) -> None:
         df = pd.read_csv(csv_path)
         # Use simple sqlite3 for initial load
         conn = sqlite3.connect(self.db_path, uri=True)

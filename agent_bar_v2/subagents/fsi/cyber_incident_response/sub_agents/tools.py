@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 
 from google.cloud import bigquery
+from ..config import PROJECT_ID
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -34,17 +35,17 @@ def triageQueryTool(hostname: str, alert_type: str):
     - Arg hostname: The hostname of the machine involved in the alert.
     - Arg alert_type: The type of alert ('EDR', 'NETWORK', 'LOGIN').
     """
-    project_id = os.getenv("GCP_PROJECT_ID")
+    project_id = PROJECT_ID
     if not project_id:
         raise ValueError("GCP_PROJECT_ID environment variable not set")
     dataset = os.getenv("BQ_DATASET", "cyber_guardian_dataset")
     client = bigquery.Client(project=project_id)
 
     table_name = {
-        "EDR": "endpoint_alerts",
-        "NETWORK": "network_alerts",
+        "EDR": "endpoint_process_events",
+        "NETWORK": "network_connection_log",
         "LOGIN": "iam_login_events",
-    }.get(alert_type, "endpoint_alerts")
+    }.get(alert_type, "endpoint_process_events")
 
     query = f"""
         SELECT * FROM `{project_id}.{dataset}.{table_name}`
@@ -73,7 +74,7 @@ def investigationQueryTool(alert_type: str, hostname: str, parent_process: str =
     - Arg parent_process: (Optional) The parent process for EDR alerts.
     - Arg destination_ip: (Optional) The malicious IP for IOC_MATCH alerts.
     """
-    project_id = os.getenv("GCP_PROJECT_ID")
+    project_id = PROJECT_ID
     if not project_id:
         raise ValueError("GCP_PROJECT_ID environment variable not set")
     dataset = os.getenv("BQ_DATASET", "cyber_guardian_dataset")

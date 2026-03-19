@@ -16,5 +16,5 @@ root_agent = LlmAgent(
     name="cyber_guardian_orchestrator",
     description=AGENT_DESCRIPTION,
     instruction=root_agent_instruction,
-    sub_agents=[threatintel_agent, investigation_agent, triage_agent, response_agent],
+    sub_agents=[triage_agent, investigation_agent, threatintel_agent, response_agent],
 )
