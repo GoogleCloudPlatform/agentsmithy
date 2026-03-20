@@ -1,7 +1,7 @@
 # 4. Service Account for the Agent
 resource "google_service_account" "agent_sa" {
-  account_id   = "agent-bar-v2-sa"
-  display_name = "Agent Bar v2 Service Account"
+  account_id   = var.sa_account_id
+  display_name = var.sa_display_name
   depends_on   = [google_project_service.enabled_apis]
 }
 

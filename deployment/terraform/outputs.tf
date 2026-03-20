@@ -37,3 +37,38 @@ output "meeting_intelligence_bucket_name" {
   description = "The name of the GCS bucket for meeting intelligence"
   value       = google_storage_bucket.meeting_intelligence_bucket.name
 }
+
+# BigQuery Outputs
+output "bq_finops_dataset_id" {
+  value = google_bigquery_dataset.finops_dataset.dataset_id
+}
+
+output "bq_finops_table_id" {
+  value = google_bigquery_table.finops_table.table_id
+}
+
+output "bq_kg_dataset_id" {
+  value = google_bigquery_dataset.kg_dataset.dataset_id
+}
+
+output "bq_retail_dataset_id" {
+  value = google_bigquery_dataset.retail_dataset.dataset_id
+}
+
+# Spanner Outputs
+output "spanner_kg_instance_id" {
+  value = google_spanner_instance.kg_instance.name
+}
+
+output "spanner_kg_database_id" {
+  value = google_spanner_database.kg_database.name
+}
+
+# Discovery Engine Outputs
+output "datastore_finops_id" {
+  value = google_discovery_engine_data_store.finops_datastore.data_store_id
+}
+
+output "datastore_retail_id" {
+  value = google_discovery_engine_data_store.retail_datastore.data_store_id
+}

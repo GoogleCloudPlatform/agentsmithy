@@ -1,6 +1,6 @@
 # 1. Default Data Bucket
 resource "google_storage_bucket" "default_data_bucket" {
-  name          = "${var.project_id}-abv2-agents-default-data"
+  name          = "${var.project_id}${var.bucket_suffix_default_data}"
   location      = var.region
   force_destroy = true
 
@@ -11,7 +11,7 @@ resource "google_storage_bucket" "default_data_bucket" {
 
 # 2. Sub-agent requirements (cross_industry/product_ad_generation)
 resource "google_storage_bucket" "product_ad_generation_bucket" {
-  name          = "${var.project_id}-abv2-cross-product-ad-generation"
+  name          = "${var.project_id}${var.bucket_suffix_product_ad_generation}"
   location      = var.region
   force_destroy = true
 
@@ -22,7 +22,7 @@ resource "google_storage_bucket" "product_ad_generation_bucket" {
 
 # 3. Campaign Manager Sub-agent
 resource "google_storage_bucket" "campaign_manager_bucket" {
-  name          = "${var.project_id}-abv2-global-campaign-manager-agent"
+  name          = "${var.project_id}${var.bucket_suffix_campaign_manager}"
   location      = var.region
   force_destroy = true
 
@@ -33,7 +33,7 @@ resource "google_storage_bucket" "campaign_manager_bucket" {
 
 # 4. Meeting Intelligence Sub-agent
 resource "google_storage_bucket" "meeting_intelligence_bucket" {
-  name          = "${var.project_id}-abv2-meeting-intelligence"
+  name          = "${var.project_id}${var.bucket_suffix_meeting_intelligence}"
   location      = var.region
   force_destroy = true
 
