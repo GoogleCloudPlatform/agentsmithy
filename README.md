@@ -78,10 +78,19 @@ Return to the web interface, select the agent and the initialized session, and b
 
 ## Generate configuration
 locally
+
 ```
+
+pip install "python-dotenv[cli]"
+
+dotenv -f agent_bar_v2/.env run -- python -m agent_bar_v2.subagents.agent_registry --local-output
+
 python -m agent_bar_v2.subagents.agent_registry --local-output
 ```
 publish to GCS
 ```
+dotenv -f agent_bar_v2/.env run -- python -m agent_bar_v2.subagents.agent_registry --gcs-bucket=ai-agent-bar-2026-stage-shared-config
+
 python -m agent_bar_v2.subagents.agent_registry --gcs-bucket=ai-agent-bar-2026-stage-shared-config
+
 ```

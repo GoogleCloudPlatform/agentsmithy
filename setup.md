@@ -95,3 +95,9 @@ https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-dev/
 https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-stage/locations/us-central1/reasoningEngines/7140821147544715264:query
 
 agent-bar-api-sa@ai-agent-bar-2026-stage.iam.gserviceaccount.com
+
+
+
+adk eval agentengine://PROJECT_ID/LOCATION/RESOURCE_ID path/to/eval_set.evalset.json --config_file_path=path/to/test_config.json
+
+adk eval agentengine://PROJECT_ID/LOCATION/RESOURCE_ID test/eval/evalsets/eval_cross_legal_guardian.json --config_file_path=test/eval/evalsets/test_config.json
