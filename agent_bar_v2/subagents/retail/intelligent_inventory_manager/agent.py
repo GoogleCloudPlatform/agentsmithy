@@ -26,11 +26,6 @@ from .sub_agents.nl2sql.agent import nl2sql_agent
 from .sub_agents.catalog_enrichment.agent import catalog_enrichment_agent
 
 
-_, project_id = google.auth.default()
-os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
-os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
-
 
 root_agent = Agent(
         name="intelligent_inventory_manager",

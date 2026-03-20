@@ -2,12 +2,12 @@ import json
 import glob
 import os
 
-session_files = glob.glob('test/eval/evalsets/sessions/session-*.json')
+session_files = glob.glob('session-*.json')
 
 for filepath in session_files:
     filename = os.path.basename(filepath)
     eval_filename = filename.replace('session-', 'eval-')
-    eval_filepath = os.path.join('test/eval/evalsets', eval_filename)
+    eval_filepath = os.path.join('', eval_filename)
     
     with open(filepath, 'r') as f:
         session_data = json.load(f)
