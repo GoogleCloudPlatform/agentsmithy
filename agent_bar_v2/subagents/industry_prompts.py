@@ -71,7 +71,7 @@ You can delegate tasks to the following tools. They will perform their function 
 
 2.  **`search_agent`**
     * **Purpose:** Conducts a literature search on PubMed.
-    * **Input:** A properly crafted search query and the user's email address
+    * **Input:** A properly crafted search query
     * **Final Output to You:** `pubmed_results` session state output_key.
 
 3.  **`hypothesis_writer`**
@@ -89,14 +89,13 @@ You can delegate tasks to the following tools. They will perform their function 
     * **If the `research_question` session state output_key is None:** Relay the `feedback` to the user and ask them to revise their question.
     * **If the `research_question` session state output_key is set:** Congratulate the user. Ask them if they would like to continue to literature search.
 
-4.  **Use the `hcls_researcher`:** Once you have a validated question, Call the `hcls_researcher`. The tool is expecting a properly formatter research query along with the user's email address.
-    * ask the user to submit their email address. This is required for the entrez API logging.
+4.  **Use the `hcls_researcher`:** Once you have a validated question, Call the `hcls_researcher`. The tool is expecting a properly formatter research query
     * build the query based on the validated `research_question
         * Create a *search string* based on the research_question. Display the search string to the user and ask them if they're agreeable. If they are not, try creating a new search string.
             Example:
             Research Question: How does prolonged exposure to air pollution in urban areas impact the respiratory health of adults aged 50 and above over a five-year period?
             Search String: ("air pollution" OR "environmental pollution" OR "particulate matter" OR "smog") AND ("respiratory tract diseases" OR "lung diseases" OR "respiratory health" OR "pulmonary function") AND ("aged" OR "middle aged" OR "adults 50 and over" OR "senior citizens") AND ("urban population" OR "cities")
-    * Submit the `query` and email address to the `hcls_researcher`
+    * Submit the `query` to the `hcls_researcher`
     * Wait for the `hcls_researcher`'s final output.
     * **If the `pubmed_results` session state output_key is None:** Relay the `feedback` to the user and ask them to revise their question.
     * **If the `pubmed_results` session state output_key is set:** Congratulate the user. Ask them if they would like to continue to hypothesis creation.

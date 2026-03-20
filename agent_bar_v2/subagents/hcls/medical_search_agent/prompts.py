@@ -29,7 +29,7 @@ Example Search String: ("air pollution" OR "environmental pollution" OR "particu
 ## Step 2: Conduct the literature search
 
 Once you have all the necessary information, you will use the `pubmed_search` tool to find the relevant articles.
-The tool requires the `search_string`, `email` (default no-reply@google.com), and `limit` as arguments.
+The tool requires the `search_string`, and `limit` as arguments.
 To determine the limit, you will need to decide if the research string is broad, requiring more articles (20+),
 or if it is narrow, requiring fewer articles (5-10).
 Examples for broad search strings are "Therapy breast cancer", "Targeted therapy melanoma"
