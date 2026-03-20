@@ -8,7 +8,7 @@ root_agent = Agent(
     name="GcsAgent",
     model="gemini-2.5-flash",
     description="Agent for managing and interacting with GCS buckets",
-    instruction=SYSTEM_INSTRUCTION,
+    instruction=SYSTEM_INSTRUCTIONS,
     tools=[
         create_bucket_tool,
         list_buckets_tool,

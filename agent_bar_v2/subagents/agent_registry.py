@@ -207,6 +207,21 @@ def get_predefined_use_case_sub_agents(industry_id: str, use_case_id: str):
     return get_sub_agents(agent_ids)
 
 
+def get_agent_descriptions_json(agent_ids: list[str]) -> str:
+    """Returns a JSON string of agent descriptions for a list of agent IDs."""
+    import json
+    agents_data = []
+    for agent_id in agent_ids:
+        agent = AGENT_REGISTRY_MAP.get(agent_id)
+        if agent:
+            agents_data.append({
+                "id": agent_id,
+                "name": getattr(agent, "name", "Unknown"),
+                "description": getattr(agent, "description", "Unknown")
+            })
+    return json.dumps(agents_data, indent=2)
+
+
 def main():
 
     import argparse
