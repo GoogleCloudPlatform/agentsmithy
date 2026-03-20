@@ -25,8 +25,8 @@ os.environ['SSL_CERT_FILE'] = certifi.where()
 
 def search_pubmed(
     search_string: str,
-    email: str,
     limit: int,
+    email: str = "no-reply@google.com",
 ) -> list:
     """
     Fetches articles with abstracts for a search_string from pubmed.
