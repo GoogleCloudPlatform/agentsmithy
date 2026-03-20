@@ -1,8 +1,10 @@
-PROJECT_ID='ai-agent-bar-2026-stage'
+import os
+
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
+GCS_DEFAULT_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
 GCS_LIST_BUCKETS_MAX_RESULTS = 100
 GCS_LIST_BLOBS_MAX_RESULTS = 100
-GCS_DEFAULT_STORAGE_CLASS='STANDARD'
-GCS_DEFAULT_LOCATION='us-central1'
-GCS_DEFAULT_CONTENT_TYPE = 'text/plain'
-LOG_LEVEL='INFO'
-LOG_FORMAT = '%(asctime)s %(clientip)-15s %(user)-8s %(message)s'
+GCS_DEFAULT_STORAGE_CLASS = "STANDARD"
+GCS_DEFAULT_CONTENT_TYPE = "text/plain"
+LOG_LEVEL = "INFO"
+LOG_FORMAT = "%(asctime)s %(clientip)-15s %(user)-8s %(message)s"

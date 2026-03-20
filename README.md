@@ -93,4 +93,5 @@ python -m agent_bar_v2.subagents.agent_registry --local-output
 **Publish to GCS:**
 ```bash
 python -m agent_bar_v2.subagents.agent_registry --gcs-bucket=ai-agent-bar-2026-stage-shared-config
+
 ```
