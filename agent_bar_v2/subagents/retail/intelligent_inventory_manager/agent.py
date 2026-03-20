@@ -21,7 +21,7 @@ from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 import google.auth
 
-from .prompts import SYSTEM_INSTRUCTIONS
+from .prompts import SYSTEM_INSTRUCTION
 from .sub_agents.nl2sql.agent import nl2sql_agent
 from .sub_agents.catalog_enrichment.agent import catalog_enrichment_agent
 
@@ -34,6 +34,6 @@ root_agent = Agent(
             "You are an Intelligent Inventory Manager Agent, a helpful AI "
             "agent that can manage inventory for retail companies. "
         ),
-        instruction=SYSTEM_INSTRUCTIONS,
+        instruction=SYSTEM_INSTRUCTION,
         sub_agents=[nl2sql_agent, catalog_enrichment_agent],
     )

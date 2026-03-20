@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-SYSTEM_INSTRUCTIONS = """
+SYSTEM_INSTRUCTION = """
     You are a helpful assistant that and searches Google Cloud Storage buckets.
     
     Your primary goal is to understand the user's intent and select the most appropriate tool to help them accomplish their tasks. 
