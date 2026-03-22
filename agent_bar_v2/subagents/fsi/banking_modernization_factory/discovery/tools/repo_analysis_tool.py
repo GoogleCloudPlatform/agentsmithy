@@ -2,6 +2,7 @@ import logging
 import os
 
 from github import ContentFile, Github, UnknownObjectException
+from ..config import GITHUB_ACCESS_TOKEN
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,7 +17,7 @@ class RepoAnalysisTools:
 
     def _get_repo_object(self, repo_url: str):
         """Helper method to get and cache the repository object."""
-        github_token = os.environ.get("GITHUB_ACCESS_TOKEN")
+        github_token = GITHUB_ACCESS_TOKEN
         if not github_token:
             raise ValueError("GITHUB_ACCESS_TOKEN environment variable not set.")
 

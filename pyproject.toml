@@ -34,6 +34,8 @@ dependencies = [
     "immutabledict",
     "loguru",
     "injector",
+    "db-dtypes",
+    "pandas",
 ]
 
 [build-system]

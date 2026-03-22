@@ -17,6 +17,9 @@ class DataProvider:
         self.csv_data = csv_data
         self.db_path = "file::memory:?cache=shared" if db_path is None else str(db_path)
         
+        # Maintain a keep-alive connection for in-memory DB with shared cache
+        self._keep_alive_conn = sqlite3.connect(self.db_path, uri=True)
+        
         # Handle table name from GCS URI or local Path
         if isinstance(csv_data, str) and csv_data.startswith("gs://"):
             self.table_name = Path(csv_data.split("/")[-1]).stem
