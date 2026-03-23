@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 from google.cloud import bigquery
-from ..config import PROJECT_ID
+from ..config import PROJECT_ID, CYBER_GUARDIAN_BQ_DATASET
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -38,7 +38,7 @@ def triageQueryTool(hostname: str, alert_type: str):
     project_id = PROJECT_ID
     if not project_id:
         raise ValueError("GCP_PROJECT_ID environment variable not set")
-    dataset = os.getenv("BQ_DATASET", "cyber_guardian_dataset")
+    dataset = CYBER_GUARDIAN_BQ_DATASET
     client = bigquery.Client(project=project_id)
 
     table_name = {
@@ -77,7 +77,7 @@ def investigationQueryTool(alert_type: str, hostname: str, parent_process: str =
     project_id = PROJECT_ID
     if not project_id:
         raise ValueError("GCP_PROJECT_ID environment variable not set")
-    dataset = os.getenv("BQ_DATASET", "cyber_guardian_dataset")
+    dataset = CYBER_GUARDIAN_BQ_DATASET
     client = bigquery.Client(project=project_id)
 
     if alert_type == "EDR_DETECTION":
