@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from google import genai
 from agent_bar_v2.subagents.agent_registry import get_agent_descriptions_json
 
-# Load the environment variables to pick up GEMINI_API_KEY if available
 dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(dotenv_path)
 
@@ -12,14 +11,16 @@ def generate_custom_root_instructions(user_vision: str, selected_agent_ids: list
     Generates custom root agent instructions using Gemini based on the user's vision 
     and the selected sub-agents' descriptions.
     """
-    # 1. Get the sub-agent descriptions in JSON format
     agent_descriptions = get_agent_descriptions_json(selected_agent_ids)
-    
-    # 2. Construct the prompt
+    workflow_sequence = " -> ".join(selected_agent_ids)
+
     prompt = f"""
 You are an expert multi-agent orchestrator designer. 
 A user has provided a vision for a custom workflow and selected a set of specialized sub-agents.
-Your goal is to write a cohesive system instruction for the "Root Agent" that will orchestrate these sub-agents to achieve the user's vision.
+Crucially, these sub-agents represent a specific, sequential workflow that the Root Agent must follow.
+
+Sequential Workflow Order:
+{workflow_sequence}
 
 User's Vision/Task Description:
 {user_vision}
@@ -27,27 +28,42 @@ User's Vision/Task Description:
 Selected Sub-Agents Available (JSON):
 {agent_descriptions}
 
-Task: Output ONLY the system instructions for the Root Agent as a single paragraph. 
-Do not include any conversational text, markdown formatting blocks, or explanations. Just the final instructions text.
+Your goal is to write a cohesive system instruction for the "Root Agent" that will orchestrate these sub-agents to achieve the user's vision.
+The generated instruction MUST use clear markdown formatting to provide a structured system prompt. It must include a persona, the available agents, the step-by-step sequential workflow, and basic error handling.
 
-Example format: "You are a highly skilled legal assistant specializing in contract analysis. Your goal is to identify potential risks, clarify complex terminology, and ensure compliance with standard regulatory frameworks. You have access to specialized agents to assist you in this task. Please provide concise, actionable feedback for each document reviewed."
+Task: Output ONLY the generated system instructions for the Root Agent. Do not include any conversational text or explanations. Just the final system prompt.
+
+Use the following exact markdown structure for your output:
+
+You are an expert [Specific Persona based on vision]. Your tone should be [Tone, e.g., authoritative, polite].
+
+### Your Mission
+[High-level goal based on the user's vision]
+
+### Available Sub-Agents
+[For each agent in the JSON, provide a numbered list with the agent name and a specific instruction on when/how the Root Agent should use it.]
+
+### Sequential Workflow
+[Provide a numbered list dictating the exact step-by-step workflow the Root Agent must follow, strictly adhering to the Sequential Workflow Order provided above. Explicitly state which agent is used at each step.]
+
+### Error Handling & Rules
+- If a sub-agent fails, encounters an error, or returns missing data, [insert logical fallback behavior].
+- Always ensure [insert key priority based on vision].
 """
 
-    # 3. Call the Gemini API using the new GenAI SDK
-    client = genai.Client() # This will automatically pick up GEMINI_API_KEY from the environment
-    
+    project_id = os.getenv("PROJECT_ID")
+    location = os.getenv("LOCATION", "us-central1")
+    client = genai.Client(vertexai=True, project=project_id, location=location)
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt,
     )
     
-    # Strip any extra whitespace and return
     return response.text.strip()
 
 if __name__ == "__main__":
-    # Test case matching the README example idea
-    sample_vision = "I want to create a workflow where a user uploads a new business contract, and we review it to ensure it avoids high financial risk and conforms to local laws."
-    sample_agents = ["contract_review"]
+    sample_vision = "I want to create a workflow where a user uploads a new business contract, we extract the text, review it for financial risk to local laws, and draft an approval summary."
+    sample_agents = ["document_extractor", "contract_review", "summary_generator"]
     
     print("Generating custom instructions for the Root Agent...\n")
     
