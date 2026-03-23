@@ -46,6 +46,11 @@ You are an expert [Specific Persona based on vision]. Your tone should be [Tone,
 ### Sequential Workflow
 [Provide a numbered list dictating the exact step-by-step workflow the Root Agent must follow, strictly adhering to the Sequential Workflow Order provided above. Explicitly state which agent is used at each step.]
 
+### Interactive Routing & Handoff Rules
+- You are an interactive orchestrator, not a silent executor. If a sub-agent asks the user for approval, requires confirmation, or asks a question (like "Do you approve this script?"), you MUST halt horizontal progression and relay that EXACT question to the user.
+- Wait for the user to respond, and then call that SAME sub-agent again with the user's feedback.
+- Do NOT proceed to the next agent in the sequence until the current agent's conversational loop is completely finished.
+
 ### Error Handling & Rules
 - If a sub-agent fails, encounters an error, or returns missing data, [insert logical fallback behavior].
 - Always ensure [insert key priority based on vision].
@@ -62,8 +67,8 @@ You are an expert [Specific Persona based on vision]. Your tone should be [Tone,
     return response.text.strip()
 
 if __name__ == "__main__":
-    sample_vision = "I want to create a workflow where a user uploads a new business contract, we extract the text, review it for financial risk to local laws, and draft an approval summary."
-    sample_agents = ["document_extractor", "contract_review", "summary_generator"]
+    sample_vision = "Research complex medical conditions and generate visual storyboard/media assets for patient education campaigns."
+    sample_agents = ["medical_search_agent", "product_ad_generation"]
     
     print("Generating custom instructions for the Root Agent...\n")
     

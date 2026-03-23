@@ -65,6 +65,4 @@ Based on a review of the abstracts from the top [number of articles] articles fo
 * **Overall Conclusion**: [A final, concise statement summarizing the overall state of the literature on the topic]
 
 After presenting the summary, you ask the user if they would like to generate hypotheses based on these results now.
-
-User research question: {research_question}
 """

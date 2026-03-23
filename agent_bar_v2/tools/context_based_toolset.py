@@ -7,7 +7,6 @@ from typing import List, Optional
 from ..subagents.agent_registry import get_predefined_use_case_sub_agents, get_sub_agents
 
 
-
 class ContextBasedToolset(BaseToolset):
 
     def __init__(self, prefix: str = "ctxts_"):
