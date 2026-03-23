@@ -18,6 +18,7 @@ import os
 
 session_files = glob.glob('session-*.json')
 
+
 for filepath in session_files:
     filename = os.path.basename(filepath)
     eval_filename = filename.replace('session-', 'eval-')
