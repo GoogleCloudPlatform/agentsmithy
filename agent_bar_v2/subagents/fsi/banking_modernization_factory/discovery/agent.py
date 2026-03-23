@@ -15,10 +15,14 @@ tools = [
     FunctionTool(func=tools_instance.get_file_content),
 ]
 
-root_agent = LlmAgent(
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
     model="gemini-2.5-flash",
-    generate_content_config=types.GenerateContentConfig(
-        temperature=0.2, top_p=0.95, max_output_tokens=65536
+    generation_config=types.GenerateContentConfig(
+        temperature=0.2,
+        top_p=0.95,
+        max_output_tokens=65536,
     ),
     name="domain_discovery",
     description=AGENT_DESCRIPTION,

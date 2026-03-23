@@ -1,10 +1,10 @@
-# Copyright 2026 Google LLC
+# Copyright 2026 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -224,14 +224,13 @@ class Summarizer:
 
     def generate(
         self,
-        file_path: pathlib.Path,
+        patient: str,
         start_time: datetime,
         end_time: datetime,
     ) -> types.GenerateContentResponse:
         """Extracts invoice information from a PDF file.
 
         Args:
-            file_path: The path to the file containing the medical notes & questionnaire.
             start_time: The start time of the shift.
             end_time: The end time of the shift.
 
@@ -239,8 +238,9 @@ class Summarizer:
             genai.types.GenerateContentResponse: A response object containing the shift summary.
         """
 
-        with open(file_path, "r") as txt_file:
-            self.document = txt_file.read()
+        # with open(file_path, "r") as txt_file:
+        #     self.document = txt_file.read()
+        self.document = patient
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             log_times_future = executor.submit(self._extract_log_times)
@@ -310,7 +310,7 @@ def list_patients(tool_context: ToolContext) -> dict[str, Any]:
         A list of patient IDs.
     """
 
-    patients = tool_context.state.get("patients")
+    patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in tool_context.state.get("patients")]
 
     if patients is None:
         return {"error": "No patients found."}
@@ -334,8 +334,8 @@ async def generate_shift_endorsement(
     Returns:
         The generated shift endorsement report.
     """
-
-    if not any(pid == patient for pid in tool_context.state.get("patients", [])):
+    patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in tool_context.state.get("patients")]
+    if not any(pid == patient for pid in patients):
         return {"error": f"Patient not found: {patient}"}
 
     start_dt, end_dt = (
@@ -354,20 +354,23 @@ async def generate_shift_endorsement(
         summary_model=tool_context.state["summary_model"],
         client=genai.Client(),
     )
-
-    patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
+# this is going to be hard
+    # patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
 
     inputs_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-raw-inputs.txt"
     _ = await tool_context.save_artifact(
         inputs_filename,
-        artifact=types.Part.from_bytes(
-            data=patient_file.read_text().encode(),
-            mime_type="text/plain",
-        ),
+        # artifact=tool_context.load_artifact("patient_data")
+        artifact=types.Part(text=tool_context.state.get("patient_data"))
+        # artifact=types.Part.from_bytes(
+        #     data=patient_file.read_text().encode(),
+        #     mime_type="text/plain",
+        # ),
     )
 
     summary_content = summarizer.generate(
-        file_path=patient_file,
+        # file_path=tool_context.load_artifact(patient),
+        patient = tool_context.state.get("patient_data"),
         start_time=start_dt,
         end_time=end_dt,
     )

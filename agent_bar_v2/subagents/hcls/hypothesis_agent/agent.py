@@ -1,10 +1,10 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,12 +14,25 @@
 
 """Hypothesis agent for creating new hypotheses based on pubmed results."""
 
-from google.adk import Agent
+from google.adk.agents import Agent
+from google.adk.models import Gemini
 
-from . import prompt
+from . import prompts
+from . import tools
+
+
+AGENT_NAME = "hypothesis_agent"
+AGENT_DESCRIPTION = "Hypothesis agent for creating new hypotheses based on pubmed results."
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model="gemini-2.5-flash",
+)
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
-    name="hypothesis_agent",
-    instruction=prompt.HYPOTHESIS_PROMPT,
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
 )

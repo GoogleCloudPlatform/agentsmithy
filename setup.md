@@ -1,97 +1,135 @@
-# Enviroment Setup
+# Environment Setup and Deployment Guide
 
-## Enable APIs
-```
-gcloud services enable \
-    aiplatform.googleapis.com \
-    artifactregistry.googleapis.com \
-    cloudbuild.googleapis.com \
-    cloudresourcemanager.googleapis.com \
-    iam.googleapis.com \
-    storage.googleapis.com \
-    speech.googleapis.com
-```
+This guide walks you through setting up your Google Cloud environment and deploying the Agent Bar v2 application to Cloud Run.
 
-## Enrable requirements for sub agents
-cross_industry/product_ad_generation requirements
+## 1. Infrastructure Setup (Terraform)
+
+We use Terraform to automate the provisioning of all required Google Cloud resources.
+
+### Before You Begin
+
+Ensure you are logged into the Google Cloud CLI and have the correct project selected:
+
 ```bash
-LOCATION_ID=us-central1
-gcloud storage buckets create --location=$LOCATION_ID gs://agent-bar-v2-cross-product-ad-generation
-
+gcloud auth login
+gcloud config set project [YOUR_PROJECT_ID]
 ```
 
-## Deploy
+### Initialize and Apply Terraform
 
-### Install ADK
+Navigate to the `deployment/terraform` directory and apply the configuration. This will enable all necessary APIs and create resources like storage buckets, service accounts, and the artifact registry.
+
+```bash
+cd deployment/terraform
+terraform init
+terraform apply -var="project_id=$(gcloud config get-value project)"
+cd ../..
 ```
+
+*Terraform will provision:*
+- **APIs**: AI Platform, Artifact Registry, Cloud Build, Cloud Run, etc.
+- **Storage**: Buckets for default data, product ad generation, campaign manager, and meeting intelligence.
+- **Artifact Registry**: A repository named `agent-bar-v2-repo` for your Docker images.
+- **Service Account**: `agent-bar-v2-sa` with the required permissions.
+
+## 2. Configure Environment Variables
+
+After Terraform finishes, you need to configure your local `.env` file with the provisioned resource names.
+
+Copy the sample environment file:
+```bash
+cp agent_bar_v2/.env.sample agent_bar_v2/.env
+```
+
+Retrieve the outputs from Terraform:
+```bash
+cd deployment/terraform
+terraform output
+cd ../..
+```
+
+Update `agent_bar_v2/.env` with the values from the `terraform output` command:
+- `GOOGLE_CLOUD_PROJECT`: Use the `project_id` output.
+- `GCS_BUCKET`: Use `gs://` followed by the `default_data_bucket_name` output.
+- `GCS_BUCKET_PRODUCT_AD_GENERATION`: Use `gs://` followed by the `product_ad_generation_bucket_name` output.
+- `GCS_BUCKET_CAMPAING_MANAGER`: Use the `campaign_manager_bucket_name` output.
+- `GCS_BUCKET_MEETING_INTELLIGENCE`: Use the `meeting_intelligence_bucket_name` output.
+
+## 3. Install the Agent Development Kit (ADK)
+
+Set up your local Python environment and install the ADK:
+
+```bash
+# Create and activate a virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
+
+# Install the ADK
 pip install google-adk
 ```
 
-### Deploy the agent
-```
-PROJECT_ID=ai-agent-bar-2026-stage
-LOCATION_ID=us-central1
+## 4. Deploy to Cloud Run
 
-adk deploy agent_engine \
-        --project=$PROJECT_ID \
-        --region=$LOCATION_ID \
-        --display_name="Agent Bar v2" \
-        agent_bar_v2
+Deploy the agent and its Web UI to Cloud Run using the `adk deploy cloud_run` command. We will use the Service Account created by Terraform.
 
-adk deploy agent_engine \
-        --project=$PROJECT_ID \
-        --region=$LOCATION_ID \
-        --display_name="Agent Bar v2" \
-        --requirements_file=requirements.txt \
-        agent_bar_v2
-```
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+export REGION="us-central1"
+export SERVICE_ACCOUNT=$(cd deployment/terraform && terraform output -raw agent_service_account_email)
 
-### Test your agent
-
-Create a session
-```
-RESOURCE_ID=<the reasoning engine resource id>
-curl \
-    -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-    -H "Content-Type: application/json" \
-    "https://$(LOCATION_ID)-aiplatform.googleapis.com/v1/projects/$(PROJECT_ID)/locations/$(LOCATION_ID)/reasoningEngines/$(RESOURCE_ID):query" \
-    -d '{"class_method": "async_create_session", "input": { "user_id": "123", "state": { "industry_id": "cross", "use_case_id": "legal_guardian", "root_prompt_overwrite":"New instructions here" }}}'
-```
-Chat
-```
-curl \
--H "Authorization: Bearer $(gcloud auth print-access-token)" \
--H "Content-Type: application/json" \
-https://$(LOCATION_ID)-aiplatform.googleapis.com/v1/projects/$(PROJECT_ID)/locations/$(LOCATION_ID)/reasoningEngines/$(RESOURCE_ID):query?alt=sse -d '{
-"class_method": "async_stream_query",
-"input": {
-    "user_id": "u_123",
-    "session_id": "4857885913439920384",
-    "message": "Hey whats the weather in new york today?",
-}
-}'
+# Deploy the Agent Bar v2 application along with the UI
+adk deploy cloud_run \
+  --project=$PROJECT_ID \
+  --region=$REGION \
+  --with_ui \
+  agent_bar_v2 \
+  -- --allow-unauthenticated --service-account=$SERVICE_ACCOUNT
 ```
 
-Example:
+## 5. Test Your Agent
+
+Once deployed, you must initialize a session before interacting with the agent. Agent Bar v2 dynamically loads sub-agents and prompts based on the **Session State**.
+
+### Initialize a Predefined Use Case
+
+The `industry_id` and `use_case_id` are used to match a predefined agent configuration in the `agent_registry.py`.
+
+```bash
+# Get the deployed Cloud Run service URL
+export CLOUD_RUN_URL=$(gcloud run services describe adk-default-service-name --platform managed --region $REGION --format 'value(status.url)')
+
+# Initialize a session for the "legal_guardian" use case in the "cross" industry
+curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_123" \
+     -H "Content-Type: application/json" \
+     -d '{ 
+           "user_id": "user123", 
+           "industry_id": "cross", 
+           "use_case_id": "legal_guardian" 
+         }'
 ```
-RESOURCE_ID=3208589334617784320
-curl \
-    -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-    -H "Content-Type: application/json" \
-    "https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-dev/locations/us-central1/reasoningEngines/3208589334617784320:query" \
-    -d '{"class_method": "async_create_session", "input": { "user_id": "123", "state": { "industry_id": "cross", "use_case_id": "legal_guardian", "root_prompt_overwrite":"" }}}'
 
-curl \
--H "Authorization: Bearer $(gcloud auth print-access-token)" \
--H "Content-Type: application/json" \
-https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-dev/locations/us-central1/reasoningEngines/3208589334617784320:streamQuery?alt=sse -d '{"class_method": "async_stream_query", "input": { "user_id": "123", "session_id": "53925685223227392", "message": "What you can do?"}}'
+### Initialize a Custom Agent Workflow
+
+You can also bypass the registry and define a custom agent and workflow directly in the session state:
+
+```bash
+curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_custom" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "user_id": "user123",
+           "industry_id": "custom",
+           "use_case_id": "my_workflow",
+           "is_custom": true,
+           "custom_agents": ["contract_review"],
+           "custom_workflow_map": { "start": "contract_review", "contract_review": "end" },
+           "custom_root_instructions": "You are a specialized assistant for reviewing legal contracts."
+         }'
 ```
 
+### Access the Web UI
 
-https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-dev/locations/us-central1/reasoningEngines/3208589334617784320:streamQuery?alt=sse
+After initializing the session via `curl`, you can interact with the agent in your browser:
 
-https://us-central1-aiplatform.googleapis.com/v1/projects/ai-agent-bar-2026-stage/locations/us-central1/reasoningEngines/7140821147544715264:query
-
-agent-bar-api-sa@ai-agent-bar-2026-stage.iam.gserviceaccount.com
+```bash
+echo "$CLOUD_RUN_URL/dev-ui/?app=agent_bar_v2&session=s_123&userId=user123"
+```

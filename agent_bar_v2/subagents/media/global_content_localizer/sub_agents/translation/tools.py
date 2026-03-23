@@ -1,3 +1,17 @@
+# Copyright 2026 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """Tools for Translation Agent"""
 
 import json
@@ -7,7 +21,7 @@ import uuid
 import google.cloud.storage as storage
 from dotenv import load_dotenv
 from fpdf import FPDF
-from google.adk.tools import ToolContext
+from google.adk.tools import ToolContext, LongRunningFunctionTool, load_artifacts
 from google.cloud import translate_v3 as translate
 from google.cloud import vision
 from google.cloud import speech_v2 as cloud_speech
@@ -18,15 +32,7 @@ import subprocess
 import tempfile
 import time
 
-load_dotenv()
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
-LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
-BUCKET_NAME = os.getenv("GCS_BUCKET")
-GCS_OUTPUT_PATH = "translation_agent_output"
-DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
-DEFAULT_SPEECH_MODEL = "chirp"
-VALID_STT_MODELS = {"chirp", "chirp_2", "chirp_telephony"}
-
+from .config import PROJECT_ID, LOCATION, BUCKET_NAME, GCS_OUTPUT_PATH, DEFAULT_GEMINI_MODEL, DEFAULT_SPEECH_MODEL, VALID_STT_MODELS
 
 async def translate_text_with_model(
     source_language: str,
@@ -809,3 +815,16 @@ Synopsis:"""
             retries += 1
     print("Gemini could not annotate file.")
     return {"status": "error", "message": "Gemini could not correct the transcript."}
+
+
+tools = [
+    LongRunningFunctionTool(translate_text_with_model),
+    write_results_gcs,
+    LongRunningFunctionTool(pic_to_text),
+    LongRunningFunctionTool(detect_language),
+    LongRunningFunctionTool(extract_audio),
+    LongRunningFunctionTool(transcribe_batch_gcs_input_inline_output_v2),
+    LongRunningFunctionTool(fix_transcripts_llm),
+    LongRunningFunctionTool(write_synopsis),
+    load_artifacts,
+]

@@ -1,0 +1,235 @@
+{
+  "eval_set_id": "cardiology_consult_eval",
+  "name": "Cardiology Consult Eval",
+  "description": "Cardiology Consult Eval",
+  "eval_cases": [
+    {
+      "eval_id": "07194279-dc0e-487d-8000-c49ab38b16a1",
+      "conversation": [
+        {
+          "invocation_id": "e-02885ff0-854b-4713-b40a-6f4b03b75c4b",
+          "user_content": {
+            "parts": [
+              {
+                "text": "I\u2019m 55, male, total cholesterol 220, HDL 45, systolic BP 142, on BP meds, non-smoker, no diabetes. What\u2019s my 10-year cardiac risk?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Your estimated 10-year risk of atherosclerotic cardiovascular disease (ASCVD) is 30%. This places you in the **high-risk** category.\n\nThis estimate is for risk stratification and early detection only and should not replace a definitive diagnosis or clinical judgment. It strongly suggests a need for lifestyle modifications and statin therapy, and you may want to consider a cardiology referral.\n\nPlease discuss these results with your healthcare provider for a comprehensive evaluation and personalized recommendations."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-9a463e61-e5b6-455b-93e4-c2a66d6214f3",
+                "args": {
+                  "systolic_bp_mmhg": 142,
+                  "total_cholesterol_mg_dl": 220,
+                  "hdl_cholesterol_mg_dl": 45,
+                  "sex": "male",
+                  "has_diabetes": false,
+                  "on_bp_medication": true,
+                  "age_years": 55,
+                  "current_smoker": false
+                },
+                "name": "calculate_ascvd_risk"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-9a463e61-e5b6-455b-93e4-c2a66d6214f3",
+                "name": "calculate_ascvd_risk",
+                "response": {
+                  "risk_percent_10y": 30,
+                  "risk_category": "high",
+                  "interpretation": "High 10-year ASCVD risk. Strong recommendation for lifestyle and statin therapy; consider cardiology referral.",
+                  "disclaimer": "Estimate for stratification only; not a substitute for clinical judgment or full ASCVD calculator."
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-92911eff-cfeb-406f-ade1-64b4a498f880",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Can you assess my risk factors: my BMI is 31, BP  is138/88 and LDL 165, I do smoke and don\u2019t exercise.."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I couldn't complete the risk factor assessment because I'm missing some important information. Could you please provide your:\n\n*   Age\n*   Total cholesterol\n*   HDL cholesterol\n*   Fasting glucose\n*   HbA1c percentage\n\nOnce I have these, I can give you a more comprehensive assessment."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-395b247f-4b4a-44f1-b788-f84ec0f7f43b",
+                "args": {
+                  "ldl_cholesterol": 165,
+                  "bmi": 31,
+                  "diastolic_bp": 88,
+                  "current_smoker": true,
+                  "systolic_bp": 138,
+                  "sedentary": true
+                },
+                "name": "assess_risk_factors"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-395b247f-4b4a-44f1-b788-f84ec0f7f43b",
+                "name": "assess_risk_factors",
+                "response": {
+                  "error": "Invoking `assess_risk_factors()` failed as the following mandatory input parameters are not present:\nage\ntotal_cholesterol\nhdl_cholesterol\nfasting_glucose\nhba1c_percent\nYou could retry calling this tool, but it is IMPORTANT for you to provide all the mandatory parameters."
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-136cff06-9330-48f6-9c6f-7b90d7ce8ab6",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Im 43 , cholestrol is 200, HDL is 78, glucose is 90 , 5.7% HbA1c percentage!"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here's an assessment of your cardiovascular risk factors based on the information you've provided:\n\n**Identified Risk Factors:**\n\n*   **BMI 31.0 (Obesity):** This is a significant risk factor for various cardiovascular conditions.\n*   **Borderline elevated systolic BP (138 mmHg) and elevated diastolic BP (88 mmHg):** While not in the highest range, these blood pressure readings are elevated and contribute to cardiovascular risk.\n*   **High LDL (165 mg/dL):** Elevated LDL cholesterol is a primary driver of atherosclerotic plaque buildup.\n*   **Current smoking:** Smoking is a major and highly impactful risk factor for heart disease and many other health issues.\n*   **Sedentary lifestyle:** Lack of regular physical activity increases your risk.\n\n**Modifiable Factors (areas you can change to reduce your risk):**\n\n*   Obesity / weight\n*   Blood pressure\n*   LDL cholesterol\n*   Smoking cessation\n*   Physical activity\n\n**Non-Modifiable Factors:**\nBased on the information provided, there are no non-modifiable factors explicitly flagged in this assessment. (Your age, sex, and family history if known are typically non-modifiable, but the tool didn't flag them as specific risk factors in this output.)\n\n**Recommendations:**\n\n*   **Prioritize Modifiable Factors:** Focus on addressing your weight, blood pressure, LDL cholesterol, smoking habits, and physical activity levels.\n*   **Blood Pressure Management:** Consider lifestyle changes such as a DASH diet, reducing sodium intake, and regular exercise. It's important to have your blood pressure rechecked and treated according to guidelines if it remains persistently elevated.\n*   **Cholesterol Management:** Adopt a heart-healthy diet and regular exercise. Further lipid panel follow-up is recommended, and your doctor will consider statin therapy based on your overall ASCVD risk.\n*   **Smoking Cessation:** There is a strong recommendation for you to stop smoking. Please seek counseling and consider pharmacotherapy options to help you quit.\n*   **Physical Activity:** Incorporate regular exercise into your routine.\n\nIt's crucial to discuss these findings with your healthcare provider. They can help you develop a personalized plan to manage these risk factors and reduce your overall cardiovascular risk."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-8e95efc1-63ba-4941-95d3-19440fcb9085",
+                "args": {
+                  "total_cholesterol": 200,
+                  "ldl_cholesterol": 165,
+                  "age": 43,
+                  "hdl_cholesterol": 78,
+                  "hba1c_percent": 5.7,
+                  "fasting_glucose": 90,
+                  "systolic_bp": 138,
+                  "diastolic_bp": 88,
+                  "sedentary": true,
+                  "current_smoker": true,
+                  "bmi": 31
+                },
+                "name": "assess_risk_factors"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-8e95efc1-63ba-4941-95d3-19440fcb9085",
+                "name": "assess_risk_factors",
+                "response": {
+                  "risk_factors": [
+                    "BMI 31.0 (obesity)",
+                    "Borderline elevated systolic BP (138 mmHg)",
+                    "High LDL (165 mg/dL)",
+                    "Current smoking",
+                    "Sedentary lifestyle"
+                  ],
+                  "modifiable_factors": [
+                    "Obesity / weight",
+                    "Blood pressure",
+                    "LDL cholesterol",
+                    "Smoking cessation",
+                    "Physical activity"
+                  ],
+                  "non_modifiable_factors": [],
+                  "recommendations": [
+                    "Prioritize modifiable factors: Obesity / weight, Blood pressure, LDL cholesterol, Smoking cessation, Physical activity",
+                    "Lifestyle (DASH diet, sodium, exercise) and consider BP recheck; treat per guidelines if persistently elevated.",
+                    "Cardiovascular diet, exercise, and consider lipid panel follow-up; statin per ASCVD risk.",
+                    "Strong recommendation for smoking cessation; offer counseling and pharmacotherapy."
+                  ]
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-6de11f43-4d7f-4b8b-b3eb-2b13bb07b4d9",
+          "user_content": {
+            "parts": [
+              {
+                "text": "My LDL was 160 last year and is 148 now. Is that improving? "
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Yes, your LDL cholesterol level is improving!\n\nYour LDL decreased from 160 mg/dL last year to 148 mg/dL now, which is a 7.5% improvement. This is a positive trend for your cardiovascular health. It's important to continue with whatever lifestyle changes or treatments have contributed to this improvement. Please share this trend with your doctor to discuss ongoing management."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-43946d37-44bb-4a52-9226-4534ee0d7840",
+                "args": {
+                  "prior_value": 160,
+                  "lower_is_better": true,
+                  "unit": "mg/dL",
+                  "metric_name": "LDL cholesterol",
+                  "current_value": 148
+                },
+                "name": "interpret_lab_trends"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-43946d37-44bb-4a52-9226-4534ee0d7840",
+                "name": "interpret_lab_trends",
+                "response": {
+                  "metric": "LDL cholesterol",
+                  "current_value": 148,
+                  "prior_value": 160,
+                  "unit": "mg/dL",
+                  "trend": "improving",
+                  "percent_change": -7.5,
+                  "clinical_note": "LDL cholesterol improved; reinforce current management."
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "agent_bar_v2",
+        "user_id": "user",
+        "state": {
+          "industry_id": "hcls",
+          "use_case_id": "cardiology_consult_copilot"
+        }
+      }
+    }
+  ]
+}

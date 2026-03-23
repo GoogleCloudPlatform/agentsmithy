@@ -22,12 +22,17 @@ dependencies = [
     "google-cloud-bigquery-migration",
     "google-cloud-videointelligence",
     "fpdf",
+    "google-genai",
     "google-cloud-translate",
     "google-cloud-vision",
     "google-cloud-speech",
     "gcsfs>=2024.11.0",
     "google-cloud-logging>=3.12.0,<4.0.0",
-    "google-cloud-aiplatform[evaluation]==1.130.0",
+    "google-cloud-aiplatform[evaluation]==1.130.0",    
+    "pyarrow",
+    "langchain-google-spanner",
+    "langchain-google-vertexai",
+    "langchain-text-splitters",
     "fastapi>=0.115.8,<1.0.0",
     "asyncpg>=0.30.0,<1.0.0",
     "pygithub",
@@ -44,6 +49,9 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.packages.find]
+exclude = ["assets*"]
+
 [dependency-groups]
 dev = [
     "ipykernel>=6.29.5",
@@ -54,6 +62,10 @@ dev = [
     "mypy>=1.16.0",
     "deptry>=0.23.0",
     "pytest-cov>=4.0.0",
+    "google-adk[eval]",
+    "pytest-asyncio",
+    "pytest-dotenv",
+    "pytest-html"
 ]
 
 [tool.agent_packs]
@@ -79,7 +91,8 @@ reportUnknownVariableType = false
 failOnWarnings = false
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["test"]
+python_functions = ["test_*", "eval"]
 
 [tool.ruff]
 fix = true

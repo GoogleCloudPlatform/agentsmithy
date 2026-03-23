@@ -1,10 +1,10 @@
-# Copyright 2026 Google LLC
+# Copyright 2026 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,17 +24,15 @@ from typing import Dict, List, Optional, Union
 import google.cloud.storage as storage
 from dotenv import load_dotenv
 from google import genai
-from google.adk.tools import ToolContext
+from google.adk.tools import ToolContext, LongRunningFunctionTool, load_artifacts
 from google.cloud import bigquery, videointelligence
 from google.cloud.exceptions import GoogleCloudError, NotFound
 from google.genai import types
 from google.genai.types import Part
 from pydantic import BaseModel, Field, RootModel
 
-load_dotenv()
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
-LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
-BUCKET_NAME = os.getenv("GCS_BUCKET")
+from .config import PROJECT_ID, LOCATION, BUCKET_NAME
+GCS_OUTPUT_PATH = "video_analysis_agent_output"
 
 
 def input_processing_helper(
@@ -1149,3 +1147,17 @@ Here are the key categories and the types of tags to include. Go beyond the obvi
             retry_time = retry_time * 2
             retries += 1
     return {"status": "error", "message": "Gemini could not generate a response"}
+
+tools = [
+    LongRunningFunctionTool(scene_analysis),
+    LongRunningFunctionTool(write_json_to_bigquery),
+    LongRunningFunctionTool(entity_analysis),
+    LongRunningFunctionTool(write_results_gcs),
+    LongRunningFunctionTool(shot_analysis),
+    LongRunningFunctionTool(write_synopsis),
+    LongRunningFunctionTool(storyboard_trailer),
+    LongRunningFunctionTool(storyboard_highlight_reel),
+    LongRunningFunctionTool(content_categorization),
+    load_artifacts,
+]
+

@@ -1,0 +1,536 @@
+{
+  "eval_set_id": "provider_directory_search_eval",
+  "name": "Provider Directory Search Eval",
+  "description": "Provider Directory Search Eval",
+  "eval_cases": [
+    {
+      "eval_id": "5274cbd3-db27-44ee-b284-f173d0dceed6",
+      "conversation": [
+        {
+          "invocation_id": "e-1c869ae1-bb05-4965-a254-f8584ce9c62f",
+          "user_content": {
+            "parts": [
+              {
+                "text": "hi! "
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello! I'm your Provider Directory Search Assistant. I can help you find healthcare providers, facilities, and organizations in the Greater Houston, TX and Greater Chicago, IL metro areas. What are you looking for today?\n"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-f95c0a57-d55e-4f24-b10b-ae6780438574",
+          "user_content": {
+            "parts": [
+              {
+                "text": "ind a cardiologist near the Texas Medical Center"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I found 2 cardiologists near the Texas Medical Center:\n\n*   **Dr. Robert Tran**\n    *   Credentials: MD, FACC\n    *   Specialty: Cardiology (Interventional Cardiology)\n    *   Address: 6565 Fannin St, Houston, TX 77030\n    *   Phone: (713) 555-1008\n    *   Accepting New Patients: Yes\n    *   Telehealth Available: Yes\n    *   Distance: 0 miles\n\n*   **Dr. Carlos Mendez**\n    *   Credentials: MD, FAAP\n    *   Specialty: Pediatrics (Pediatric Cardiology)\n    *   Address: 6624 Fannin St, Houston, TX 77030\n    *   Phone: (713) 555-1014\n    *   Accepting New Patients: Yes\n    *   Telehealth Available: Yes\n    *   Distance: 0.1 miles\n\nWould you like to narrow down the search by other criteria, such as language spoken or gender, or perhaps check for other specialists at Houston Methodist Hospital?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-fe6464a0-781c-4b98-a107-cde8f97b2841",
+                "args": {
+                  "longitude": -95.3984,
+                  "specialty": "Cardiology",
+                  "latitude": 29.7097
+                },
+                "name": "find_nearby_practitioners"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-fe6464a0-781c-4b98-a107-cde8f97b2841",
+                "name": "find_nearby_practitioners",
+                "response": {
+                  "count": 2,
+                  "results": [
+                    {
+                      "npi": "1200000008",
+                      "name": "Dr. Robert Tran",
+                      "credentials": "MD, FACC",
+                      "specialty": "Cardiology",
+                      "subspecialties": [
+                        "Interventional Cardiology"
+                      ],
+                      "gender": "Male",
+                      "languages": [
+                        "English",
+                        "Vietnamese"
+                      ],
+                      "phone": "(713) 555-1008",
+                      "address": "6565 Fannin St, Houston, TX 77030",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Houston Methodist"
+                      ],
+                      "facilities": [
+                        "Houston Methodist Hospital"
+                      ],
+                      "distance_miles": 0
+                    },
+                    {
+                      "npi": "1200000014",
+                      "name": "Dr. Carlos Mendez",
+                      "credentials": "MD, FAAP",
+                      "specialty": "Pediatrics",
+                      "subspecialties": [
+                        "Pediatric Cardiology"
+                      ],
+                      "gender": "Male",
+                      "languages": [
+                        "English",
+                        "Spanish"
+                      ],
+                      "phone": "(713) 555-1014",
+                      "address": "6624 Fannin St, Houston, TX 77030",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Texas Pediatric Associates"
+                      ],
+                      "facilities": [
+                        "Texas Pediatric Associates \u2013 Medical Center"
+                      ],
+                      "distance_miles": 0.1
+                    }
+                  ]
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-5baeaa1a-8774-48c5-907e-9dcb443fb1f1",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Are there any psychologists near Logan Square?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I found 4 psychologists near Logan Square:\n\n*   **Dr. Isabel Reyes**\n    *   Credentials: PsyD\n    *   Specialty: Psychology (Cognitive Behavioral Therapy)\n    *   Address: 2553 N Kedzie Blvd, Chicago, IL 60647\n    *   Phone: (773) 555-1041\n    *   Accepting New Patients: Yes\n    *   Telehealth Available: Yes\n    *   Distance: 0.3 miles\n\n*   **Dr. Nathan Byrne**\n    *   Credentials: PhD\n    *   Specialty: Psychology (Clinical Neuropsychology)\n    *   Address: 2553 N Kedzie Blvd, Chicago, IL 60647\n    *   Phone: (773) 555-1042\n    *   Accepting New Patients: Yes\n    *   Telehealth Available: Yes\n    *   Distance: 0.3 miles\n\n*   **Dr. Marcus Grant**\n    *   Credentials: PhD\n    *   Specialty: Psychology (Trauma & PTSD)\n    *   Address: 2553 N Kedzie Blvd, Chicago, IL 60647\n    *   Phone: (773) 555-1044\n    *   Accepting New Patients: No\n    *   Telehealth Available: True\n    *   Distance: 0.3 miles\n\n*   **Dr. Anya Kowalski**\n    *   Credentials: PsyD\n    *   Specialty: Psychology (Child & Adolescent Psychology)\n    *   Address: 3059 W Diversey Ave, Chicago, IL 60647\n    *   Phone: (773) 555-1043\n    *   Accepting New Patients: Yes\n    *   Telehealth Available: True\n    *   Distance: 0.7 miles\n\nWould you like to refine this search, perhaps by looking for someone who speaks a specific language, or check other providers at one of these facilities?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-b15cb039-a574-4824-aa9b-e0f636fad947",
+                "args": {
+                  "latitude": 41.9231,
+                  "longitude": -87.7093,
+                  "specialty": "Psychology"
+                },
+                "name": "find_nearby_practitioners"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-b15cb039-a574-4824-aa9b-e0f636fad947",
+                "name": "find_nearby_practitioners",
+                "response": {
+                  "count": 4,
+                  "results": [
+                    {
+                      "npi": "1200000041",
+                      "name": "Dr. Isabel Reyes",
+                      "credentials": "PsyD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Cognitive Behavioral Therapy"
+                      ],
+                      "gender": "Female",
+                      "languages": [
+                        "English",
+                        "Spanish"
+                      ],
+                      "phone": "(773) 555-1041",
+                      "address": "2553 N Kedzie Blvd, Chicago, IL 60647",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Lakeshore Behavioral Health"
+                      ],
+                      "facilities": [
+                        "Logan Square Behavioral Health Center"
+                      ],
+                      "distance_miles": 0.3
+                    },
+                    {
+                      "npi": "1200000042",
+                      "name": "Dr. Nathan Byrne",
+                      "credentials": "PhD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Clinical Neuropsychology"
+                      ],
+                      "gender": "Male",
+                      "languages": [
+                        "English"
+                      ],
+                      "phone": "(773) 555-1042",
+                      "address": "2553 N Kedzie Blvd, Chicago, IL 60647",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Lakeshore Behavioral Health"
+                      ],
+                      "facilities": [
+                        "Logan Square Behavioral Health Center"
+                      ],
+                      "distance_miles": 0.3
+                    },
+                    {
+                      "npi": "1200000044",
+                      "name": "Dr. Marcus Grant",
+                      "credentials": "PhD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Trauma & PTSD"
+                      ],
+                      "gender": "Male",
+                      "languages": [
+                        "English"
+                      ],
+                      "phone": "(773) 555-1044",
+                      "address": "2553 N Kedzie Blvd, Chicago, IL 60647",
+                      "accepting_new_patients": false,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Lakeshore Behavioral Health"
+                      ],
+                      "facilities": [
+                        "Logan Square Behavioral Health Center"
+                      ],
+                      "distance_miles": 0.3
+                    },
+                    {
+                      "npi": "1200000043",
+                      "name": "Dr. Anya Kowalski",
+                      "credentials": "PsyD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Child & Adolescent Psychology"
+                      ],
+                      "gender": "Female",
+                      "languages": [
+                        "English",
+                        "Polish"
+                      ],
+                      "phone": "(773) 555-1043",
+                      "address": "3059 W Diversey Ave, Chicago, IL 60647",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "North Side Community Health"
+                      ],
+                      "facilities": [
+                        "North Side Community Health \u2013 Logan Square"
+                      ],
+                      "distance_miles": 0.7
+                    }
+                  ]
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-ce2fae85-897e-4da8-80fe-ba32aed5d0df",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Where can I find a pharmacy near the Field Museum?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I found 4 pharmacies near the Field Museum:\n\n*   **Museum Campus Pharmacy**\n    *   Address: 1301 S Lake Shore Dr, Chicago, IL 60605\n    *   Phone: (312) 555-0218\n    *   Services: pharmacy, prescriptions, vaccinations, otc_medications\n    *   Distance: 0.1 miles\n    *   Hours: Mon-Fri 8am-9pm, Sat 9am-6pm, Sun 10am-5pm\n\n*   **South Loop Pharmacy & Wellness**\n    *   Address: 47 W Polk St, Chicago, IL 60605\n    *   Phone: (312) 555-0219\n    *   Services: pharmacy, prescriptions, vaccinations, compounding, otc_medications\n    *   Distance: 0.7 miles\n    *   Hours: Mon-Fri 8am-8pm, Sat 9am-5pm\n\n*   **Prairie Avenue Pharmacy**\n    *   Address: 2100 S Prairie Ave, Chicago, IL 60616\n    *   Phone: (312) 555-0220\n    *   Services: pharmacy, prescriptions, vaccinations, delivery\n    *   Distance: 0.8 miles\n    *   Hours: Mon-Sat 9am-7pm\n\n*   **Bucktown-Wicker Park Pharmacy**\n    *   Address: 1701 N Milwaukee Ave, Chicago, IL 60647\n    *   Phone: (773) 555-0223\n    *   Services: pharmacy, prescriptions, vaccinations, otc_medications\n    *   Distance: 4.4 miles\n    *   Hours: Mon-Fri 8am-9pm, Sat 9am-6pm, Sun 10am-5pm\n\nIs there anything else I can help you find, or would you like to narrow down the pharmacy search?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-942847dd-2c20-4818-9bfe-52ea870ce15d",
+                "args": {
+                  "facility_type": "pharmacy",
+                  "longitude": -87.617,
+                  "latitude": 41.8663
+                },
+                "name": "find_nearby_facilities"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-942847dd-2c20-4818-9bfe-52ea870ce15d",
+                "name": "find_nearby_facilities",
+                "response": {
+                  "count": 4,
+                  "results": [
+                    {
+                      "id": "FAC018",
+                      "npi": "1100000018",
+                      "name": "Museum Campus Pharmacy",
+                      "type": "pharmacy",
+                      "organization": "",
+                      "phone": "(312) 555-0218",
+                      "address": "1301 S Lake Shore Dr, Chicago, IL 60605",
+                      "services": [
+                        "pharmacy",
+                        "prescriptions",
+                        "vaccinations",
+                        "otc_medications"
+                      ],
+                      "hours": "Mon-Fri 8am-9pm, Sat 9am-6pm, Sun 10am-5pm",
+                      "distance_miles": 0.1
+                    },
+                    {
+                      "id": "FAC019",
+                      "npi": "1100000019",
+                      "name": "South Loop Pharmacy & Wellness",
+                      "type": "pharmacy",
+                      "organization": "",
+                      "phone": "(312) 555-0219",
+                      "address": "47 W Polk St, Chicago, IL 60605",
+                      "services": [
+                        "pharmacy",
+                        "prescriptions",
+                        "vaccinations",
+                        "compounding",
+                        "otc_medications"
+                      ],
+                      "hours": "Mon-Fri 8am-8pm, Sat 9am-5pm",
+                      "distance_miles": 0.7
+                    },
+                    {
+                      "id": "FAC020",
+                      "npi": "1100000020",
+                      "name": "Prairie Avenue Pharmacy",
+                      "type": "pharmacy",
+                      "organization": "",
+                      "phone": "(312) 555-0220",
+                      "address": "2100 S Prairie Ave, Chicago, IL 60616",
+                      "services": [
+                        "pharmacy",
+                        "prescriptions",
+                        "vaccinations",
+                        "delivery"
+                      ],
+                      "hours": "Mon-Sat 9am-7pm",
+                      "distance_miles": 0.8
+                    },
+                    {
+                      "id": "FAC023",
+                      "npi": "1100000023",
+                      "name": "Bucktown-Wicker Park Pharmacy",
+                      "type": "pharmacy",
+                      "organization": "",
+                      "phone": "(773) 555-0223",
+                      "address": "1701 N Milwaukee Ave, Chicago, IL 60647",
+                      "services": [
+                        "pharmacy",
+                        "prescriptions",
+                        "vaccinations",
+                        "otc_medications"
+                      ],
+                      "hours": "Mon-Fri 8am-9pm, Sat 9am-6pm, Sun 10am-5pm",
+                      "distance_miles": 4.4
+                    }
+                  ]
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        },
+        {
+          "invocation_id": "e-f1cfa710-42e1-4ba2-9779-9120a7b4132f",
+          "user_content": {
+            "parts": [
+              {
+                "text": "yes can you find a spanish speaking doctor in psychologist near logan square"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I found one Spanish-speaking psychologist near Logan Square:\n\n*   **Dr. Isabel Reyes**\n    *   Credentials: PsyD\n    *   Specialty: Psychology (Cognitive Behavioral Therapy)\n    *   Address: 2553 N Kedzie Blvd, Chicago, IL 60647\n    *   Phone: (773) 555-1041\n    *   Accepting New Patients: Yes\n    *   Telehealth Available: Yes\n    *   Distance: 0.3 miles\n    *   Languages: English, Spanish\n\nWould you like to search for psychologists with other language proficiencies, or perhaps explore other specialties?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-9aa1a7c9-845e-45b9-a6f9-c6bca81553e3",
+                "args": {
+                  "language": "Spanish",
+                  "longitude": -87.7093,
+                  "latitude": 41.9231,
+                  "specialty": "Psychology"
+                },
+                "name": "find_nearby_practitioners"
+              }
+            ],
+            "tool_responses": [
+              {
+                "id": "adk-9aa1a7c9-845e-45b9-a6f9-c6bca81553e3",
+                "name": "find_nearby_practitioners",
+                "response": {
+                  "count": 4,
+                  "results": [
+                    {
+                      "npi": "1200000041",
+                      "name": "Dr. Isabel Reyes",
+                      "credentials": "PsyD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Cognitive Behavioral Therapy"
+                      ],
+                      "gender": "Female",
+                      "languages": [
+                        "English",
+                        "Spanish"
+                      ],
+                      "phone": "(773) 555-1041",
+                      "address": "2553 N Kedzie Blvd, Chicago, IL 60647",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Lakeshore Behavioral Health"
+                      ],
+                      "facilities": [
+                        "Logan Square Behavioral Health Center"
+                      ],
+                      "distance_miles": 0.3
+                    },
+                    {
+                      "npi": "1200000042",
+                      "name": "Dr. Nathan Byrne",
+                      "credentials": "PhD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Clinical Neuropsychology"
+                      ],
+                      "gender": "Male",
+                      "languages": [
+                        "English"
+                      ],
+                      "phone": "(773) 555-1042",
+                      "address": "2553 N Kedzie Blvd, Chicago, IL 60647",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Lakeshore Behavioral Health"
+                      ],
+                      "facilities": [
+                        "Logan Square Behavioral Health Center"
+                      ],
+                      "distance_miles": 0.3
+                    },
+                    {
+                      "npi": "1200000044",
+                      "name": "Dr. Marcus Grant",
+                      "credentials": "PhD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Trauma & PTSD"
+                      ],
+                      "gender": "Male",
+                      "languages": [
+                        "English"
+                      ],
+                      "phone": "(773) 555-1044",
+                      "address": "2553 N Kedzie Blvd, Chicago, IL 60647",
+                      "accepting_new_patients": false,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "Lakeshore Behavioral Health"
+                      ],
+                      "facilities": [
+                        "Logan Square Behavioral Health Center"
+                      ],
+                      "distance_miles": 0.3
+                    },
+                    {
+                      "npi": "1200000043",
+                      "name": "Dr. Anya Kowalski",
+                      "credentials": "PsyD",
+                      "specialty": "Psychology",
+                      "subspecialties": [
+                        "Child & Adolescent Psychology"
+                      ],
+                      "gender": "Female",
+                      "languages": [
+                        "English",
+                        "Polish"
+                      ],
+                      "phone": "(773) 555-1043",
+                      "address": "3059 W Diversey Ave, Chicago, IL 60647",
+                      "accepting_new_patients": true,
+                      "telehealth_available": true,
+                      "organizations": [
+                        "North Side Community Health"
+                      ],
+                      "facilities": [
+                        "North Side Community Health \u2013 Logan Square"
+                      ],
+                      "distance_miles": 0.7
+                    }
+                  ]
+                }
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "agent_bar_v2",
+        "user_id": "user",
+        "state": {
+          "industry_id": "hcls",
+          "use_case_id": "provider_search_agent"
+        }
+      }
+    }
+  ]
+}

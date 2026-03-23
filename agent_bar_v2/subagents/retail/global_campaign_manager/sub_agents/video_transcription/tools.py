@@ -1,3 +1,17 @@
+# Copyright 2026 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """Tools for Transcription Agent"""
 
 import json
@@ -11,7 +25,7 @@ import google.cloud.storage as storage
 from dotenv import load_dotenv
 from fpdf import FPDF
 from google import genai
-from google.adk.tools import ToolContext
+from google.adk.tools import ToolContext, LongRunningFunctionTool, load_artifacts
 from google.api_core import client_options
 from google.cloud import speech_v2 as cloud_speech
 from google.genai import types
@@ -561,3 +575,12 @@ Synopsis:"""
             retries += 1
     print("Gemini could not annotate file.")
     return {"status": "error", "message": "Gemini could not correct the transcript."}
+
+tools = [
+    LongRunningFunctionTool(transcribe_batch_gcs_input_inline_output_v2),
+    LongRunningFunctionTool(fix_transcripts_llm),
+    LongRunningFunctionTool(extract_audio),
+    LongRunningFunctionTool(write_results_gcs),
+    LongRunningFunctionTool(write_synopsis),
+    load_artifacts,
+]
