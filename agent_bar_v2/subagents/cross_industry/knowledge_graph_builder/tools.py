@@ -20,6 +20,7 @@ import logging
 from pydantic import BaseModel
 
 import sqlparse
+import vertexai
 from google.cloud import bigquery
 from langchain_community.graphs.graph_document import (
     GraphDocument,
@@ -29,6 +30,7 @@ from langchain_community.graphs.graph_document import (
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_spanner import SpannerGraphStore, SpannerGraphQAChain, SpannerGraphStore
+from langchain_google_spanner.graph_retriever import SpannerGraphVectorContextRetriever
 from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
 
 from .config import (
@@ -62,12 +64,26 @@ def get_services():
     vertexai.init(project=PROJECT_ID, location=PROJECT_LOCATION)
 
     state = SessionState()
+
     embeddings = VertexAIEmbeddings(
-        model_name="text-embedding-005",
+        model_name="gemini-embedding-001",
         project=PROJECT_ID,
-        location=PROJECT_LOCATION,
     )
     return state, embeddings
+
+def get_bq_datasets() -> list:
+    """
+    return a list of `project_id`s and `dataset_id`s that can be explored by the agent
+    """
+    approved_datasets = [
+        ('bigquery-public-data', 'austin_bikeshare'),
+        ('bigquery-public-data', 'bbc_news'),
+        ('bigquery-public-data', 'iowa_liquor_sales'),
+        ('bigquery-public-data', 'stackoverflow'),
+        (PROJECT_ID, 'cymbal_retail')
+    ]
+    return approved_datasets
+
 
 # dynamic graph tools
 def get_bq_dataset_schema(project_id: str, dataset_id: str) -> str:
@@ -161,170 +177,170 @@ def is_safe_bq_query(query: str) -> bool:
         return False
 
 
-def execute_dynamic_graph_build(
-    project_id: str,
-    graph_store: SpannerGraphStore,
-    build_plan_json: str,
-    embedding_service: VertexAIEmbeddings,  # Add embedding_service as an argument
-    cleanup_first: bool = False,
-) -> str:
-    """
-    Executes the graph build process, now including explicit embedding generation.
-    """
-    logging.info("TOOL: Executing Dynamic Graph Build")
-    try:
-        plan = json.loads(build_plan_json)
+# def execute_dynamic_graph_build(
+#     project_id: str,
+#     graph_store: SpannerGraphStore,
+#     build_plan_json: str,
+#     embedding_service: VertexAIEmbeddings,  # Add embedding_service as an argument
+#     cleanup_first: bool = False,
+# ) -> str:
+#     """
+#     Executes the graph build process, now including explicit embedding generation.
+#     """
+#     logging.info("TOOL: Executing Dynamic Graph Build")
+#     try:
+#         plan = json.loads(build_plan_json)
 
-        bq_query = plan["bq_etl_query"]
-        if not is_safe_bq_query(bq_query):
-            logging.error(f"Generated BigQuery query failed validation: {bq_query}")
-            return (
-                "Error: Malicious or invalid BigQuery query detected. Execution halted."
-            )
+#         bq_query = plan["bq_etl_query"]
+#         if not is_safe_bq_query(bq_query):
+#             logging.error(f"Generated BigQuery query failed validation: {bq_query}")
+#             return (
+#                 "Error: Malicious or invalid BigQuery query detected. Execution halted."
+#             )
 
-        client = bigquery.Client(project=project_id)
+#         client = bigquery.Client(project=project_id)
 
-        rows = list(client.query(plan["bq_etl_query"]).result())
-        if not rows:
-            return "ETL query returned no results. Graph is empty."
+#         rows = list(client.query(plan["bq_etl_query"]).result())
+#         if not rows:
+#             return "ETL query returned no results. Graph is empty."
 
-        nodes = {}
-        final_relationships = []
-        seen_relationships = set()
+#         nodes = {}
+#         final_relationships = []
+#         seen_relationships = set()
 
-        for row in rows:
-            row_nodes = {
-                cfg["node_type"]: nodes.setdefault(
-                    (str(row[cfg["id_column"]]), cfg["node_type"]),
-                    Node(
-                        id=str(row[cfg["id_column"]]),
-                        type=cfg["node_type"],
-                        properties={
-                            "name": str(row[cfg["id_column"]]),
-                            "description": f"A graph node representing a {cfg['node_type']} with the name {str(row[cfg['id_column']])}.",
-                        },
-                    ),
-                )
-                for cfg in plan["nodes"]
-            }
-            for rel in plan["relationships"]:
-                source = row_nodes.get(rel["source"])
-                target = row_nodes.get(rel["target"])
-                if source and target:
-                    rel_type = rel.get("type", "RELATED_TO")
+#         for row in rows:
+#             row_nodes = {
+#                 cfg["node_type"]: nodes.setdefault(
+#                     (str(row[cfg["id_column"]]), cfg["node_type"]),
+#                     Node(
+#                         id=str(row[cfg["id_column"]]),
+#                         type=cfg["node_type"],
+#                         properties={
+#                             "name": str(row[cfg["id_column"]]),
+#                             "description": f"A graph node representing a {cfg['node_type']} with the name {str(row[cfg['id_column']])}.",
+#                         },
+#                     ),
+#                 )
+#                 for cfg in plan["nodes"]
+#             }
+#             for rel in plan["relationships"]:
+#                 source = row_nodes.get(rel["source"])
+#                 target = row_nodes.get(rel["target"])
+#                 if source and target:
+#                     rel_type = rel.get("type", "RELATED_TO")
 
-                    # Now it's safe to access .id and create the key
-                    relationship_key = (source.id, target.id, rel_type)
+#                     # Now it's safe to access .id and create the key
+#                     relationship_key = (source.id, target.id, rel_type)
 
-                    if relationship_key not in seen_relationships:
-                        seen_relationships.add(relationship_key)
-                        final_relationships.append(
-                            Relationship(source=source, target=target, type=rel_type)
-                        )
+#                     if relationship_key not in seen_relationships:
+#                         seen_relationships.add(relationship_key)
+#                         final_relationships.append(
+#                             Relationship(source=source, target=target, type=rel_type)
+#                         )
 
-        graph_doc = GraphDocument(
-            nodes=list(nodes.values()),
-            relationships=final_relationships,
-            source=Document(page_content="Dynamic Build"),
-        )
+#         graph_doc = GraphDocument(
+#             nodes=list(nodes.values()),
+#             relationships=final_relationships,
+#             source=Document(page_content="Dynamic Build"),
+#         )
 
-        # ** NEW STEP: Explicitly generate and attach embeddings to each node **
-        logging.info(f"Generating embeddings for {len(graph_doc.nodes)} nodes...")
-        for node in graph_doc.nodes:
-            node_content_for_embedding = node.properties.get("name", node.id)
-            node.properties["embedding"] = embedding_service.embed_query(
-                node_content_for_embedding
-            )
+#         # ** NEW STEP: Explicitly generate and attach embeddings to each node **
+#         logging.info(f"Generating embeddings for {len(graph_doc.nodes)} nodes...")
+#         for node in graph_doc.nodes:
+#             node_content_for_embedding = node.properties.get("name", node.id)
+#             node.properties["embedding"] = embedding_service.embed_query(
+#                 node_content_for_embedding
+#             )
 
-        if cleanup_first:
-            graph_store.cleanup()
+#         if cleanup_first:
+#             graph_store.cleanup()
 
-        logging.info("Storing graph and embeddings in Spanner...")
-        graph_store.add_graph_documents([graph_doc])
+#         logging.info("Storing graph and embeddings in Spanner...")
+#         graph_store.add_graph_documents([graph_doc])
 
-        return f"Success! Built graph with {len(nodes)} nodes and {len(final_relationships)} relationships."
+#         return f"Success! Built graph with {len(nodes)} nodes and {len(final_relationships)} relationships."
 
-    except Exception as e:
-        return f"An unexpected error occurred during graph build: {e}"
+#     except Exception as e:
+#         return f"An unexpected error occurred during graph build: {e}"
     
-# spanner tools
+# # spanner tools
 
-_qa_chain: Optional[SpannerGraphQAChain] = None
+# _qa_chain: Optional[SpannerGraphQAChain] = None
 
-def get_spanner_graph_qa_chain(graph_store: SpannerGraphStore) -> SpannerGraphQAChain:
-    """Initializes or returns the cached SpannerGraphQAChain."""
-    global _qa_chain
-    if _qa_chain:
-        return _qa_chain
+# def get_spanner_graph_qa_chain(graph_store: SpannerGraphStore) -> SpannerGraphQAChain:
+#     """Initializes or returns the cached SpannerGraphQAChain."""
+#     global _qa_chain
+#     if _qa_chain:
+#         return _qa_chain
 
-    # Initialize LLM
-    llm = ChatVertexAI(
-        model_name="gemini-2.5-flash",
-        temperature=0,
-        project=os.environ.get("GOOGLE_CLOUD_PROJECT"),
-        location=os.environ.get("GOOGLE_CLOUD_LOCATION"),
-    )
+#     # Initialize LLM
+#     llm = ChatVertexAI(
+#         model_name="gemini-2.5-flash",
+#         temperature=0,
+#         project=os.environ.get("GOOGLE_CLOUD_PROJECT"),
+#         location=os.environ.get("GOOGLE_CLOUD_LOCATION"),
+#     )
 
-    # Initialize Chain
-    _qa_chain = SpannerGraphQAChain.from_llm(
-        llm,
-        graph=graph_store,
-        allow_dangerous_requests=True,
-        verbose=True,
-        return_intermediate_steps=True,
-    )
-    return _qa_chain
-
-
-def get_spanner_schema_core(graph_store: SpannerGraphStore) -> str:
-    """
-    Retrieves the schema of the Spanner Graph, including node labels and properties.
-    Use this to understand what data maps to which properties (e.g. is it 'Active' or 'active'?).
-    """
-    try:
-        chain = get_spanner_graph_qa_chain(graph_store)
-        if hasattr(chain.graph, "get_schema"):
-            return chain.graph.get_schema
-        # Fallback if get_schema property/method access differs
-        return str(chain.graph.schema)
-    except Exception as e:
-        return f"Error retrieving schema: {str(e)}"
+#     # Initialize Chain
+#     _qa_chain = SpannerGraphQAChain.from_llm(
+#         llm,
+#         graph=graph_store,
+#         allow_dangerous_requests=True,
+#         verbose=True,
+#         return_intermediate_steps=True,
+#     )
+#     return _qa_chain
 
 
-def query_spanner_graph_core(question: str, graph_store: SpannerGraphStore) -> str:
-    """
-    Answers a question by querying the Spanner Graph.
-    Returns the answer and the GQL query used.
-    """
-    try:
-        chain = get_spanner_graph_qa_chain(graph_store)
-        result = chain.invoke({"query": question})
+# def get_spanner_schema_core(graph_store: SpannerGraphStore) -> str:
+#     """
+#     Retrieves the schema of the Spanner Graph, including node labels and properties.
+#     Use this to understand what data maps to which properties (e.g. is it 'Active' or 'active'?).
+#     """
+#     try:
+#         chain = get_spanner_graph_qa_chain(graph_store)
+#         if hasattr(chain.graph, "get_schema"):
+#             return chain.graph.get_schema
+#         # Fallback if get_schema property/method access differs
+#         return str(chain.graph.schema)
+#     except Exception as e:
+#         return f"Error retrieving schema: {str(e)}"
 
-        answer = result.get("result", "")
-        intermediate_steps = result.get("intermediate_steps", [])
 
-        gql_query = "N/A"
-        formatted_result = {
-            "answer": answer,
-            "generated_gql": gql_query,
-            "intermediate_steps": str(intermediate_steps),
-        }
+# def query_spanner_graph_core(question: str, graph_store: SpannerGraphStore) -> str:
+#     """
+#     Answers a question by querying the Spanner Graph.
+#     Returns the answer and the GQL query used.
+#     """
+#     try:
+#         chain = get_spanner_graph_qa_chain(graph_store)
+#         result = chain.invoke({"query": question})
 
-        for step in intermediate_steps:
-            if isinstance(step, dict) and "query" in step:
-                formatted_result["generated_gql"] = step["query"]
-            elif isinstance(step, str) and "GRAPH" in step:
-                formatted_result["generated_gql"] = step
+#         answer = result.get("result", "")
+#         intermediate_steps = result.get("intermediate_steps", [])
 
-        if not answer or answer.strip() == "[]":
-            formatted_result["warning"] = (
-                "The query returned no results. Consider checking the schema with `get_spanner_schema` or adjusting filters (e.g. case sensitivity)."
-            )
+#         gql_query = "N/A"
+#         formatted_result = {
+#             "answer": answer,
+#             "generated_gql": gql_query,
+#             "intermediate_steps": str(intermediate_steps),
+#         }
 
-        return json.dumps(formatted_result, indent=2)
+#         for step in intermediate_steps:
+#             if isinstance(step, dict) and "query" in step:
+#                 formatted_result["generated_gql"] = step["query"]
+#             elif isinstance(step, str) and "GRAPH" in step:
+#                 formatted_result["generated_gql"] = step
 
-    except Exception as e:
-        return f"Error querying Spanner Graph: {str(e)}"
+#         if not answer or answer.strip() == "[]":
+#             formatted_result["warning"] = (
+#                 "The query returned no results. Consider checking the schema with `get_spanner_schema` or adjusting filters (e.g. case sensitivity)."
+#             )
+
+#         return json.dumps(formatted_result, indent=2)
+
+#     except Exception as e:
+#         return f"Error querying Spanner Graph: {str(e)}"
 
 # agent definitions
 def generate_build_plan_tool(
@@ -405,22 +421,25 @@ def _clean_json_string(json_string: str) -> str:
     return json_string.strip()
 
 
-def get_schema_wrapper() -> str:
+def get_schema_wrapper(project_id: str, dataset_id: str) -> str:
     """Inspects the BigQuery dataset to get table schemas."""
-    return get_bq_dataset_schema(project_id=PROJECT_ID, dataset_id=BQ_DATASET_ID)
+    if BQ_DATASET_ID is None:
+        datasets = str(get_bq_datasets())
+        return """please select a dataset from this list {datasets}}"""
+    return get_bq_dataset_schema(project_id=project_id, dataset_id=dataset_id)
 
 
-def call_builder_tool_wrapper(user_request: str) -> str:
+def call_builder_tool_wrapper(user_request: str, project_id: str, dataset_id: str) -> str:
     """Generates a JSON build plan by calling the intelligent builder tool based on the user's request.
     Args:
         user_request: The natural language request from the user detailing what kind of graph they want to build (e.g., node types and relationships).
     """
-    schema_json = get_schema_wrapper()
+    schema_json = get_schema_wrapper(dataset_id)
     plan_json = generate_build_plan_tool(
         user_request=user_request,
         schema_json=schema_json,
-        project_id=PROJECT_ID,
-        dataset_id=BQ_DATASET_ID,
+        project_id=project_id,
+        dataset_id=dataset_id,
         graph_name=GRAPH_NAME,
     )
     # Store it immediately so we don't have to pass huge JSON strings around
@@ -433,100 +452,100 @@ def call_builder_tool_wrapper(user_request: str) -> str:
     return "Build plan generated and saved to session state successfully."
 
 
-def initialize_graph_services_wrapper() -> str:
-    try:
-        session_state, embedding_service = get_services()
-        if not session_state.build_plan:
-            return "Error: No build plan found in session state."
-        plan = session_state.build_plan
-        node_types = [node["node_type"] for node in plan.get("nodes", [])]
-        if not node_types:
-            return "Error: Build plan contains no node types to index."
-        session_state.graph_store = SpannerGraphStore(
-            instance_id=SPANNER_INSTANCE,
-            database_id=SPANNER_DATABASE,
-            graph_name=GRAPH_NAME,
-        )
-        session_state.retriever = SpannerGraphVectorContextRetriever.from_params(
-            graph_store=session_state.graph_store,
-            embedding_service=embedding_service,
-            llm=ChatVertexAI(
-                model="gemini-2.5-flash",
-                project=PROJECT_ID,
-                location=PROJECT_LOCATION,
-            ),
-            expand_by_hops=2,
-        )
-        return "Successfully initialized graph services."
-    except Exception as e:
-        return f"Error during service initialization: {e}"
+# def initialize_graph_services_wrapper() -> str:
+#     try:
+#         session_state, embedding_service = get_services()
+#         if not session_state.build_plan:
+#             return "Error: No build plan found in session state."
+#         plan = session_state.build_plan
+#         node_types = [node["node_type"] for node in plan.get("nodes", [])]
+#         if not node_types:
+#             return "Error: Build plan contains no node types to index."
+#         session_state.graph_store = SpannerGraphStore(
+#             instance_id=SPANNER_INSTANCE,
+#             database_id=SPANNER_DATABASE,
+#             graph_name=GRAPH_NAME,
+#         )
+#         session_state.retriever = SpannerGraphVectorContextRetriever.from_params(
+#             graph_store=session_state.graph_store,
+#             embedding_service=embedding_service,
+#             llm=ChatVertexAI(
+#                 model="gemini-2.5-flash",
+#                 project=PROJECT_ID,
+#                 location=PROJECT_LOCATION,
+#             ),
+#             expand_by_hops=2,
+#         )
+#         return "Successfully initialized graph services."
+#     except Exception as e:
+#         return f"Error during service initialization: {e}"
 
 
-def execute_build_wrapper(cleanup_graph: bool = False) -> str:
-    """Executes the stored JSON build plan to create the graph AND generate embeddings."""
-    session_state, embedding_service = get_services()
-    if not session_state.graph_store:
-        return "Error: Graph services must be initialized first."
-    if not session_state.build_plan:
-        return "Error: No build plan found in session state."
+# def execute_build_wrapper(cleanup_graph: bool = False) -> str:
+#     """Executes the stored JSON build plan to create the graph AND generate embeddings."""
+#     session_state, embedding_service = get_services()
+#     if not session_state.graph_store:
+#         return "Error: Graph services must be initialized first."
+#     if not session_state.build_plan:
+#         return "Error: No build plan found in session state."
 
-    # Serialize it back to pass to the dynamic execution tool
-    plan_json_str = json.dumps(session_state.build_plan)
-    return execute_dynamic_graph_build(
-        project_id=PROJECT_ID,
-        graph_store=session_state.graph_store,
-        build_plan_json=plan_json_str,
-        embedding_service=embedding_service,
-        cleanup_first=cleanup_graph,
-    )
-
-
-def _is_safe_cypher_query(query: str) -> bool:
-    """
-    Validates that the Cypher query does not contain destructive keywords.
-    """
-    # List of keywords that modify or delete data
-    disallowed_keywords = ["DELETE", "DETACH", "CREATE", "SET", "REMOVE", "MERGE"]
-    query_upper = query.upper()
-    for keyword in disallowed_keywords:
-        if keyword in query_upper:
-            return False
-    return True
+#     # Serialize it back to pass to the dynamic execution tool
+#     plan_json_str = json.dumps(session_state.build_plan)
+#     return execute_dynamic_graph_build(
+#         project_id=PROJECT_ID,
+#         graph_store=session_state.graph_store,
+#         build_plan_json=plan_json_str,
+#         embedding_service=embedding_service,
+#         cleanup_first=cleanup_graph,
+#     )
 
 
-# ** NEW, SIMPLER QUERY TOOLS **
-def execute_direct_traversal(tool_name: str, parameters_json: str) -> str:
-    """Executes a specific, predefined traversal query. Use this for simple, direct lookups."""
-    session_state, embedding_service = get_services()
-    if not session_state.graph_store or not session_state.build_plan:
-        return "Error: Services not initialized or build plan not found."
-    try:
-        params = json.loads(parameters_json)
-        query_template = session_state.build_plan["traversal_tools"].get(tool_name)
-        if not query_template:
-            return f"Error: Direct traversal tool '{tool_name}' not found in the build plan."
-        if not _is_safe_cypher_query(query_template):
-            return (
-                "Error: Malicious or invalid Cypher query detected. Execution halted."
-            )
-        query_to_run = query_template.format(graph_name=GRAPH_NAME)
-        results = session_state.graph_store.query(query_to_run, params=params)
-        return json.dumps(results, indent=2) if results else "No results found."
-    except Exception as e:
-        return f"Error executing direct traversal: {e}"
+# def _is_safe_cypher_query(query: str) -> bool:
+#     """
+#     Validates that the Cypher query does not contain destructive keywords.
+#     """
+#     # List of keywords that modify or delete data
+#     disallowed_keywords = ["DELETE", "DETACH", "CREATE", "SET", "REMOVE", "MERGE"]
+#     query_upper = query.upper()
+#     for keyword in disallowed_keywords:
+#         if keyword in query_upper:
+#             return False
+#     return True
 
 
-def answer_question_with_graph_rag(natural_language_query: str) -> str:
-    """Answers complex or vague questions using the powerful GraphRAG retriever."""
-    session_state, embedding_service = get_services()
-    if not session_state.retriever:
-        return "Error: Graph retriever not available. Please build the graph first."
-    try:
-        result_documents = session_state.retriever.invoke(natural_language_query)
-        formatted_results = [json.loads(doc.page_content) for doc in result_documents]
-        return json.dumps(formatted_results, indent=2)
-    except Exception as e:
-        return f"Error during GraphRAG query: {e}"
+# # ** NEW, SIMPLER QUERY TOOLS **
+# def execute_direct_traversal(tool_name: str, parameters_json: str) -> str:
+#     """Executes a specific, predefined traversal query. Use this for simple, direct lookups."""
+#     session_state, embedding_service = get_services()
+#     if not session_state.graph_store or not session_state.build_plan:
+#         return "Error: Services not initialized or build plan not found."
+#     try:
+#         params = json.loads(parameters_json)
+#         query_template = session_state.build_plan["traversal_tools"].get(tool_name)
+#         if not query_template:
+#             return f"Error: Direct traversal tool '{tool_name}' not found in the build plan."
+#         if not _is_safe_cypher_query(query_template):
+#             return (
+#                 "Error: Malicious or invalid Cypher query detected. Execution halted."
+#             )
+#         query_to_run = query_template.format(graph_name=GRAPH_NAME)
+#         results = session_state.graph_store.query(query_to_run, params=params)
+#         return json.dumps(results, indent=2) if results else "No results found."
+#     except Exception as e:
+#         return f"Error executing direct traversal: {e}"
+
+
+# def answer_question_with_graph_rag(natural_language_query: str) -> str:
+#     """Answers complex or vague questions using the powerful GraphRAG retriever."""
+#     session_state, embedding_service = get_services()
+#     if not session_state.retriever:
+#         return "Error: Graph retriever not available. Please build the graph first."
+#     try:
+#         result_documents = session_state.retriever.invoke(natural_language_query)
+#         formatted_results = [json.loads(doc.page_content) for doc in result_documents]
+#         return json.dumps(formatted_results, indent=2)
+#     except Exception as e:
+#         return f"Error during GraphRAG query: {e}"
 
 
 def summarize_build_plan_wrapper() -> str:
@@ -538,46 +557,47 @@ def summarize_build_plan_wrapper() -> str:
     return summarize_build_plan_tool(build_plan_json=plan_json_str)
 
 
-# ** NEW SPANNER QA TOOLS **
-def get_spanner_schema_wrapper() -> str:
-    """
-    Retrieves the schema of the Spanner Graph, including node labels and properties.
-    Use this to understand what data maps to which properties (e.g. is it 'Active' or 'active'?).
-    """
-    session_state, _ = get_services()
-    if not session_state.graph_store:
-        # Initialize graph store if not already done, just to get schema
-        session_state.graph_store = SpannerGraphStore(
-            instance_id=SPANNER_INSTANCE,
-            database_id=SPANNER_DATABASE,
-            graph_name=GRAPH_NAME,
-        )
-    return get_spanner_schema_core(session_state.graph_store)
+# # ** NEW SPANNER QA TOOLS **
+# def get_spanner_schema_wrapper() -> str:
+#     """
+#     Retrieves the schema of the Spanner Graph, including node labels and properties.
+#     Use this to understand what data maps to which properties (e.g. is it 'Active' or 'active'?).
+#     """
+#     session_state, _ = get_services()
+#     if not session_state.graph_store:
+#         # Initialize graph store if not already done, just to get schema
+#         session_state.graph_store = SpannerGraphStore(
+#             instance_id=SPANNER_INSTANCE,
+#             database_id=SPANNER_DATABASE,
+#             graph_name=GRAPH_NAME,
+#         )
+#     return get_spanner_schema_core(session_state.graph_store)
 
 
-def query_spanner_graph_wrapper(question: str) -> str:
-    """
-    Answers a question by querying the Spanner Graph generating GQL automatically.
-    Returns the answer and the GQL query used.
-    """
-    session_state, _ = get_services()
-    if not session_state.graph_store:
-        # Initialize graph store if not already done
-        session_state.graph_store = SpannerGraphStore(
-            instance_id=SPANNER_INSTANCE,
-            database_id=SPANNER_DATABASE,
-            graph_name=GRAPH_NAME,
-        )
-    return query_spanner_graph_core(question, session_state.graph_store)
+# def query_spanner_graph_wrapper(question: str) -> str:
+#     """
+#     Answers a question by querying the Spanner Graph generating GQL automatically.
+#     Returns the answer and the GQL query used.
+#     """
+#     session_state, _ = get_services()
+#     if not session_state.graph_store:
+#         # Initialize graph store if not already done
+#         session_state.graph_store = SpannerGraphStore(
+#             instance_id=SPANNER_INSTANCE,
+#             database_id=SPANNER_DATABASE,
+#             graph_name=GRAPH_NAME,
+#         )
+#     return query_spanner_graph_core(question, session_state.graph_store)
 
 tools=[
+    get_bq_datasets,
     get_schema_wrapper,
     call_builder_tool_wrapper,
     summarize_build_plan_wrapper,
-    initialize_graph_services_wrapper,
-    execute_build_wrapper,
-    execute_direct_traversal,
-    answer_question_with_graph_rag,
-    get_spanner_schema_wrapper,
-    query_spanner_graph_wrapper,
+    # initialize_graph_services_wrapper,
+    # execute_build_wrapper,
+    # execute_direct_traversal,
+    # answer_question_with_graph_rag,
+    # get_spanner_schema_wrapper,
+    # query_spanner_graph_wrapper,
 ]
