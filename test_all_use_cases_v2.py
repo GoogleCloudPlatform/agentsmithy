@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import vertexai
@@ -26,7 +27,7 @@ from agent_bar_v2.subagents.industry_prompts import (
 
 # Initialize Vertex AI
 vertexai.init(project="ai-agent-bar-2026-stage", location="us-central1")
-model = GenerativeModel("gemini-2.5-flash")
+model = GenerativeModel(os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"))
 
 # Industries and their use cases
 industry_use_cases = {

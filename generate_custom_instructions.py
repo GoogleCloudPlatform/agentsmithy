@@ -61,7 +61,7 @@ You are an expert [Specific Persona based on vision]. Your tone should be [Tone,
     location = os.getenv("LOCATION", "us-central1")
     client = genai.Client(vertexai=True, project=project_id, location=location)
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
         contents=prompt,
     )
     
@@ -112,7 +112,7 @@ def select_agents_for_vision(user_vision: str) -> dict:
     client = genai.Client(vertexai=True, project=project_id, location=location)
     
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
         contents=prompt,
         config={
             "response_mime_type": "application/json"

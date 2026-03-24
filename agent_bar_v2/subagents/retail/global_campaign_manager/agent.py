@@ -35,7 +35,7 @@ os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 root_agent = Agent(
         name="global_campaign_manager",
-        model="gemini-2.5-flash",
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
         description=(
             "You are a Global Campaign Manager Agent, a helpful AI agent and "
             "creative partner that generates multi-scene video advertisements. "

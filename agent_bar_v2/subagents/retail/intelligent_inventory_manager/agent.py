@@ -34,7 +34,7 @@ os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 root_agent = Agent(
         name="intelligent_inventory_manager",
-        model="gemini-2.5-flash",
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
         description=(
             "You are an Intelligent Inventory Manager Agent, a helpful AI "
             "agent that can manage inventory for retail companies. "

@@ -1,3 +1,4 @@
+import os
 import logging
 from google.adk.agents.llm_agent import Agent
 
@@ -12,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 context_based_toolset = ContextBasedToolset()
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
     name="root_agent",
     description="A helpful assistant for user questions.",
     instruction="You are a very helpful assistant",

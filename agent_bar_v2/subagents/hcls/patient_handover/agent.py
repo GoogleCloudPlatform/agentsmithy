@@ -25,7 +25,7 @@ from google.genai import types
 from . import prompts
 from . import tools
 
-DEFAULT_MODEL = "gemini-2.5-flash"
+DEFAULT_MODEL = os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview")
 
 
 AGENT_NAME = "patient_handover_assistant"
@@ -33,7 +33,7 @@ AGENT_DESCRIPTION = "Provides shift handover and endorsement reports for medical
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
 )
 
 

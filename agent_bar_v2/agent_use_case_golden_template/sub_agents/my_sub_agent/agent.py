@@ -1,3 +1,4 @@
+import os
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +28,7 @@ Your goal is to [Specific Goal].
 root_agent = Agent(
     name="my_sub_agent",
     model=Gemini(
-        model="gemini-2.5-flash",
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
         # Custom temperature for more creative explanations
         generation_config=types.GenerateContentConfig(
             temperature=0.7,

@@ -1,3 +1,4 @@
+import os
 
 # Copyright 2026 Google LLC
 #
@@ -29,7 +30,7 @@ AGENT_DESCRIPTION = "Handles specific use case requests and delegates to sub-age
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
     generation_config=types.GenerateContentConfig(
         temperature=0.5,
         top_p=0.95,

@@ -1,3 +1,4 @@
+import os
 import google.cloud.storage as storage
 from google.adk.agents import LlmAgent
 from google.adk.agents.callback_context import CallbackContext
@@ -80,7 +81,7 @@ def load_agent() -> LlmAgent:
 
     agent = LlmAgent(
         name="product_ad_generation",
-        model="gemini-2.5-flash",
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
         description=(
             "You are a Product Ad Generation Agent, a helpful AI agent and creative partner that generates multi-scene video advertisements."
             " Your process is interactive and split into precise steps."

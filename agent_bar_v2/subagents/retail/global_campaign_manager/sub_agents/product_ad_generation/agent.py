@@ -42,7 +42,7 @@ AGENT_DESCRIPTION = "You are a Product Ad Generation Agent, a helpful AI agent a
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
 )
 
 root_agent = Agent(
