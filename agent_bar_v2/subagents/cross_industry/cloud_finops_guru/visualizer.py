@@ -1,7 +1,10 @@
 # agent/visualizer.py
 import os
 from google.adk.agents import LlmAgent
-from google.adk.code_executors import VertexAiCodeExecutor
+# from google.adk.code_executors import VertexAiCodeExecutor
+
+from google.adk.code_executors import BuiltInCodeExecutor
+
 
 from .config import ROOT_AGENT_MODEL, GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION
 
@@ -9,9 +12,10 @@ visual_specialist = LlmAgent(
     name="visual_specialist",
     model=ROOT_AGENT_MODEL,
     include_contents="none",
-    code_executor=VertexAiCodeExecutor(
-        project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION, return_artifacts=True
-    ),
+   #  code_executor=VertexAiCodeExecutor(
+   #      project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION, return_artifacts=True
+   #  ),
+    code_executor=BuiltInCodeExecutor(),
     instruction="""
     ROLE: You are a SILENT Senior Data Scientist & Visualization Expert. Your only output should be the generated chart.
     
