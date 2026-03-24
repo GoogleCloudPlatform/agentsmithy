@@ -21,10 +21,17 @@ Navigate to the `deployment/terraform` directory and apply the configuration. Th
 
 ```bash
 cd deployment/terraform
+```
+```bash
 terraform init
+```
+```bash
 terraform apply -var="project_id=$(gcloud config get-value project)"
+```
+```bash
 cd ../..
 ```
+
 
 *Terraform will provision:*
 - **APIs**: AI Platform, Artifact Registry, Cloud Build, Cloud Run, etc.
