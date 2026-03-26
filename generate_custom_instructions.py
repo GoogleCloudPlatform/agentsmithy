@@ -14,6 +14,8 @@ def generate_custom_root_instructions(user_vision: str, selected_agent_ids: list
     """
     agent_descriptions = get_agent_descriptions_json(selected_agent_ids)
     workflow_sequence = " -> ".join(selected_agent_ids)
+    print("AGENT DESCRIPTIONS")
+    print(agent_descriptions)
 
     prompt = f"""
 You are an expert multi-agent orchestrator designer. 

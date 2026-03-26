@@ -217,10 +217,10 @@ def get_agent_descriptions_json(agent_ids: list[str]) -> str:
             agents_data.append({
                 "id": agent_id,
                 "name": getattr(agent, "name", "Unknown"),
-                "description": getattr(agent, "description", "Unknown")
+                "description": getattr(agent, "description", "Unknown"),
+                "system_instruction": getattr(agent, "instruction", "")
             })
     return json.dumps(agents_data, indent=2)
-
 
 def main():
 
@@ -239,16 +239,10 @@ def main():
     )
     args = parser.parse_args()
 
+    available_agents_list = json.loads(get_agent_descriptions_json(list(AGENT_REGISTRY_MAP.keys())))
     # Prepare the data to be exported
     registry_data = {
-        "available_agents": [
-            {
-                "id": agent_id,
-                "name": agent.name,
-                "description": agent.description,
-            }
-            for agent_id, agent in AGENT_REGISTRY_MAP.items()
-        ],
+        "available_agents": available_agents_list,
         "default_industry_use_cases": {
             industry_id: {
                 use_case_id: use_case_config["agents"]
