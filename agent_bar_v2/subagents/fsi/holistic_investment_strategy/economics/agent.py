@@ -8,11 +8,11 @@ from .sub_agents.query_generation_agent.agent import get_query_generation_agent
 from .sub_agents.query_validation_agent.agent import get_query_validation_agent
 from .sub_agents.query_runner_agent.agent import get_query_runner_agent
 from .sub_agents.answer_generation_agent.agent import get_answer_generation_agent
+from ..config import MACROECONOMICS_BUCKET_NAME
 
 # Configuration and Dependency Injection
 CURRENT_DIR = Path(__file__).parent
-BUCKET_NAME = os.getenv("GCS_BUCKET", "agent-bar-sample-data")
-CSV_PATH = f"gs://{BUCKET_NAME}/fsi/economics/data/world_bank_data_2025.csv"
+CSV_PATH = f"gs://{MACROECONOMICS_BUCKET_NAME}/fsi/economics/data/world_bank_data_2025.csv"
 
 def configure_macro_agent(binder: Binder) -> None:
     binder.bind(AgentConfig, to=AgentConfig(), scope=SingletonScope)
