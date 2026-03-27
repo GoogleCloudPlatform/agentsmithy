@@ -26,21 +26,25 @@ variable "region" {
 variable "sa_account_id" {
   description = "Service account ID for the agent"
   type        = string
+  default     = "agent-bar-v2-sa"
 }
 
 variable "sa_display_name" {
   description = "Service account display name for the agent"
   type        = string
+  default     = "Agent Bar v2 Service Account"
 }
 
 variable "ar_repository_id" {
   description = "Artifact Registry repository ID"
   type        = string
+  default     = "agent-bar-v2-repo"
 }
 
 variable "ar_description" {
   description = "Artifact Registry repository description"
   type        = string
+  default     = "Docker repository for Agent Bar v2 images"
 }
 
 variable "bucket_suffix_default_data" {
@@ -96,17 +100,6 @@ variable "bq_retail_store_table_id" {
 
 variable "bq_retail_inventory_table_id" {
   description = "BigQuery table ID for Retail inventory"
-  type        = string
-}
-
-# Spanner Variables
-variable "spanner_kg_instance" {
-  description = "Spanner instance name for Knowledge Graph"
-  type        = string
-}
-
-variable "spanner_kg_database" {
-  description = "Spanner database name for Knowledge Graph"
   type        = string
 }
 
