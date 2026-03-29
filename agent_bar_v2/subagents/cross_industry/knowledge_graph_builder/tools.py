@@ -29,17 +29,14 @@ from langchain_community.graphs.graph_document import (
 )
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_google_spanner import SpannerGraphStore, SpannerGraphQAChain, SpannerGraphStore
+from langchain_google_spanner import SpannerGraphStore, SpannerGraphQAChain
 from langchain_google_spanner.graph_retriever import SpannerGraphVectorContextRetriever
 from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
 
 from .config import (
     PROJECT_ID,
     PROJECT_LOCATION,
-    BUCKET_NAME,
     BQ_DATASET_ID,
-    SPANNER_INSTANCE,
-    SPANNER_DATABASE,
     GRAPH_NAME,
 )
 
@@ -421,20 +418,36 @@ def _clean_json_string(json_string: str) -> str:
     return json_string.strip()
 
 
-def get_schema_wrapper(project_id: str, dataset_id: str) -> str:
+def get_schema_wrapper(project_id: Optional[str] = None, dataset_id: Optional[str] = None) -> str:
     """Inspects the BigQuery dataset to get table schemas."""
-    if BQ_DATASET_ID is None:
+    if not project_id:
+        project_id = PROJECT_ID
+    if not dataset_id:
+        dataset_id = BQ_DATASET_ID
+
+    if not project_id or not dataset_id:
         datasets = str(get_bq_datasets())
-        return """please select a dataset from this list {datasets}}"""
+        return f"Please select a dataset from this list: {datasets}"
+
     return get_bq_dataset_schema(project_id=project_id, dataset_id=dataset_id)
 
 
-def call_builder_tool_wrapper(user_request: str, project_id: str, dataset_id: str) -> str:
+def call_builder_tool_wrapper(user_request: str, project_id: Optional[str] = None, dataset_id: Optional[str] = None) -> str:
     """Generates a JSON build plan by calling the intelligent builder tool based on the user's request.
     Args:
         user_request: The natural language request from the user detailing what kind of graph they want to build (e.g., node types and relationships).
+        project_id: (Optional) The BigQuery project ID.
+        dataset_id: (Optional) The BigQuery dataset ID.
     """
-    schema_json = get_schema_wrapper(dataset_id)
+    if not project_id:
+        project_id = PROJECT_ID
+    if not dataset_id:
+        dataset_id = BQ_DATASET_ID
+
+    if not project_id or not dataset_id:
+         return "Error: project_id and dataset_id must be provided or set in config."
+
+    schema_json = get_schema_wrapper(project_id=project_id, dataset_id=dataset_id)
     plan_json = generate_build_plan_tool(
         user_request=user_request,
         schema_json=schema_json,

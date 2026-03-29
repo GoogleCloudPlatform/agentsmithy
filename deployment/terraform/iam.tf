@@ -26,3 +26,24 @@ resource "google_project_iam_member" "agent_sa_roles" {
   role     = each.key
   member   = "serviceAccount:${google_service_account.agent_sa.email}"
 }
+
+# Get project details
+data "google_project" "project" {}
+
+# 6. IAM Roles for default Compute Engine SA for Cloud Build
+resource "google_project_iam_member" "compute_sa_build_roles" {
+  for_each   = toset(local.build_service_account_roles)
+  project    = var.project_id
+  role       = each.key
+  member     = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+  depends_on = [google_project_service.enabled_apis]
+}
+
+# 7. IAM Roles for default Cloud Build SA
+resource "google_project_iam_member" "cloudbuild_sa_roles" {
+  for_each   = toset(local.build_service_account_roles)
+  project    = var.project_id
+  role       = each.key
+  member     = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
+  depends_on = [google_project_service.enabled_apis]
+}

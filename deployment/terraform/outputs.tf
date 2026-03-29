@@ -69,18 +69,21 @@ output "bq_retail_dataset_id" {
   value = google_bigquery_dataset.retail_dataset.dataset_id
 }
 
-# Spanner Outputs
-output "spanner_kg_instance_id" {
-  value = google_spanner_instance.kg_instance.name
+output "bq_retail_product_table_id" {
+  value = google_bigquery_table.retail_product_table.table_id
 }
 
-output "spanner_kg_database_id" {
-  value = google_spanner_database.kg_database.name
+output "bq_retail_store_table_id" {
+  value = google_bigquery_table.retail_store_table.table_id
+}
+
+output "bq_retail_inventory_table_id" {
+  value = google_bigquery_table.retail_inventory_table.table_id
 }
 
 # Discovery Engine Outputs
 output "datastore_finops_id" {
-  value = google_discovery_engine_data_store.finops_datastore.data_store_id
+  value = google_discovery_engine_data_store.finops_datastore.name
 }
 
 output "datastore_retail_id" {

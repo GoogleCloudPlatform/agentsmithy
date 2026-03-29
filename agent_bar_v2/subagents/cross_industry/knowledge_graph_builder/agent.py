@@ -12,16 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
-import os
-from functools import lru_cache
-from typing import Any
-
-import vertexai
 from google.adk.agents import Agent
-from langchain_google_spanner import SpannerGraphStore
-from langchain_google_spanner.graph_retriever import SpannerGraphVectorContextRetriever
-from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
 
 from .prompts import (SYSTEM_INSTRUCTION)
 from . import tools

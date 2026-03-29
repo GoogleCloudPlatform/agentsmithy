@@ -114,19 +114,6 @@ variable "bq_retail_inventory_table_id" {
   default     = "inventory"
 }
 
-# Spanner Variables
-variable "spanner_kg_instance" {
-  description = "Spanner instance name for Knowledge Graph"
-  type        = string
-  default     = "kg_instance"
-}
-
-variable "spanner_kg_database" {
-  description = "Spanner database name for Knowledge Graph"
-  type        = string
-  default     = "gk_database"
-}
-
 # Discovery Engine / Vertex AI Search Variables
 variable "datastore_finops_id" {
   description = "Discovery Engine Data Store ID for FinOps"

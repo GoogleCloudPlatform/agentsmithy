@@ -29,6 +29,10 @@ terraform init
 terraform apply -var="project_id=$(gcloud config get-value project)"
 ```
 ```bash
+terraform plan --var="project_id=$(gcloud config get-value project)" -var-file=vars/dev.tfvars
+```
+```bash
+# return the the main folder
 cd ../..
 ```
 
@@ -62,19 +66,6 @@ Update `agent_bar_v2/.env` with the values from the `terraform output` command:
 - `GCS_BUCKET_CAMPAING_MANAGER`: Use the `campaign_manager_bucket_name` output.
 - `GCS_BUCKET_MEETING_INTELLIGENCE`: Use the `meeting_intelligence_bucket_name` output.
 
-## 3. Install the Agent Development Kit (ADK)
-
-Set up your local Python environment and install the ADK:
-
-```bash
-# Create and activate a virtual environment
-python3 -m venv .venv
-source .venv/bin/activate
-
-# Install the ADK
-pip install google-adk
-```
-
 ## 4. Deploy to Cloud Run
 
 Deploy the agent and its Web UI to Cloud Run using the `adk deploy cloud_run` command. We will use the Service Account created by Terraform.
@@ -83,14 +74,28 @@ Deploy the agent and its Web UI to Cloud Run using the `adk deploy cloud_run` co
 export PROJECT_ID=$(gcloud config get-value project)
 export REGION="us-central1"
 export SERVICE_ACCOUNT=$(cd deployment/terraform && terraform output -raw agent_service_account_email)
+```
 
-# Deploy the Agent Bar v2 application along with the UI
-adk deploy cloud_run \
-  --project=$PROJECT_ID \
-  --region=$REGION \
-  --with_ui \
-  agent_bar_v2 \
-  -- --allow-unauthenticated --service-account=$SERVICE_ACCOUNT
+Generate cloud run required structure
+```bash
+cp deployment/cloud_run/requirements.txt .
+cp deployment/cloud_run/Dockerfile .
+cp deployment/cloud_run/main.py .
+
+```
+
+### Deploy the Agent Bar v2 application along with the UI
+```bash
+gcloud run deploy agent-bar-v2 \
+--source . \
+--region $REGION \
+--project $PROJECT_ID \
+--allow-unauthenticated \
+--service-account $SERVICE_ACCOUNT \
+--cpu=4 \
+--memory=8Gi
+--set-env-vars=$(grep -v '^#' agent_bar_v2/.env | xargs | sed 's/ /,/g')
+# Add any other necessary environment variables your agent might need
 ```
 
 ## 5. Test Your Agent
@@ -103,7 +108,7 @@ The `industry_id` and `use_case_id` are used to match a predefined agent configu
 
 ```bash
 # Get the deployed Cloud Run service URL
-export CLOUD_RUN_URL=$(gcloud run services describe adk-default-service-name --platform managed --region $REGION --format 'value(status.url)')
+export CLOUD_RUN_URL=$(gcloud run services describe agent-bar-v2 --platform managed --region $REGION --format 'value(status.url)')
 
 # Initialize a session for the "legal_guardian" use case in the "cross" industry
 curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_123" \
