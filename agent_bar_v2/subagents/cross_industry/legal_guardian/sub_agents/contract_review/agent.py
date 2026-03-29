@@ -22,7 +22,7 @@ from google.genai import types
 from . import prompts
 from . import tools
 
-AGENT_NAME = "contract_reviewer"
+AGENT_NAME = "contract_review"
 AGENT_DESCRIPTION = "Reviews and provides feedback on contracts, SOWs, and proposals based on best practices."
 
 # Model configuration

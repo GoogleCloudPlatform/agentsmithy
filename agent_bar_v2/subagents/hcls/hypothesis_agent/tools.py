@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Tools for the hypothesis_agent."""
+"""Tools for the hypothesis_writer."""
 
 tools = []

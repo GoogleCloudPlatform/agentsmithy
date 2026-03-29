@@ -28,7 +28,7 @@ from . import tools
 DEFAULT_MODEL = "gemini-2.5-flash"
 
 
-AGENT_NAME = "patient_handover_assistant"
+AGENT_NAME = "patient_handover"
 AGENT_DESCRIPTION = "Provides shift handover and endorsement reports for medical patients."
 
 # Model configuration

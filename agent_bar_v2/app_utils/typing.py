@@ -11,18 +11,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from google.adk.agents import Agent
-
-from .prompts import (SYSTEM_INSTRUCTION)
-from . import tools
-
-
-# --- 4. Root Agent Definition ---
-root_agent = Agent(
-    name="knowledge_graph_builder",
-    model="gemini-2.5-flash",
-    description="An entrypoint for executing intelligent tools that build and query knowledge graphs.",
-    instruction=SYSTEM_INSTRUCTION,
-    tools=tools.tools,
+import uuid
+from typing import (
+    Literal,
 )
+
+from pydantic import (
+    BaseModel,
+    Field,
+)
+
+
+class Feedback(BaseModel):
+    """Represents feedback for a conversation."""
+
+    score: int | float
+    text: str | None = ""
+    log_type: Literal["feedback"] = "feedback"
+    service_name: Literal["adk-multiagent"] = "adk-multiagent"
+    user_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str = Field(default_factory=lambda: str(uuid.uuid4()))

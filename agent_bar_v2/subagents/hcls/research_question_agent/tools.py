@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Tools for the research_question_agent."""
+"""Tools for the research_question_writer."""
 
 tools = []

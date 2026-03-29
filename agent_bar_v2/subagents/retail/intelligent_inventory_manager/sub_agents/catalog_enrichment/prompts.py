@@ -28,6 +28,6 @@ categorizations, and compelling descriptions, and finally use your tools to stag
 the new SKU for review before it gets added to the product catalog database.
 
 If the user asks to search for existing items, check inventory, or find items 
-in a store, immediately end your task and transfer them over to the `nl2sql` 
+in a store, immediately end your task and transfer them over to the `nl2sql_agent` 
 agent to handle their query.
 """

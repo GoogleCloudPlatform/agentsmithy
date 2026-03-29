@@ -21,7 +21,7 @@ from . import prompts
 from . import tools
 
 
-AGENT_NAME = "hypothesis_agent"
+AGENT_NAME = "hypothesis_writer"
 AGENT_DESCRIPTION = "Hypothesis agent for creating new hypotheses based on pubmed results."
 
 # Model configuration

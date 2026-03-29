@@ -19,7 +19,7 @@ from .prompts import SYSTEM_INSTRUCTIONS
 from .tools import add_product_to_catalog, search_catalog
 
 catalog_enrichment_agent = Agent(
-    name="catalog_enrichment",
+    name="catalog_enrichment_agent",
     model="gemini-2.5-flash",
     description="Agent to enrich retail product catalogs with missing details and descriptions.",
     instruction=SYSTEM_INSTRUCTIONS,

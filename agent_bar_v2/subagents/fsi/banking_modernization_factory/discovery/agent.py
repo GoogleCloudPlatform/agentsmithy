@@ -20,7 +20,7 @@ from . import prompts
 from . import tools
 
 
-AGENT_NAME = "domain_discovery"
+AGENT_NAME = "discovery_agent"
 AGENT_DESCRIPTION = "Analyzes legacy codebases to identify business domains, logic, and dependencies for modernization."
 
 

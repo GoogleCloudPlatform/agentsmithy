@@ -50,66 +50,79 @@ variable "ar_description" {
 variable "bucket_suffix_default_data" {
   description = "Suffix for the default data bucket"
   type        = string
+  default     = "-default-data"
 }
 
 variable "bucket_suffix_product_ad_generation" {
   description = "Suffix for the product ad generation bucket"
   type        = string
+  default     = "-cross-pag"
 }
 
 variable "bucket_suffix_campaign_manager" {
   description = "Suffix for the campaign manager bucket"
   type        = string
+  default     = "-cross-gcma"
 }
 
 variable "bucket_suffix_meeting_intelligence" {
   description = "Suffix for the meeting intelligence bucket"
   type        = string
+  default     = "-cross-mi"
 }
 
 # BigQuery Variables
 variable "bq_finops_dataset_id" {
   description = "BigQuery dataset ID for FinOps"
   type        = string
+  default     = "finops"
 }
 
 variable "bq_finops_table_id" {
   description = "BigQuery table ID for FinOps"
   type        = string
+  default     = "finops10ktable"
 }
 
 variable "bq_kg_dataset_id" {
   description = "BigQuery dataset ID for Knowledge Graph"
   type        = string
+  default     = "kg_agent"
 }
 
 variable "bq_retail_dataset_id" {
   description = "BigQuery dataset ID for Retail"
   type        = string
+  default     = "retail"
 }
 
 variable "bq_retail_product_table_id" {
   description = "BigQuery table ID for Retail products"
   type        = string
+  default     = "products"
 }
 
 variable "bq_retail_store_table_id" {
   description = "BigQuery table ID for Retail stores"
   type        = string
+  default     = "store"
 }
 
 variable "bq_retail_inventory_table_id" {
   description = "BigQuery table ID for Retail inventory"
   type        = string
+  default     = "inventory"
 }
 
 # Discovery Engine / Vertex AI Search Variables
 variable "datastore_finops_id" {
   description = "Discovery Engine Data Store ID for FinOps"
   type        = string
+  default     = "finops"
 }
 
 variable "datastore_retail_id" {
   description = "Discovery Engine Data Store ID for Retail Customer Support"
   type        = string
+  default     = "retail"
 }
