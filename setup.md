@@ -66,6 +66,8 @@ Update `agent_bar_v2/.env` with the values from the `terraform output` command:
 - `GCS_BUCKET_CAMPAING_MANAGER`: Use the `campaign_manager_bucket_name` output.
 - `GCS_BUCKET_MEETING_INTELLIGENCE`: Use the `meeting_intelligence_bucket_name` output.
 
+> **Note on Pre-loaded Data:** Some sub-agents (e.g., Knowledge Graph, Retail Inventory) require specific datasets or files to be pre-loaded into BigQuery or GCS. If an agent depends on pre-loaded data, you can find detailed instructions and schemas within that specific sub-agent's directory under `agent_bar_v2/subagents/`.
+
 ## 4. Deploy to Cloud Run
 
 Deploy the agent and its Web UI to Cloud Run using the `adk deploy cloud_run` command. We will use the Service Account created by Terraform.
