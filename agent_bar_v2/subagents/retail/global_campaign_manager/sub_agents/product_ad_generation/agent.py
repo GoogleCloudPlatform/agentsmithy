@@ -23,10 +23,6 @@ from . import tools
 from .callbacks import inline_data_processing
 
 
-_, project_id = google.auth.default()
-os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
-os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 # if not PROJECT_ID or not LOCATION or not BUCKET_NAME:
 #     raise EnvironmentError(

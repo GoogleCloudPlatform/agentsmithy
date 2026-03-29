@@ -134,21 +134,6 @@ http://127.0.0.1:8000/dev-ui/?app=agent_bar_v2&session=s_123&userId=user
 4. **Start Chatting:**
 Select the agent and the initialized session in the web UI, and begin your interaction.
 
-## Generating the Configuration
-
-The agent registry configuration can be exported locally or published directly to a Google Cloud Storage (GCS) bucket.
-
-**Generate Locally:**
-```bash
-python -m agent_bar_v2.subagents.agent_registry --local-output
-```
-
-**Publish to GCS:**
-```bash
-python -m agent_bar_v2.subagents.agent_registry --gcs-bucket=ai-agent-bar-2026-stage-shared-config
-
-```
-
 
 # Contributors
 

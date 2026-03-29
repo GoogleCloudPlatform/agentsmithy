@@ -220,3 +220,6 @@ __marimo__/
 llms-full.txt
 
 .DS_Store
+
+.terraform*
+terraform.tfstate*

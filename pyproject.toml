@@ -5,11 +5,11 @@ description = "A short project description."
 authors = [{ name = "agusramirez", email = "agusramirez@google.com" }]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.12",
 ]
 keywords = ['agent-catalog', 'adk', 'agent']
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "google-adk",
     "requests",

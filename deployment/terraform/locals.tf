@@ -23,7 +23,6 @@ locals {
     "speech.googleapis.com",
     "run.googleapis.com", # Required for Cloud Run deployment
     "bigquery.googleapis.com",
-    "spanner.googleapis.com",
     "discoveryengine.googleapis.com"
   ]
 
@@ -35,8 +34,14 @@ locals {
     "roles/artifactregistry.reader",
     "roles/bigquery.dataEditor",
     "roles/bigquery.jobUser",
-    "roles/spanner.databaseAdmin",
-    "roles/spanner.databaseReader",
     "roles/discoveryengine.editor",
+  ]
+
+  build_service_account_roles = [
+    "roles/storage.objectViewer",
+    "roles/artifactregistry.writer",
+    "roles/run.admin",
+    "roles/iam.serviceAccountUser",
+    "roles/logging.logWriter"
   ]
 }

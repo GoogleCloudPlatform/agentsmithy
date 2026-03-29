@@ -25,15 +25,14 @@ os.environ['SSL_CERT_FILE'] = certifi.where()
 
 def search_pubmed(
     search_string: str,
-    email: str,
     limit: int,
+    email: str = "no-reply@google.com",
 ) -> list:
     """
     Fetches articles with abstracts for a search_string from pubmed.
 
-    Args:
+    Required Args:
         search_string: The string for the search (e.g., "Treatment for KRAS G13D Breast Cancer")
-        email: The email to be given to the Entrez API (e.g., "admin@website.com")
         limit: The maximum number of articles to fetch
 
     Returns:
