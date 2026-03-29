@@ -28,8 +28,8 @@ def create_root_agent() -> BaseAgent:
     answer_gen = get_answer_generation_agent(injector)
 
     macro_agent = SequentialAgent(
-        name="NL2SQL_macroeconomic_agent",
-        description="Analyzes global macroeconomic trends using a modular NL2SQL pipeline.",
+        name=AGENT_NAME,
+        description=AGENT_DESCRIPTION,
         sub_agents=[
             query_gen,
             query_val,
@@ -38,6 +38,9 @@ def create_root_agent() -> BaseAgent:
         ],
     )
     return macro_agent
+
+AGENT_NAME = "macro_agent"
+AGENT_DESCRIPTION = "Analyzes global economic trends, central bank policies, and market indicators to provide macroeconomic insights."
 
 # For compatibility with legacy loading if needed
 root_agent = create_root_agent()

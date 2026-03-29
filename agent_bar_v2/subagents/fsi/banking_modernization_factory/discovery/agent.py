@@ -5,8 +5,6 @@ from google.genai import types
 from .prompt import INSTRUCTION_PROMPT
 from .tools.repo_analysis_tool import RepoAnalysisTools
 
-AGENT_DESCRIPTION = "Analyzes legacy codebases via GitHub repositories to identify business domains, logic, and dependencies for modernization."
-
 # Initialize the custom tool class
 tools_instance = RepoAnalysisTools()
 
@@ -15,6 +13,8 @@ tools = [
     FunctionTool(func=tools_instance.get_file_content),
 ]
 
+AGENT_NAME = "discovery_agent"
+AGENT_DESCRIPTION = "Analyzes legacy codebases via GitHub repositories to identify business domains, logic, and dependencies for modernization."
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
@@ -24,7 +24,7 @@ GEMINI_MODEL_CONFIG = Gemini(
         top_p=0.95,
         max_output_tokens=65536,
     ),
-    name="domain_discovery",
+    name=AGENT_NAME,
     description=AGENT_DESCRIPTION,
     instruction=INSTRUCTION_PROMPT,
     tools=tools,

@@ -21,7 +21,7 @@ from . import prompts
 from . import tools
 from .callbacks import inline_data_processing
 
-AGENT_NAME = "video_analysis_agent"
+AGENT_NAME = "meeting_video_analysis"
 AGENT_DESCRIPTION = "Agent to analyze scene, shot and entity information from videos."
 
 # Model configuration

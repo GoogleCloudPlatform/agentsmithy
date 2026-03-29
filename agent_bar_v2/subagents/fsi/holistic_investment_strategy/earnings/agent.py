@@ -20,7 +20,7 @@ from . import prompts
 from . import tools
 
 
-AGENT_NAME = "earnings_call_analytics"
+AGENT_NAME = "earnings_agent"
 AGENT_DESCRIPTION = "Analyzes earnings calls and financial reports to evaluate company performance, management sentiment, and strategic direction."
 
 

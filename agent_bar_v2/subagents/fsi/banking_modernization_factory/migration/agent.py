@@ -26,10 +26,12 @@ from .tools.sql_translation import (
     upload_to_gcs_tool,
 )
 
-AGENT_DESCRIPTION = "An agent that translates SQL queries between different dialects using BigQuery's Translation API, with Gemini-powered error resolution."
+
+AGENT_NAME = "oracle_to_bigquery"
+AGENT_DESCRIPTION = "Translates Oracle schemas and PL/SQL to BigQuery compatible SQL, optimizing for the cloud environment."
 
 root_agent = LlmAgent(
-    name="oracle_to_bigquery",
+    name=AGENT_NAME,
     model="gemini-2.5-flash",
     description=AGENT_DESCRIPTION,
     instruction=AGENT_INSTRUCTION,

@@ -19,7 +19,7 @@ from google.genai import types
 from . import prompts
 from . import tools
 
-AGENT_NAME = "proposal_drafter_agent"
+AGENT_NAME = "proposal_writer"
 AGENT_DESCRIPTION = "This agent takes an existing draft passed in and makes only the changes requested"
 
 # Model configuration

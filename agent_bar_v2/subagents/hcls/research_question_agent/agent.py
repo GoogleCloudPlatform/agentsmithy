@@ -21,7 +21,7 @@ from . import prompts
 from . import tools
 
 
-AGENT_NAME = "research_question_agent"
+AGENT_NAME = "research_question_writer"
 AGENT_DESCRIPTION = "Research question agent improving the research agent."
 
 # Model configuration

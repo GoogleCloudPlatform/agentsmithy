@@ -36,6 +36,7 @@ terraform plan --var="project_id=$(gcloud config get-value project)" -var-file=v
 cd ../..
 ```
 
+
 *Terraform will provision:*
 - **APIs**: AI Platform, Artifact Registry, Cloud Build, Cloud Run, etc.
 - **Storage**: Buckets for default data, product ad generation, campaign manager, and meeting intelligence.
