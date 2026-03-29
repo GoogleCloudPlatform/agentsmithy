@@ -8,7 +8,7 @@ from .sub_agents.query_generation_agent.agent import get_query_generation_agent
 from .sub_agents.query_validation_agent.agent import get_query_validation_agent
 from .sub_agents.query_runner_agent.agent import get_query_runner_agent
 from .sub_agents.answer_generation_agent.agent import get_answer_generation_agent
-from ..config import MACROECONOMICS_BUCKET_NAME
+from .config import MACROECONOMICS_BUCKET_NAME
 
 # Configuration and Dependency Injection
 CURRENT_DIR = Path(__file__).parent

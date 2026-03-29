@@ -29,6 +29,22 @@ resource "google_bigquery_dataset" "retail_dataset" {
   depends_on = [google_project_service.enabled_apis]
 }
 
+# Finsights BigQuery Dataset
+resource "google_bigquery_dataset" "finsights_dataset" {
+  dataset_id = var.bq_finsights_dataset_id
+  location   = var.region
+  project    = var.project_id
+  depends_on = [google_project_service.enabled_apis]
+}
+
+# Cyber Guardian BigQuery Dataset
+resource "google_bigquery_dataset" "cyber_guardian_dataset" {
+  dataset_id = var.bq_cyber_guardian_dataset_id
+  location   = var.region
+  project    = var.project_id
+  depends_on = [google_project_service.enabled_apis]
+}
+
 resource "google_bigquery_table" "retail_product_table" {
   dataset_id          = google_bigquery_dataset.retail_dataset.dataset_id
   table_id            = var.bq_retail_product_table_id

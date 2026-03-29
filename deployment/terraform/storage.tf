@@ -55,3 +55,14 @@ resource "google_storage_bucket" "meeting_intelligence_bucket" {
 
   depends_on = [google_project_service.enabled_apis]
 }
+
+# 5. Macroeconomics Bucket
+resource "google_storage_bucket" "macroeconomics_bucket" {
+  name          = "${var.project_id}${var.bucket_suffix_macroeconomics}"
+  location      = var.region
+  force_destroy = true
+
+  uniform_bucket_level_access = true
+
+  depends_on = [google_project_service.enabled_apis]
+}

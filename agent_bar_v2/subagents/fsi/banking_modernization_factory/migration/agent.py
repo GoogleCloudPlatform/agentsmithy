@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from google.adk.agents import Agent
-from google.adk.models import Gemini
+from google.adk.agents import LlmAgent
 from google.genai import types
 
 from .prompt import AGENT_INSTRUCTION

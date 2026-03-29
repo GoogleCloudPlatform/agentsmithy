@@ -71,7 +71,25 @@ variable "bucket_suffix_meeting_intelligence" {
   default     = "-cross-mi"
 }
 
+variable "bucket_suffix_macroeconomics" {
+  description = "Suffix for the macroeconomics bucket"
+  type        = string
+  default     = "-fsi-macroeconomics"
+}
+
 # BigQuery Variables
+variable "bq_finsights_dataset_id" {
+  description = "BigQuery dataset ID for Finsights"
+  type        = string
+  default     = "finsights"
+}
+
+variable "bq_cyber_guardian_dataset_id" {
+  description = "BigQuery dataset ID for Cyber Guardian"
+  type        = string
+  default     = "cyber_guardian_data"
+}
+
 variable "bq_finops_dataset_id" {
   description = "BigQuery dataset ID for FinOps"
   type        = string
