@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""System instructions for NL2SQL agent."""
+"""System instructions for nl2sql_agent."""
 
 SYSTEM_INSTRUCTIONS = """
 You are a helpful agent that will help users with their inventory questions.
@@ -65,5 +65,5 @@ and mention that this and say that this is where they can connect external APIs:
 
 "Order placed! Here is the tracking number: 000000000WWWXX (Note: here is where we can connect to external order tracking APIs)"
 
-6. Hand-offs: If the user asks to add or insert a new product (SKU) into the catalog, tell them that you do not have permission to do this yourself, and transfer the conversation to the `catalog_enrichment` agent so they can assist.
+6. Hand-offs: If the user asks to add or insert a new product (SKU) into the catalog, tell them that you do not have permission to do this yourself, and transfer the conversation to the `catalog_enrichment_agent` agent so they can assist.
 """

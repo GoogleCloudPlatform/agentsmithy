@@ -21,7 +21,7 @@ from . import prompts
 from . import tools
 from .callbacks import inline_data_processing
 
-AGENT_NAME = "video_moderation_agent"
+AGENT_NAME = "content_moderation"
 AGENT_DESCRIPTION = "Agent to analyze explicit content, sensitive themes, aggressive themes, inappropriate content and/or profanity in videos and transcripts."
 
 # Model configuration

@@ -20,7 +20,7 @@ from . import prompts
 from . import tools
 
 
-AGENT_NAME = "macroeconomic_researcher"
+AGENT_NAME = "macro_agent"
 AGENT_DESCRIPTION = "Analyzes global economic trends, central bank policies, and market indicators to provide macroeconomic insights."
 
 

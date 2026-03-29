@@ -22,7 +22,7 @@ from . import prompts
 from . import tools
 from .callbacks import inline_data_processing
 
-AGENT_NAME = "transcription_agent"
+AGENT_NAME = "meeting_transcription"
 AGENT_DESCRIPTION = "Agent to extract audio data from video files and then transcribe the audio files."
 
 # Model configuration

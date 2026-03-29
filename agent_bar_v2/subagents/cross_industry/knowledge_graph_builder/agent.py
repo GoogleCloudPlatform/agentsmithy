@@ -29,7 +29,7 @@ from . import tools
 
 # --- 4. Root Agent Definition ---
 root_agent = Agent(
-    name="Graph_Orchestrator_Agent",
+    name="knowledge_graph_builder",
     model="gemini-2.5-flash",
     description="An entrypoint for executing intelligent tools that build and query knowledge graphs.",
     instruction=SYSTEM_INSTRUCTION,
