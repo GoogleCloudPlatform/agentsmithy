@@ -52,7 +52,20 @@ output "meeting_intelligence_bucket_name" {
   value       = google_storage_bucket.meeting_intelligence_bucket.name
 }
 
+output "macroeconomics_bucket_name" {
+  description = "The name of the GCS bucket for macroeconomics"
+  value       = google_storage_bucket.macroeconomics_bucket.name
+}
+
 # BigQuery Outputs
+output "bq_finsights_dataset_id" {
+  value = google_bigquery_dataset.finsights_dataset.dataset_id
+}
+
+output "bq_cyber_guardian_dataset_id" {
+  value = google_bigquery_dataset.cyber_guardian_dataset.dataset_id
+}
+
 output "bq_finops_dataset_id" {
   value = google_bigquery_dataset.finops_dataset.dataset_id
 }

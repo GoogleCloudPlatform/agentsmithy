@@ -17,9 +17,9 @@ AGENT_NAME = "discovery_agent"
 AGENT_DESCRIPTION = "Analyzes legacy codebases via GitHub repositories to identify business domains, logic, and dependencies for modernization."
 
 # Model configuration
-GEMINI_MODEL_CONFIG = Gemini(
+root_agent = LlmAgent(
     model="gemini-2.5-flash",
-    generation_config=types.GenerateContentConfig(
+    generate_content_config=types.GenerateContentConfig(
         temperature=0.2,
         top_p=0.95,
         max_output_tokens=65536,

@@ -16,7 +16,7 @@ from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.genai import types
 
-from .prompt import SYSTEM_INSTRUCTIONS
+from .prompts import SYSTEM_INSTRUCTION
 from .discovery.agent import root_agent as discovery_agent
 from .migration.agent import root_agent as migration_agent
 
@@ -29,7 +29,7 @@ root_agent = LlmAgent(
     ),
     name="banking_modernization_factory",
     description=AGENT_DESCRIPTION,
-    instruction=SYSTEM_INSTRUCTIONS,
+    instruction=SYSTEM_INSTRUCTION,
     tools=[
         AgentTool(discovery_agent),
         AgentTool(migration_agent),
