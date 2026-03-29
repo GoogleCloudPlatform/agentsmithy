@@ -1,0 +1,4 @@
+agent-bar-sample-data/fsi/migration/input
+
+input database name: sample
+project name: ai-agent-bar-2026-stage

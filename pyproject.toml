@@ -19,6 +19,7 @@ dependencies = [
     "biopython",
     "google-cloud-storage",
     "google-cloud-bigquery",
+    "google-cloud-bigquery-migration",
     "google-cloud-videointelligence",
     "fpdf",
     "google-genai",
@@ -34,6 +35,12 @@ dependencies = [
     "langchain-text-splitters",
     "fastapi>=0.115.8,<1.0.0",
     "asyncpg>=0.30.0,<1.0.0",
+    "pygithub",
+    "immutabledict",
+    "loguru",
+    "injector",
+    "db-dtypes",
+    "pandas",
 ]
 
 [build-system]

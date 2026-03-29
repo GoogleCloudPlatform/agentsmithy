@@ -13,3 +13,4 @@
 # limitations under the License.
 
 """Configuration for the economics agent."""
+MACROECONOMICS_BUCKET_NAME = os.getenv("MACROECONOMICS_BUCKET", "agent-bar-sample-data")

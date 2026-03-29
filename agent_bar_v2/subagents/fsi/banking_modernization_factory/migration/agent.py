@@ -16,29 +16,34 @@ from google.adk.agents import Agent
 from google.adk.models import Gemini
 from google.genai import types
 
-from . import prompts
-from . import tools
-
-
-AGENT_NAME = "migration_agent"
-AGENT_DESCRIPTION = "Translates Oracle schemas and PL/SQL to BigQuery compatible SQL, optimizing for the cloud environment."
-
-
-# Model configuration
-GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
-    generation_config=types.GenerateContentConfig(
-        temperature=0.2,
-        top_p=0.95,
-        max_output_tokens=65536,
-    ),
-    retry_options=types.HttpRetryOptions(attempts=3),
+from .prompt import AGENT_INSTRUCTION
+from .tools.sql_translation import (
+    analyze_sql_with_gemini_tool,
+    check_error_files_tool,
+    mapping_tool,
+    resolve_sql_error_tool,
+    run_sql_translation_tool,
+    upload_to_gcs_tool,
 )
 
-root_agent = Agent(
+
+AGENT_NAME = "oracle_to_bigquery"
+AGENT_DESCRIPTION = "Translates Oracle schemas and PL/SQL to BigQuery compatible SQL, optimizing for the cloud environment."
+
+root_agent = LlmAgent(
     name=AGENT_NAME,
-    model=GEMINI_MODEL_CONFIG,
+    model="gemini-2.5-flash",
     description=AGENT_DESCRIPTION,
-    instruction=prompts.SYSTEM_INSTRUCTION,
-    tools=tools.tools,
+    instruction=AGENT_INSTRUCTION,
+    generate_content_config=types.GenerateContentConfig(
+        temperature=0.2, top_p=0.95, max_output_tokens=65536
+    ),
+    tools=[
+        run_sql_translation_tool,
+        check_error_files_tool,
+        analyze_sql_with_gemini_tool,
+        resolve_sql_error_tool,
+        upload_to_gcs_tool,
+        mapping_tool,
+    ],
 )
