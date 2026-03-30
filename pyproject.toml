@@ -65,7 +65,8 @@ dev = [
     "google-adk[eval]",
     "pytest-asyncio",
     "pytest-dotenv",
-    "pytest-html"
+    "pytest-html",
+    "pylint"
 ]
 
 [tool.agent_packs]
