@@ -29,7 +29,7 @@ locals {
   agent_roles = [
     "roles/aiplatform.user",
     "roles/aiplatform.admin",
-    "roles/storage.objectUser",
+    "roles/storage.admin",
     "roles/logging.logWriter",
     "roles/artifactregistry.reader",
     "roles/bigquery.dataEditor",

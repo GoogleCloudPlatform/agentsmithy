@@ -15,4 +15,4 @@
 """Configuration for the economics agent."""
 import os
 
-MACROECONOMICS_BUCKET_NAME = os.getenv("MACROECONOMICS_BUCKET", "agent-bar-sample-data")
+MACROECONOMICS_BUCKET_NAME = os.getenv("MACROECONOMICS_BUCKET_NAME", "agent-bar-sample-data")

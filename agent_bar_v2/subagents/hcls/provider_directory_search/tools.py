@@ -145,28 +145,31 @@ def search_practitioners(
     Returns:
         A dict with "count" and "results" (list of matching practitioners).
     """
-    results = []
-    for p in PRACTITIONERS:
-        full_name = f"{p['first_name']} {p['last_name']}"
-        if name and not _text_match(full_name, name):
-            continue
-        if specialty and not _text_match(p["specialty"], specialty):
-            if not any(_text_match(s, specialty) for s in p.get("subspecialties", [])):
+    try:
+        results = []
+        for p in PRACTITIONERS:
+            full_name = f"{p['first_name']} {p['last_name']}"
+            if name and not _text_match(full_name, name):
                 continue
-        if city and not _text_match(p["address"]["city"], city):
-            continue
-        if zip_code and p["address"]["zip"] != zip_code:
-            continue
-        if accepting_new_patients is not None and p["accepting_new_patients"] != accepting_new_patients:
-            continue
-        if telehealth_available is not None and p["telehealth_available"] != telehealth_available:
-            continue
-        if language and not any(_text_match(lang, language) for lang in p["languages"]):
-            continue
-        if gender and not _text_match(p["gender"], gender):
-            continue
-        results.append(_format_practitioner(p))
-    return {"count": len(results), "results": results}
+            if specialty and not _text_match(p["specialty"], specialty):
+                if not any(_text_match(s, specialty) for s in p.get("subspecialties", [])):
+                    continue
+            if city and not _text_match(p["address"]["city"], city):
+                continue
+            if zip_code and p["address"]["zip"] != zip_code:
+                continue
+            if accepting_new_patients is not None and p["accepting_new_patients"] != accepting_new_patients:
+                continue
+            if telehealth_available is not None and p["telehealth_available"] != telehealth_available:
+                continue
+            if language and not any(_text_match(lang, language) for lang in p["languages"]):
+                continue
+            if gender and not _text_match(p["gender"], gender):
+                continue
+            results.append(_format_practitioner(p))
+        return {"count": len(results), "results": results}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in search_practitioners: {e}" }
 
 
 def find_nearby_practitioners(
@@ -191,18 +194,21 @@ def find_nearby_practitioners(
     Returns:
         A dict with "count" and "results" sorted by distance.
     """
-    results = []
-    for p in PRACTITIONERS:
-        if specialty and not _text_match(p["specialty"], specialty):
-            if not any(_text_match(s, specialty) for s in p.get("subspecialties", [])):
+    try:
+        results = []
+        for p in PRACTITIONERS:
+            if specialty and not _text_match(p["specialty"], specialty):
+                if not any(_text_match(s, specialty) for s in p.get("subspecialties", [])):
+                    continue
+            if accepting_new_patients is not None and p["accepting_new_patients"] != accepting_new_patients:
                 continue
-        if accepting_new_patients is not None and p["accepting_new_patients"] != accepting_new_patients:
-            continue
-        dist = _haversine_miles(latitude, longitude, p["address"]["latitude"], p["address"]["longitude"])
-        if dist <= radius_miles:
-            results.append(_format_practitioner(p, distance=dist))
-    results.sort(key=lambda r: r["distance_miles"])
-    return {"count": len(results), "results": results}
+            dist = _haversine_miles(latitude, longitude, p["address"]["latitude"], p["address"]["longitude"])
+            if dist <= radius_miles:
+                results.append(_format_practitioner(p, distance=dist))
+        results.sort(key=lambda r: r["distance_miles"])
+        return {"count": len(results), "results": results}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in find_nearby_practitioners: {e}" }
 
 
 def search_facilities(
@@ -228,20 +234,23 @@ def search_facilities(
     Returns:
         A dict with "count" and "results" (list of matching facilities).
     """
-    results = []
-    for f in FACILITIES:
-        if name and not _text_match(f["name"], name):
-            continue
-        if facility_type and not _text_match(f["type"], facility_type):
-            continue
-        if city and not _text_match(f["address"]["city"], city):
-            continue
-        if zip_code and f["address"]["zip"] != zip_code:
-            continue
-        if service and not any(_text_match(s, service) for s in f.get("services", [])):
-            continue
-        results.append(_format_facility(f))
-    return {"count": len(results), "results": results}
+    try:
+        results = []
+        for f in FACILITIES:
+            if name and not _text_match(f["name"], name):
+                continue
+            if facility_type and not _text_match(f["type"], facility_type):
+                continue
+            if city and not _text_match(f["address"]["city"], city):
+                continue
+            if zip_code and f["address"]["zip"] != zip_code:
+                continue
+            if service and not any(_text_match(s, service) for s in f.get("services", [])):
+                continue
+            results.append(_format_facility(f))
+        return {"count": len(results), "results": results}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in search_facilities: {e}" }
 
 
 def find_nearby_facilities(
@@ -263,17 +272,20 @@ def find_nearby_facilities(
     Returns:
         A dict with "count" and "results" sorted by distance.
     """
-    results = []
-    for f in FACILITIES:
-        if facility_type and not _text_match(f["type"], facility_type):
-            continue
-        if service and not any(_text_match(s, service) for s in f.get("services", [])):
-            continue
-        dist = _haversine_miles(latitude, longitude, f["address"]["latitude"], f["address"]["longitude"])
-        if dist <= radius_miles:
-            results.append(_format_facility(f, distance=dist))
-    results.sort(key=lambda r: r["distance_miles"])
-    return {"count": len(results), "results": results}
+    try:
+        results = []
+        for f in FACILITIES:
+            if facility_type and not _text_match(f["type"], facility_type):
+                continue
+            if service and not any(_text_match(s, service) for s in f.get("services", [])):
+                continue
+            dist = _haversine_miles(latitude, longitude, f["address"]["latitude"], f["address"]["longitude"])
+            if dist <= radius_miles:
+                results.append(_format_facility(f, distance=dist))
+        results.sort(key=lambda r: r["distance_miles"])
+        return {"count": len(results), "results": results}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in find_nearby_facilities: {e}" }
 
 
 def search_organizations(
@@ -292,16 +304,19 @@ def search_organizations(
     Returns:
         A dict with "count" and "results" including affiliated facilities.
     """
-    results = []
-    for o in ORGANIZATIONS:
-        if name and not _text_match(o["name"], name):
-            continue
-        if organization_type and not _text_match(o["type"], organization_type):
-            continue
-        if city and not _text_match(o["address"]["city"], city):
-            continue
-        results.append(_format_organization(o))
-    return {"count": len(results), "results": results}
+    try:
+        results = []
+        for o in ORGANIZATIONS:
+            if name and not _text_match(o["name"], name):
+                continue
+            if organization_type and not _text_match(o["type"], organization_type):
+                continue
+            if city and not _text_match(o["address"]["city"], city):
+                continue
+            results.append(_format_organization(o))
+        return {"count": len(results), "results": results}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in search_organizations: {e}" }
 
 
 def get_provider_details(npi: str) -> dict:
@@ -317,13 +332,16 @@ def get_provider_details(npi: str) -> dict:
     Returns:
         Full details for the entity, or an error message if not found.
     """
-    if npi in _prac_by_npi:
-        return {"type": "practitioner", "details": _format_practitioner(_prac_by_npi[npi])}
-    if npi in _fac_by_npi:
-        return {"type": "facility", "details": _format_facility(_fac_by_npi[npi])}
-    if npi in _org_by_npi:
-        return {"type": "organization", "details": _format_organization(_org_by_npi[npi])}
-    return {"error": f"No provider found with NPI {npi}"}
+    try:
+        if npi in _prac_by_npi:
+            return {"type": "practitioner", "details": _format_practitioner(_prac_by_npi[npi])}
+        if npi in _fac_by_npi:
+            return {"type": "facility", "details": _format_facility(_fac_by_npi[npi])}
+        if npi in _org_by_npi:
+            return {"type": "organization", "details": _format_organization(_org_by_npi[npi])}
+        return {"error": f"No provider found with NPI {npi}"}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in get_provider_details: {e}" }
 
 
 def find_practitioners_at_facility(facility_name: str) -> dict:
@@ -338,23 +356,26 @@ def find_practitioners_at_facility(facility_name: str) -> dict:
     Returns:
         Matching facility info and the practitioners who practice there.
     """
-    matching_facilities = [f for f in FACILITIES if _text_match(f["name"], facility_name)]
-    if not matching_facilities:
-        return {"error": f"No facility found matching '{facility_name}'", "results": []}
+    try:
+        matching_facilities = [f for f in FACILITIES if _text_match(f["name"], facility_name)]
+        if not matching_facilities:
+            return {"error": f"No facility found matching '{facility_name}'", "results": []}
 
-    all_results = []
-    for fac in matching_facilities:
-        practitioners = [
-            _format_practitioner(p)
-            for p in PRACTITIONERS
-            if fac["id"] in p.get("facility_ids", [])
-        ]
-        all_results.append({
-            "facility": _format_facility(fac),
-            "practitioner_count": len(practitioners),
-            "practitioners": practitioners,
-        })
-    return {"count": len(all_results), "results": all_results}
+        all_results = []
+        for fac in matching_facilities:
+            practitioners = [
+                _format_practitioner(p)
+                for p in PRACTITIONERS
+                if fac["id"] in p.get("facility_ids", [])
+            ]
+            all_results.append({
+                "facility": _format_facility(fac),
+                "practitioner_count": len(practitioners),
+                "practitioners": practitioners,
+            })
+        return {"count": len(all_results), "results": all_results}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in find_practitioners_at_facility: {e}" }
 
 
 def find_practitioners_in_organization(organization_name: str) -> dict:
@@ -369,23 +390,26 @@ def find_practitioners_in_organization(organization_name: str) -> dict:
     Returns:
         Matching organization info and affiliated practitioners.
     """
-    matching_orgs = [o for o in ORGANIZATIONS if _text_match(o["name"], organization_name)]
-    if not matching_orgs:
-        return {"error": f"No organization found matching '{organization_name}'", "results": []}
+    try:
+        matching_orgs = [o for o in ORGANIZATIONS if _text_match(o["name"], organization_name)]
+        if not matching_orgs:
+            return {"error": f"No organization found matching '{organization_name}'", "results": []}
 
-    all_results = []
-    for org in matching_orgs:
-        practitioners = [
-            _format_practitioner(p)
-            for p in PRACTITIONERS
-            if org["id"] in p.get("organization_ids", [])
-        ]
-        all_results.append({
-            "organization": _format_organization(org),
-            "practitioner_count": len(practitioners),
-            "practitioners": practitioners,
-        })
-    return {"count": len(all_results), "results": all_results}
+        all_results = []
+        for org in matching_orgs:
+            practitioners = [
+                _format_practitioner(p)
+                for p in PRACTITIONERS
+                if org["id"] in p.get("organization_ids", [])
+            ]
+            all_results.append({
+                "organization": _format_organization(org),
+                "practitioner_count": len(practitioners),
+                "practitioners": practitioners,
+            })
+        return {"count": len(all_results), "results": all_results}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in find_practitioners_in_organization: {e}" }
 
 
 tools = [

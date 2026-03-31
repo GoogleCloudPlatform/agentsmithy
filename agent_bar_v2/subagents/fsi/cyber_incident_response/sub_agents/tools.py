@@ -77,7 +77,7 @@ def triageQueryTool(hostname: str, alert_type: str):
         rows = list(client.query(query, job_config=job_config).result())
         return bq_rows_to_json(rows)
     except Exception as e:
-        return json.dumps({"status": "error", "message": str(e)})
+        return json.dumps({"status": "error", "message": f"Error running triage query for {hostname}: {str(e)}"})
 
 
 def investigationQueryTool(alert_type: str, hostname: str, parent_process: str = "", destination_ip: str = ""):
@@ -126,7 +126,7 @@ def investigationQueryTool(alert_type: str, hostname: str, parent_process: str =
         rows = list(client.query(query, job_config=job_config).result())
         return bq_rows_to_json(rows)
     except Exception as e:
-        return json.dumps({"status": "error", "message": str(e)})
+        return json.dumps({"status": "error", "message": f"Error running investigation query for {alert_type}: {str(e)}"})
 
 
 # --- Threat Intel Tool ---
@@ -135,15 +135,18 @@ def threatIntelQueryTool(indicators: list[str]):
     Checks indicators against a threat intelligence database (Simulated).
     - Arg indicators: A list of IPs, Domains, or Hashes.
     """
-    # In a real scenario, this would call VirusTotal, CrowdStrike, or a local BQ table.
-    intelligence_db = {
-        "8.8.8.8": "benign",
-        "1.2.3.4": "malicious - Known C2 Server",
-        "malware.exe": "malicious - Ransomware Family X",
-        "bad-domain.com": "malicious - Phishing Campaign Y",
-    }
-    results = {ind: intelligence_db.get(ind, "unknown") for ind in indicators}
-    return json.dumps(results)
+    try:
+        # In a real scenario, this would call VirusTotal, CrowdStrike, or a local BQ table.
+        intelligence_db = {
+            "8.8.8.8": "benign",
+            "1.2.3.4": "malicious - Known C2 Server",
+            "malware.exe": "malicious - Ransomware Family X",
+            "bad-domain.com": "malicious - Phishing Campaign Y",
+        }
+        results = {ind: intelligence_db.get(ind, "unknown") for ind in indicators}
+        return json.dumps(results)
+    except Exception as e:
+        return json.dumps({"status": "error", "message": f"Error querying threat intel database: {str(e)}"})
 
 
 # --- Response Tools ---
@@ -152,12 +155,15 @@ def getPlaybookTool(triggering_condition: str):
     Retrieves the response playbook for a given condition.
     - Arg triggering_condition: The type of threat (e.g., 'Ransomware', 'Phishing').
     """
-    playbooks = {
-        "EDR_DETECTION": "1. Isolate Host. 2. Kill malicious processes. 3. Scan for persistence. 4. Reset User Password.",
-        "IOC_MATCH": "1. Block Destination IP at Firewall. 2. Identify all hosts contacting this IP. 3. Isolate affected hosts.",
-        "PHISHING_EMAIL": "1. Purge email from all inboxes. 2. Identify users who clicked link. 3. Reset credentials for those users.",
-    }
-    return playbooks.get(triggering_condition, "Standard Triage: Gather more info and escalate to on-call.")
+    try:
+        playbooks = {
+            "EDR_DETECTION": "1. Isolate Host. 2. Kill malicious processes. 3. Scan for persistence. 4. Reset User Password.",
+            "IOC_MATCH": "1. Block Destination IP at Firewall. 2. Identify all hosts contacting this IP. 3. Isolate affected hosts.",
+            "PHISHING_EMAIL": "1. Purge email from all inboxes. 2. Identify users who clicked link. 3. Reset credentials for those users.",
+        }
+        return playbooks.get(triggering_condition, "Standard Triage: Gather more info and escalate to on-call.")
+    except Exception as e:
+        return f"Error retrieving playbook for '{triggering_condition}': {str(e)}"
 
 
 def responseExecutionTool(action: str, target: str, requires_approval: bool = True):
@@ -166,19 +172,25 @@ def responseExecutionTool(action: str, target: str, requires_approval: bool = Tr
     - Arg action: The action to perform ('Isolate Host', 'Block IP', 'Reset Password').
     - Arg target: The host or identifier to target.
     """
-    if requires_approval:
-        return f"Action '{action}' on '{target}' requested. Pending manual approval in the SOC portal."
-    return f"Action '{action}' on '{target}' executed successfully."
+    try:
+        if requires_approval:
+            return f"Action '{action}' on '{target}' requested. Pending manual approval in the SOC portal."
+        return f"Action '{action}' on '{target}' executed successfully."
+    except Exception as e:
+        return f"Error executing response action '{action}' on '{target}': {str(e)}"
 
 
 def createIncidentTool(alert_type: str, hostname: str, user: str, severity: str):
     """
     Creates an incident ticket in the tracking system (Simulated).
     """
-    incident_id = f"INC-{datetime.now().strftime('%Y%m%d%H%M%S')}"
-    logger.info(f"Created incident {incident_id} for {alert_type} on {hostname}")
-    return json.dumps({
-        "status": "success",
-        "incident_id": incident_id,
-        "summary": f"Incident {severity} - {alert_type} detected on {hostname} for user {user}"
-    })
+    try:
+        incident_id = f"INC-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        logger.info(f"Created incident {incident_id} for {alert_type} on {hostname}")
+        return json.dumps({
+            "status": "success",
+            "incident_id": incident_id,
+            "summary": f"Incident {severity} - {alert_type} detected on {hostname} for user {user}"
+        })
+    except Exception as e:
+        return json.dumps({"status": "error", "message": f"Error creating incident ticket for {alert_type}: {str(e)}"})
