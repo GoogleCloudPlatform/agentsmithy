@@ -18,7 +18,7 @@ from typing import Optional
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.models import LlmRequest, LlmResponse
 from google.genai import types
-from ..subagents.agent_registry import get_prompt_for_industry
+from ..subagents.agent_registry import get_prompt_for_industry, get_sub_agents
 
 
 def set_system_instructions_callback(
@@ -28,7 +28,27 @@ def set_system_instructions_callback(
 
     is_custom_workflow = bool(callback_context.state.get("is_custom"))
     if is_custom_workflow:
-        custom_root_instructions = callback_context.state.get("custom_root_instructions")
+        user_instructions = str(callback_context.state.get("custom_root_instructions", ""))
+        custom_root_instructions = f"# Main Instructions\n{user_instructions}\n"
+
+        mandatory_instructions = (
+            "\n## Mandatory Instructions\n"
+            "- As a first step ALWAYS the agent needs to ask each sub-agent its role and its interaction steps.\n"
+            "- After this, the agent should respond to the first user interaction and provide the expected interaction."
+        )
+        custom_root_instructions += mandatory_instructions
+
+        custom_agents = callback_context.state.get("custom_agents")
+        if custom_agents:
+            try:
+                agents = get_sub_agents(custom_agents)
+                if agents:
+                    custom_root_instructions += "\n\n### Available Sub-agents\n"
+                    for agent in agents:
+                        custom_root_instructions += f"- **{agent.name}**: {agent.description}\n"
+            except Exception as e:
+                logging.error(f"Failed to load custom agents descriptions: {e}")
+
         logging.info(f"Using custom workflow with root instructions: {custom_root_instructions[:50]}...")
 
         # workflow_type = callback_context.state.get("type")
@@ -36,7 +56,7 @@ def set_system_instructions_callback(
         if custom_workflow_map:
             # TODO create a validation process to validate the custom_workflow_map variable, make sure that has a start and at least one
             # TODO test and improve
-            workflow_prompt = f"\n\nFollow this specific sequential workflow: {custom_workflow_map}"
+            workflow_prompt = f"\n\n### Sequential Workflow\nFollow this specific sequential workflow: {custom_workflow_map}"
             custom_root_instructions += workflow_prompt
 
         system_instruction = types.Content(role="system", parts=[types.Part(text=str(custom_root_instructions))])
