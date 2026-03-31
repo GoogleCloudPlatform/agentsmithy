@@ -72,14 +72,17 @@ def get_bq_datasets() -> list:
     """
     return a list of `project_id`s and `dataset_id`s that can be explored by the agent
     """
-    approved_datasets = [
-        ('bigquery-public-data', 'austin_bikeshare'),
-        ('bigquery-public-data', 'bbc_news'),
-        ('bigquery-public-data', 'iowa_liquor_sales'),
-        ('bigquery-public-data', 'stackoverflow'),
-        (PROJECT_ID, 'cymbal_retail')
-    ]
-    return approved_datasets
+    try:
+        approved_datasets = [
+            ('bigquery-public-data', 'austin_bikeshare'),
+            ('bigquery-public-data', 'bbc_news'),
+            ('bigquery-public-data', 'iowa_liquor_sales'),
+            ('bigquery-public-data', 'stackoverflow'),
+            (PROJECT_ID, 'cymbal_retail')
+        ]
+        return approved_datasets
+    except Exception as e:
+        raise
 
 
 # dynamic graph tools
@@ -350,59 +353,65 @@ def generate_build_plan_tool(
     """
     Generates a detailed JSON build plan, including traversal tools with correct openCypher queries for Spanner Graph.
     """
-    print("--- TOOL: Invoking Builder LLM to generate plan ---")
-    # Use an f-string to dynamically insert the graph_name into the prompt examples
-    builder_prompt = f"""
-You are an expert graph data engineer for Spanner Graph. Your task is to generate a 'build plan' JSON object. This plan MUST include four keys:
-1. `bq_etl_query`: A BigQuery SQL query to select columns for building the graph.
-2. `nodes`: A list of objects defining each node with its `node_type` (label) and `id_column`.
-3. `relationships`: A list of objects defining links. Each object MUST have three keys: 'source', 'target', and 'type'. The values for 'source' and 'target' MUST be the string values of the 'node_type' from the nodes list (e.g., "Server", "Employee"). They cannot be dictionaries. The 'type' MUST be an uppercase, snake_case string.
-   **IMPORTANT**: If the DATABASE SCHEMA contains `foreign_keys`, you MUST automatically create relationships where the table with the foreign key is the 'source' and the `referenced_table` is the 'target'. You should assign a logical 'type' to these relationships (e.g. "HAS_ACCOUNT", "BELONGS_TO").
-4. `traversal_tools`: A dictionary of complete, executable **openCypher** queries to traverse the graph relationships.
+    try:
+        print("--- TOOL: Invoking Builder LLM to generate plan ---")
+        # Use an f-string to dynamically insert the graph_name into the prompt examples
+        builder_prompt = f"""
+    You are an expert graph data engineer for Spanner Graph. Your task is to generate a 'build plan' JSON object. This plan MUST include four keys:
+    1. `bq_etl_query`: A BigQuery SQL query to select columns for building the graph.
+    2. `nodes`: A list of objects defining each node with its `node_type` (label) and `id_column`.
+    3. `relationships`: A list of objects defining links. Each object MUST have three keys: 'source', 'target', and 'type'. The values for 'source' and 'target' MUST be the string values of the 'node_type' from the nodes list (e.g., "Server", "Employee"). They cannot be dictionaries. The 'type' MUST be an uppercase, snake_case string.
+       **IMPORTANT**: If the DATABASE SCHEMA contains `foreign_keys`, you MUST automatically create relationships where the table with the foreign key is the 'source' and the `referenced_table` is the 'target'. You should assign a logical 'type' to these relationships (e.g. "HAS_ACCOUNT", "BELONGS_TO").
+    4. `traversal_tools`: A dictionary of complete, executable **openCypher** queries to traverse the graph relationships.
 
-   --- CRITICAL SPANNER CYPHER RULES ---
-   1.  Every query MUST begin with the 'GRAPH {graph_name}' directive followed by a space.
-   2.  Query parameters MUST be prefixed with '@' (e.g., @app_id).
-   3.  The relationship label in the MATCH clause is the full edge name constructed by joining the source type, relationship type, and target type with underscores.
-   4.  Filter nodes using an explicit `WHERE` clause.
-   5.  Self-Consistency Rule: When generating the `traversal_tools`, you MUST use the exact relationship `type` values you defined in the `relationships` section above to construct the edge labels.
+       --- CRITICAL SPANNER CYPHER RULES ---
+       1.  Every query MUST begin with the 'GRAPH {graph_name}' directive followed by a space.
+       2.  Query parameters MUST be prefixed with '@' (e.g., @app_id).
+       3.  The relationship label in the MATCH clause is the full edge name constructed by joining the source type, relationship type, and target type with underscores.
+       4.  Filter nodes using an explicit `WHERE` clause.
+       5.  Self-Consistency Rule: When generating the `traversal_tools`, you MUST use the exact relationship `type` values you defined in the `relationships` section above to construct the edge labels.
 
-   **Example of a correct query for a relationship defined as `source: "App", target: "Repo", type: "HAS_REPO"`:**
-   The constructed edge label is `App_HAS_REPO_Repo`.
-   The correct query for `get_repos_for_app` is:
-   `GRAPH {graph_name} MATCH (a:App)-[:App_HAS_REPO_Repo]->(r:Repo) WHERE a.id = @app_id RETURN r.id AS id`
+       **Example of a correct query for a relationship defined as `source: "App", target: "Repo", type: "HAS_REPO"`:**
+       The constructed edge label is `App_HAS_REPO_Repo`.
+       The correct query for `get_repos_for_app` is:
+       `GRAPH {graph_name} MATCH (a:App)-[:App_HAS_REPO_Repo]->(r:Repo) WHERE a.id = @app_id RETURN r.id AS id`
 
-Your output MUST be ONLY the raw JSON object, without any markdown fences, comments, or other text.
-"""
-    # The context now explicitly includes the graph_name for the LLM
-    context_string = f"CONTEXT:\nProject ID: {project_id}\nDataset ID: {dataset_id}\nGraph Name: {graph_name}\n\nDATABASE SCHEMA:\n{schema_json}"
+    Your output MUST be ONLY the raw JSON object, without any markdown fences, comments, or other text.
+    """
+        # The context now explicitly includes the graph_name for the LLM
+        context_string = f"CONTEXT:\nProject ID: {project_id}\nDataset ID: {dataset_id}\nGraph Name: {graph_name}\n\nDATABASE SCHEMA:\n{schema_json}"
 
-    # Use the .invoke() method with a list of LangChain message objects
-    response = ChatVertexAI(model="gemini-2.5-flash").invoke(
-        [
-            SystemMessage(content=f"{builder_prompt}\n\n{context_string}"),
-            HumanMessage(content=user_request),
-        ]
-    )
-    return response.content
+        # Use the .invoke() method with a list of LangChain message objects
+        response = ChatVertexAI(model="gemini-2.5-flash").invoke(
+            [
+                SystemMessage(content=f"{builder_prompt}\n\n{context_string}"),
+                HumanMessage(content=user_request),
+            ]
+        )
+        return response.content
+    except Exception as e:
+        return f"Error in generate_build_plan_tool: {e}"
 
 
 def summarize_build_plan_tool(build_plan_json: str) -> Any:
     """
     Takes a raw JSON build plan and returns a human-readable summary.
     """
-    print("--- TOOL: Invoking Summarizer LLM to generate summary ---")
-    summarizer_prompt = (
-        "You are a helpful project manager. Your task is to take a technical JSON build plan and describe it to a non-technical user. "
-        "Do not show any code, SQL, or Cypher. Your output MUST have two sections:"
-        "1. 'Graph Structure': Describe the entities (nodes) and the relationships between them in simple terms. Show the relationship flow (e.g., App -> Repo -> Table)."
-        "2. 'Available Tools': List each tool from the 'traversal_tools' section. For each tool, provide a simple, one-sentence description of what it does (e.g., 'Given an App, this tool finds its code Repositories.')."
-        "Your entire output must be in markdown."
-    )
-    response = ChatVertexAI(model="gemini-2.5-flash", temperature=0).invoke(
-        f"{summarizer_prompt}\n\nJSON PLAN:\n{build_plan_json}"
-    )
-    return response.content
+    try:
+        print("--- TOOL: Invoking Summarizer LLM to generate summary ---")
+        summarizer_prompt = (
+            "You are a helpful project manager. Your task is to take a technical JSON build plan and describe it to a non-technical user. "
+            "Do not show any code, SQL, or Cypher. Your output MUST have two sections:"
+            "1. 'Graph Structure': Describe the entities (nodes) and the relationships between them in simple terms. Show the relationship flow (e.g., App -> Repo -> Table)."
+            "2. 'Available Tools': List each tool from the 'traversal_tools' section. For each tool, provide a simple, one-sentence description of what it does (e.g., 'Given an App, this tool finds its code Repositories.')."
+            "Your entire output must be in markdown."
+        )
+        response = ChatVertexAI(model="gemini-2.5-flash", temperature=0).invoke(
+            f"{summarizer_prompt}\n\nJSON PLAN:\n{build_plan_json}"
+        )
+        return response.content
+    except Exception as e:
+        return f"Error in summarize_build_plan_tool: {e}"
 
 # utility tools
 

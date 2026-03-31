@@ -334,8 +334,16 @@ def copy_and_replace_document(
         else:
             print("No replacements specified.")
 
+        return {
+            "status": "success",
+            "message": f"Document '{new_document_name}' created and updated successfully.",
+            "document_id": new_document_id
+        }
+
     except HttpError as error:
-        print(f'An error occurred: {error}')
+        return {"status": "error", "message": f"An error occurred: {error}"}
+    except Exception as e:
+        return {"status": "error", "message": f"Error copying and replacing document: {str(e)}"}
 
 def _delete_existing_slides(
     credentials: Any,

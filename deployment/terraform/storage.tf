@@ -66,3 +66,10 @@ resource "google_storage_bucket" "macroeconomics_bucket" {
 
   depends_on = [google_project_service.enabled_apis]
 }
+
+# 6. Economics Sub-agent Data
+resource "google_storage_bucket_object" "economics_world_bank_data" {
+  name   = "fsi/economics/data/world_bank_data_2025.csv"
+  source = "${path.module}/../../agent_bar_v2/subagents/fsi/holistic_investment_strategy/economics/data/world_bank_data_2025.csv"
+  bucket = google_storage_bucket.default_data_bucket.name
+}

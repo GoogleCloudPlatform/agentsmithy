@@ -178,10 +178,13 @@ async def save_script_to_state(
     Saves the four brainstormed scene prompts into the agent's state memory.
     This tool is called after the creative brainstorming step (Act 1).
     """
-    print("Saving script to state...")
-    script = [scene1_prompt, scene2_prompt, scene3_prompt, scene4_prompt]
-    tool_context.state["creative_script"] = script
-    return {"status": "success", "message": "Script saved to state."}
+    try:
+        print("Saving script to state...")
+        script = [scene1_prompt, scene2_prompt, scene3_prompt, scene4_prompt]
+        tool_context.state["creative_script"] = script
+        return {"status": "success", "message": "Script saved to state."}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in save_script_to_state: {e}" }
 
 
 async def generate_and_display_images(
@@ -192,97 +195,100 @@ async def generate_and_display_images(
     saves them to GCS, and displays all 4 images as artifacts in the chat.
     This is the main tool for Act 2.
     """
-    print("Generating and displaying images from script in state...")
+    try:
+        print("Generating and displaying images from script in state...")
 
-    if not global_genai_client:
-        return [{"status": "error", "message": "GenAI Client not initialized."}]
+        if not global_genai_client:
+            return [{"status": "error", "message": "GenAI Client not initialized."}]
 
-    # 1. Get the script from state
-    script = tool_context.state.get("creative_script", [])
-    if not script:
-        return [
-            {
-                "status": "error",
-                "message": "Could not find script in state. Please start over.",
-            }
-        ]
+        # 1. Get the script from state
+        script = tool_context.state.get("creative_script", [])
+        if not script:
+            return [
+                {
+                    "status": "error",
+                    "message": "Could not find script in state. Please start over.",
+                }
+            ]
 
-    storyboard_data = []  # This is what we will save back to the state
-    image_model = "imagen-3.0-generate-002"
-    storage_client = storage.Client()
-    bucket = storage_client.bucket(BUCKET_NAME)
+        storyboard_data = []  # This is what we will save back to the state
+        image_model = "imagen-3.0-generate-002"
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(BUCKET_NAME)
 
-    # 2. Loop through the prompts and generate/save/display
-    for i, prompt in enumerate(script):
-        scene_num = i + 1
-        print(f"Generating image for Scene {scene_num}: {prompt}")
+        # 2. Loop through the prompts and generate/save/display
+        for i, prompt in enumerate(script):
+            scene_num = i + 1
+            print(f"Generating image for Scene {scene_num}: {prompt}")
 
-        image_response = global_genai_client.models.generate_images(
-            model=image_model,
-            prompt=prompt,
-            config=types.GenerateImagesConfig(
-                number_of_images=1,
-                aspect_ratio="16:9",
-                person_generation=types.PersonGeneration.ALLOW_ALL,
-            ),
-        )
-
-        if (
-            not image_response.generated_images
-            or not image_response.generated_images[0].image
-        ):
-            print(
-                f"ERROR: Image generation failed or returned invalid data for prompt: {prompt}"
+            image_response = global_genai_client.models.generate_images(
+                model=image_model,
+                prompt=prompt,
+                config=types.GenerateImagesConfig(
+                    number_of_images=1,
+                    aspect_ratio="16:9",
+                    person_generation=types.PersonGeneration.ALLOW_ALL,
+                ),
             )
-            continue
 
-        pil_img = image_response.generated_images[0].image._pil_image
-        if not pil_img:
-            print(f"ERROR: Could not decode image data for prompt: {prompt}")
-            continue
+            if (
+                not image_response.generated_images
+                or not image_response.generated_images[0].image
+            ):
+                print(
+                    f"ERROR: Image generation failed or returned invalid data for prompt: {prompt}"
+                )
+                continue
 
-        buf = io.BytesIO()
-        pil_img.save(buf, format="PNG")
-        buf.seek(0)
-        verified_img = Image.open(buf)
+            pil_img = image_response.generated_images[0].image._pil_image
+            if not pil_img:
+                print(f"ERROR: Could not decode image data for prompt: {prompt}")
+                continue
 
-        final_buf = io.BytesIO()
-        verified_img.save(final_buf, format="PNG")
-        image_bytes = final_buf.getvalue()
+            buf = io.BytesIO()
+            pil_img.save(buf, format="PNG")
+            buf.seek(0)
+            verified_img = Image.open(buf)
 
-        # 3. Upload to GCS (for the final video tool)
-        gcs_file_name = f"scene_{uuid.uuid4()}.png"
-        blob = bucket.blob(f"ad_agent_scenes/{gcs_file_name}")
-        blob.upload_from_string(image_bytes, content_type="image/png")
-        gcs_path = f"gs://{BUCKET_NAME}/ad_agent_scenes/{gcs_file_name}"
+            final_buf = io.BytesIO()
+            verified_img.save(final_buf, format="PNG")
+            image_bytes = final_buf.getvalue()
 
-        # 4. Save and Display Artifact
-        artifact_name = f"storyboard_scene_{scene_num}.png"
-        try:
-            artifact_part = types.Part.from_bytes(
-                data=image_bytes, mime_type="image/png"
+            # 3. Upload to GCS (for the final video tool)
+            gcs_file_name = f"scene_{uuid.uuid4()}.png"
+            blob = bucket.blob(f"ad_agent_scenes/{gcs_file_name}")
+            blob.upload_from_string(image_bytes, content_type="image/png")
+            gcs_path = f"gs://{BUCKET_NAME}/ad_agent_scenes/{gcs_file_name}"
+
+            # 4. Save and Display Artifact
+            artifact_name = f"storyboard_scene_{scene_num}.png"
+            try:
+                artifact_part = types.Part.from_bytes(
+                    data=image_bytes, mime_type="image/png"
+                )
+                await tool_context.save_artifact(artifact_name, artifact_part)
+                print(f"Saved Scene {scene_num} as artifact: {artifact_name}")
+
+                await tool_context.load_artifact(artifact_name)
+                print(f"Loaded artifact {artifact_name} for display.")
+            except Exception as e:
+                print(f"Error saving/loading artifact {artifact_name}: {e}")
+
+            # 5. Prepare data for the new state
+            storyboard_data.append(
+                {
+                    "scene_prompt": prompt,
+                    "image_gcs": gcs_path,
+                    "mime_type": "image/png",
+                    "artifact_name": artifact_name,
+                }
             )
-            await tool_context.save_artifact(artifact_name, artifact_part)
-            print(f"Saved Scene {scene_num} as artifact: {artifact_name}")
 
-            await tool_context.load_artifact(artifact_name)
-            print(f"Loaded artifact {artifact_name} for display.")
-        except Exception as e:
-            print(f"Error saving/loading artifact {artifact_name}: {e}")
-
-        # 5. Prepare data for the new state
-        storyboard_data.append(
-            {
-                "scene_prompt": prompt,
-                "image_gcs": gcs_path,
-                "mime_type": "image/png",
-                "artifact_name": artifact_name,
-            }
-        )
-
-    # 6. Save the FULL storyboard data to a new state variable
-    tool_context.state["storyboard_images"] = storyboard_data
-    return storyboard_data
+        # 6. Save the FULL storyboard data to a new state variable
+        tool_context.state["storyboard_images"] = storyboard_data
+        return storyboard_data
+    except Exception as e:
+        return [{"status": "error", "message": f"Error in generate_and_display_images: {e}" }]
 
 
 # ==============================================================================
