@@ -28,8 +28,8 @@ context_based_toolset = ContextBasedToolset()
 root_agent = Agent(
     model="gemini-2.5-flash",
     name="root_agent",
-    description="A helpful assistant for user questions.",
-    instruction="You are a very helpful assistant",
+    description="",
+    instruction="",
     before_model_callback=set_system_instructions_callback,
     tools=[context_based_toolset]
 )
