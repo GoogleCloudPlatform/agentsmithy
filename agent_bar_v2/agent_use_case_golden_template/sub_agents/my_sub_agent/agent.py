@@ -28,7 +28,7 @@ Your goal is to [Specific Goal].
 root_agent = Agent(
     name="my_sub_agent",
     model=Gemini(
-        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
         # Custom temperature for more creative explanations
         generation_config=types.GenerateContentConfig(
             temperature=0.7,

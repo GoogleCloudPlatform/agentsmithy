@@ -21,7 +21,7 @@ from . import prompt
 
 cardiology_consult = LlmAgent(
     name="patient_journey_agent",
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     description=(
         "Patient Journey"
     ),

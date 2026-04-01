@@ -27,7 +27,7 @@ AGENT_DESCRIPTION = "Analyzes earnings calls and financial reports to evaluate c
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     generation_config=types.GenerateContentConfig(
         temperature=0.7,
         top_p=0.95,

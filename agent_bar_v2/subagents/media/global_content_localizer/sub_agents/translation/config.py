@@ -21,6 +21,6 @@ PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
 BUCKET_NAME = os.getenv("GCS_BUCKET")
 GCS_OUTPUT_PATH = "translation_agent_output"
-DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview")
+DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash")
 DEFAULT_SPEECH_MODEL = "chirp"
 VALID_STT_MODELS = {"chirp", "chirp_2", "chirp_telephony"}

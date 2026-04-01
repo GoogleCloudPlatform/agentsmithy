@@ -30,7 +30,7 @@ from .prompts import GLOBAL_CAMPAIGN_MANAGER_INSTRUCTIONS
 
 root_agent = Agent(
         name="global_campaign_manager",
-        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
         description=(
             "You are a Global Campaign Manager Agent, a helpful AI agent and "
             "creative partner that generates multi-scene video advertisements. "

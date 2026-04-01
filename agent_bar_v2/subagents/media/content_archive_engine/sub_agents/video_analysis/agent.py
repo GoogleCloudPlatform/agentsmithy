@@ -27,7 +27,7 @@ AGENT_DESCRIPTION = "Agent to analyze scene, shot and entity information from vi
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 )
 
 root_agent = Agent(

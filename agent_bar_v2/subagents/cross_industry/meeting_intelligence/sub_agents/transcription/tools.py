@@ -32,7 +32,7 @@ from google.genai import types
 
 from .config import BUCKET_NAME, LOCATION, PROJECT_ID
 GCS_OUTPUT_PATH = "transcription_agent_output"
-DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview")
+DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash")
 DEFAULT_SPEECH_MODEL = "chirp_2"
 VALID_STT_MODELS = {"chirp", "chirp_2", "chirp_telephony"}
 

@@ -87,7 +87,7 @@ def load_agent() -> LlmAgent:
 
     agent = LlmAgent(
         name="product_ad_generation",
-        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
         description=(
             "You are a Product Ad Generation Agent, a helpful AI agent and creative partner that generates multi-scene video advertisements."
             " Your process is interactive and split into precise steps."

@@ -20,15 +20,10 @@ from google.adk.models import LlmRequest, LlmResponse
 from google.genai import types
 from ..subagents.agent_registry import get_prompt_for_industry, get_sub_agents
 
-# This logic instructs the Root Agent to act as a conversational proxy 
-# instead of stopping after the first tool response.
 ORCHESTRATION_LOGIC = """
-
 ### OPERATIONAL RULES FOR SUB-AGENTS:
 1. You are an orchestrator. Some of your tools are agents themselves.
 2. If a tool output contains a question for the user or asks for missing information, your ONLY job is to relay that question to the user immediately.
-3. After the user answers a tool's question, you MUST call that same tool again in your next turn, passing the user's answer.
-4. Do not consider a task "finished" until the sub-agent/tool provides a final result or confirmation of completion.
 """
 
 def set_system_instructions_callback(

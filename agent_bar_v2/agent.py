@@ -26,7 +26,7 @@ logging.basicConfig(level=logging.INFO)
 context_based_toolset = ContextBasedToolset()
 
 root_agent = Agent(
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     name="root_agent",
     description="",
     instruction="",

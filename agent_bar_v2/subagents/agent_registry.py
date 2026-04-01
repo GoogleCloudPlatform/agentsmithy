@@ -247,7 +247,7 @@ def get_sub_agents(agents_id: [str]):
         agent = AGENT_REGISTRY_MAP.get(agent_id)
         if agent is None:
             raise ValueError(f"Agent id '{agent_id}' not found in registry")
-        agents.append(AgentTool(agent, skip_summarization=True))
+        agents.append(AgentTool(agent))
     return agents
 
 

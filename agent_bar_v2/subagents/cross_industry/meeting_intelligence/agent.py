@@ -33,7 +33,7 @@ AGENT_DESCRIPTION = """
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     generation_config=types.GenerateContentConfig(
         temperature=0.5,
         top_p=0.95,

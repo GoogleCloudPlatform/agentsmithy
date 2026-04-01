@@ -19,7 +19,7 @@ from .tools import copy_and_replace_document_tool, save_document_tool, list_driv
 
 drive_agent = Agent(
     name="DriveAgent",
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     description="Drive Agent",
     instruction=PROMPT,
     tools=[

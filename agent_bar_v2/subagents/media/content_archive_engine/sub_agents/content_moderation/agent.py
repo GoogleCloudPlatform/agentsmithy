@@ -27,7 +27,7 @@ AGENT_DESCRIPTION = "Agent to analyze explicit content, sensitive themes, aggres
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 )
 
 root_agent = Agent(

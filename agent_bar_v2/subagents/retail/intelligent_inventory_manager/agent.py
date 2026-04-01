@@ -29,7 +29,7 @@ from .sub_agents.catalog_enrichment.agent import catalog_enrichment_agent
 
 root_agent = Agent(
         name="intelligent_inventory_manager",
-        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+        model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
         description=(
             "You are an Intelligent Inventory Manager Agent, a helpful AI "
             "agent that can manage inventory for retail companies. "

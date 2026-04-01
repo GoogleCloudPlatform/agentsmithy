@@ -20,7 +20,7 @@ from .tools import create_bucket_tool, list_buckets_tool, get_bucket_details_too
 # Create the GCS management agent
 root_agent = Agent(
     name="storage_access",
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     description="Agent for managing and interacting with GCS buckets",
     instruction=SYSTEM_INSTRUCTIONS,
     tools=[

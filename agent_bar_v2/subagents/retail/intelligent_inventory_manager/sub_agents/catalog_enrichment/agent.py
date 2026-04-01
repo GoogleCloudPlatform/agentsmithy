@@ -20,7 +20,7 @@ from .tools import add_product_to_catalog, search_catalog
 
 catalog_enrichment_agent = Agent(
     name="catalog_enrichment_agent",
-    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     description="Agent to enrich retail product catalogs with missing details and descriptions.",
     instruction=SYSTEM_INSTRUCTIONS,
     tools=[search_catalog, add_product_to_catalog],
