@@ -223,3 +223,7 @@ llms-full.txt
 
 .terraform*
 terraform.tfstate*
+
+# Test Suite
+assets/*
+report.html
