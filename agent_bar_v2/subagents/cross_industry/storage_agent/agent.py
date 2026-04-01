@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from google.adk.agents import Agent
 from google.adk.tools.load_memory_tool import load_memory_tool
 from .prompt import SYSTEM_INSTRUCTION

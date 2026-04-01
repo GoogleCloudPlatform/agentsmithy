@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from google.adk.agents import Agent
 from .prompt import PROMPT
 from .tools import copy_and_replace_document_tool, save_document_tool, list_drive_documents_tool

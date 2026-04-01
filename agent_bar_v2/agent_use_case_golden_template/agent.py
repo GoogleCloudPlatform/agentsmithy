@@ -14,6 +14,7 @@
 
 """Main Agent definition for the [Use Case Name] use case."""
 
+import os
 from google.adk.agents import Agent
 from google.adk.models import Gemini
 from google.adk.tools import AgentTool

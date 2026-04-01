@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.genai import types

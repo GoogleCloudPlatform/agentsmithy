@@ -14,7 +14,9 @@ import os
 # limitations under the License.
 
 from dotenv import load_dotenv
-from google.adk.agents import LlmAgent
+from google.adk.agents import Agent
+from google.adk.models import Gemini
+from google.genai import types
 
 from .prompt import root_agent_instruction
 from .sub_agents.investigation.agent import investigation_agent
@@ -24,6 +26,7 @@ from .sub_agents.triage.agent import triage_agent
 
 load_dotenv()
 
+AGENT_NAME = "cyber_incident_response"
 AGENT_DESCRIPTION = "Orchestrates a multi-agent cybersecurity incident response workflow using specialized triage, investigation, threat intelligence, and response agents."
 
 

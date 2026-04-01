@@ -14,6 +14,7 @@
 
 """Defining the NL2SQL agent."""
 
+import os
 from google.adk.agents import Agent
 
 from .prompts import SYSTEM_INSTRUCTIONS

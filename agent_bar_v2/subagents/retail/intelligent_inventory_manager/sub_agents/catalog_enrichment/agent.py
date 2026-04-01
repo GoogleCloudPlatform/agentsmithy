@@ -14,6 +14,7 @@
 
 """Defining the Catalog Enrichment agent."""
 from google.adk.agents import Agent
+import os
 
 from .prompts import SYSTEM_INSTRUCTIONS
 from .tools import add_product_to_catalog, search_catalog

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import google.cloud.storage as storage
 from google.adk.agents import LlmAgent
 from google.adk.agents.callback_context import CallbackContext
