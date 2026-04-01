@@ -17,7 +17,6 @@ from dotenv import load_dotenv
 
 # Construct the path to the .env file in the root directory
 # Uncomment this to load env vars for sharing file
-# TODO improve this
 # dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 # load_dotenv(dotenv_path)
 
