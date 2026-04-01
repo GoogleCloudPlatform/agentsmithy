@@ -23,7 +23,7 @@ root_agent = Agent(
     name="storage_access",
     model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     description="Agent for managing and interacting with GCS buckets",
-    instruction=SYSTEM_INSTRUCTIONS,
+    instruction=SYSTEM_INSTRUCTION,
     tools=[
         create_bucket_tool,
         list_buckets_tool,
