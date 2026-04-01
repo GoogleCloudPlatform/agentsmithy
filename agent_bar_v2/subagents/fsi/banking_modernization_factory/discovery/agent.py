@@ -13,33 +13,34 @@ import os
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from google.adk.agents import Agent
-from google.adk.models import Gemini
+from google.adk.agents import LlmAgent
+from google.adk.tools import FunctionTool
 from google.genai import types
 
-from . import prompts
-from . import tools
+from .prompt import INSTRUCTION_PROMPT
+from .tools.repo_analysis_tool import RepoAnalysisTools
 
+# Initialize the custom tool class
+tools_instance = RepoAnalysisTools()
 
-AGENT_NAME = "domain_discovery"
-AGENT_DESCRIPTION = "Analyzes legacy codebases to identify business domains, logic, and dependencies for modernization."
+tools = [
+    FunctionTool(func=tools_instance.list_repository_files),
+    FunctionTool(func=tools_instance.get_file_content),
+]
 
+AGENT_NAME = "discovery_agent"
+AGENT_DESCRIPTION = "Analyzes legacy codebases via GitHub repositories to identify business domains, logic, and dependencies for modernization."
 
 # Model configuration
-GEMINI_MODEL_CONFIG = Gemini(
+root_agent = LlmAgent(
     model=os.getenv("GEMINI_MODEL_VERSION", "gemini-3-flash-preview"),
-    generation_config=types.GenerateContentConfig(
+    generate_content_config=types.GenerateContentConfig(
         temperature=0.2,
         top_p=0.95,
         max_output_tokens=65536,
     ),
-    retry_options=types.HttpRetryOptions(attempts=3),
-)
-
-root_agent = Agent(
     name=AGENT_NAME,
-    model=GEMINI_MODEL_CONFIG,
     description=AGENT_DESCRIPTION,
-    instruction=prompts.SYSTEM_INSTRUCTION,
-    tools=tools.tools,
+    instruction=INSTRUCTION_PROMPT,
+    tools=tools,
 )

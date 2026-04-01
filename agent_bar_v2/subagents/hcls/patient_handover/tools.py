@@ -1,10 +1,10 @@
-# Copyright 2026 Google LLC
+# Copyright 2026 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -294,13 +294,15 @@ def list_available_shifts(tool_context: ToolContext) -> dict[str, Any]:
     Returns:
         A list of shift dates and times.
     """
+    try:
+        shifts = tool_context.state.get("shifts")
 
-    shifts = tool_context.state.get("shifts")
+        if shifts is None:
+            return {"error": "No shifts found."}
 
-    if shifts is None:
-        return {"error": "No shifts found."}
-
-    return {"success": "Shifts found.", "shifts": shifts}
+        return {"success": "Shifts found.", "shifts": shifts}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in list_available_shifts: {e}" }
 
 
 def list_patients(tool_context: ToolContext) -> dict[str, Any]:
@@ -309,13 +311,16 @@ def list_patients(tool_context: ToolContext) -> dict[str, Any]:
     Returns:
         A list of patient IDs.
     """
+    try:
+        patients_data = tool_context.state.get("patients")
+        if patients_data is None:
+            return {"error": "No patients found."}
 
-    patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in tool_context.state.get("patients")]
+        patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in patients_data]
 
-    if patients is None:
-        return {"error": "No patients found."}
-
-    return {"success": "Patients found.", "patients": patients}
+        return {"success": "Patients found.", "patients": patients}
+    except Exception as e:
+        return {"status": "error", "message": f"Error in list_patients: {e}" }
 
 
 async def generate_shift_endorsement(
@@ -334,65 +339,72 @@ async def generate_shift_endorsement(
     Returns:
         The generated shift endorsement report.
     """
-    patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in tool_context.state.get("patients")]
-    if not any(pid == patient for pid in patients):
-        return {"error": f"Patient not found: {patient}"}
+    try:
+        patients_data = tool_context.state.get("patients")
+        if not patients_data:
+            return {"error": "No patients data found in state."}
 
-    start_dt, end_dt = (
-        datetime.fromisoformat(start_time),
-        datetime.fromisoformat(end_time),
-    )
-    if not any(
-        start_dt == datetime.fromisoformat(shift["start_time"])
-        and end_dt == datetime.fromisoformat(shift["end_time"])
-        for shift in tool_context.state.get("shifts", [])
-    ):
-        return {"error": f"Shift not found: {start_dt} - {end_dt}"}
+        patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in patients_data]
+        if not any(pid == patient for pid in patients):
+            return {"error": f"Patient not found: {patient}"}
 
-    summarizer = Summarizer(
-        section_model=tool_context.state["section_model"],
-        summary_model=tool_context.state["summary_model"],
-        client=genai.Client(),
-    )
-# this is going to be hard
-    # patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
+        start_dt, end_dt = (
+            datetime.fromisoformat(start_time),
+            datetime.fromisoformat(end_time),
+        )
+        if not any(
+            start_dt == datetime.fromisoformat(shift["start_time"])
+            and end_dt == datetime.fromisoformat(shift["end_time"])
+            for shift in tool_context.state.get("shifts", [])
+        ):
+            return {"error": f"Shift not found: {start_dt} - {end_dt}"}
 
-    inputs_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-raw-inputs.txt"
-    _ = await tool_context.save_artifact(
-        inputs_filename,
-        # artifact=tool_context.load_artifact("patient_data")
-        artifact=types.Part(text=tool_context.state.get("patient_data"))
-        # artifact=types.Part.from_bytes(
-        #     data=patient_file.read_text().encode(),
-        #     mime_type="text/plain",
-        # ),
-    )
+        summarizer = Summarizer(
+            section_model=tool_context.state["section_model"],
+            summary_model=tool_context.state["summary_model"],
+            client=genai.Client(),
+        )
+    # this is going to be hard
+        # patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
 
-    summary_content = summarizer.generate(
-        # file_path=tool_context.load_artifact(patient),
-        patient = tool_context.state.get("patient_data"),
-        start_time=start_dt,
-        end_time=end_dt,
-    )
+        inputs_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-raw-inputs.txt"
+        _ = await tool_context.save_artifact(
+            inputs_filename,
+            # artifact=tool_context.load_artifact("patient_data")
+            artifact=types.Part(text=tool_context.state.get("patient_data"))
+            # artifact=types.Part.from_bytes(
+            #     data=patient_file.read_text().encode(),
+            #     mime_type="text/plain",
+            # ),
+        )
 
-    if not (summary_report := summary_content.text):
+        summary_content = summarizer.generate(
+            # file_path=tool_context.load_artifact(patient),
+            patient = tool_context.state.get("patient_data"),
+            start_time=start_dt,
+            end_time=end_dt,
+        )
+
+        if not (summary_report := summary_content.text):
+            return {
+                "error": "No summary generated.",
+                "response": summary_content.model_dump(mode="json", exclude_none=True),
+            }
+
+        endorsement_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-endorsement.md"
+        _ = await tool_context.save_artifact(
+            endorsement_filename,
+            artifact=types.Part.from_bytes(
+                data=summary_report.encode(),
+                mime_type="text/markdown",
+            ),
+        )
+
         return {
-            "error": "No summary generated.",
-            "response": summary_content.model_dump(mode="json", exclude_none=True),
+            "success": "Summary generated successfully. Please inform the user about the raw inputs and endorsement files. Raw inputs contains all of the source patient data used for the endorsement report.",
+            "raw_inputs_file": inputs_filename,
+            "endorsement_file": endorsement_filename,
+            "report_content": summary_report,
         }
-
-    endorsement_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-endorsement.md"
-    _ = await tool_context.save_artifact(
-        endorsement_filename,
-        artifact=types.Part.from_bytes(
-            data=summary_report.encode(),
-            mime_type="text/markdown",
-        ),
-    )
-
-    return {
-        "success": "Summary generated successfully. Please inform the user about the raw inputs and endorsement files. Raw inputs contains all of the source patient data used for the endorsement report.",
-        "raw_inputs_file": inputs_filename,
-        "endorsement_file": endorsement_filename,
-        "report_content": summary_report,
-    }
+    except Exception as e:
+        return {"status": "error", "message": f"Error in generate_shift_endorsement: {e}" }

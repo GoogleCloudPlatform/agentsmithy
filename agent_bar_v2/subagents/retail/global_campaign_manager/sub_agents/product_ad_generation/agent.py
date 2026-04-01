@@ -1,10 +1,10 @@
-# Copyright 2026 Google LLC
+# Copyright 2026 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,16 +23,12 @@ from . import tools
 from .callbacks import inline_data_processing
 
 
-_, project_id = google.auth.default()
-os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
-os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
-if not PROJECT_ID or not LOCATION or not BUCKET_NAME:
-    raise EnvironmentError(
-        "Missing required environment variables (GOOGLE_CLOUD_PROJECT, "
-        "GOOGLE_CLOUD_LOCATION, GCS_BUCKET) in your .env file."
-    )
+# if not PROJECT_ID or not LOCATION or not BUCKET_NAME:
+#     raise EnvironmentError(
+#         "Missing required environment variables (GOOGLE_CLOUD_PROJECT, "
+#         "GOOGLE_CLOUD_LOCATION, GCS_BUCKET) in your .env file."
+#     )
 
 print(f"Loaded config: Project={PROJECT_ID}, Location={LOCATION}, Bucket={BUCKET_NAME}")
 

@@ -1,11 +1,11 @@
 # ruff: noqa
-# Copyright 2026 Google LLC
+# Copyright 2026 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,11 +26,6 @@ import google.cloud.storage as storage
 from .sub_agents.product_ad_generation.agent import product_ad_agent
 from .sub_agents.video_transcription.agent import video_transcription_agent
 from .prompts import GLOBAL_CAMPAIGN_MANAGER_INSTRUCTIONS
-
-_, project_id = google.auth.default()
-os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
-os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 
 root_agent = Agent(

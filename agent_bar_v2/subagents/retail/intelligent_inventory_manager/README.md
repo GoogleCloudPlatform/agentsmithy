@@ -8,7 +8,7 @@ This agent employs a hierarchical design. The central `intelligent_inventory_man
 
 ![Agent Architecture Diagram](./assets/iim_arch.png)
 
-1.  **`nl2sql` (Retail Concierge)**
+1.  **`nl2sql_agent` (Retail Concierge)**
     *   **Purpose**: Handles product discovery and inventory lookup.
     *   **Capabilities**: Allows users to search the current catalog, filter by specific attributes (like price), and check availability at nearby retail store locations.
     *   **Tools**:
@@ -16,7 +16,7 @@ This agent employs a hierarchical design. The central `intelligent_inventory_man
         *   `store_locator`: Checks inventory levels for specific SKUs across physical stores.
         *   `product_selection`: Aids the user in narrowing down their search results.
 
-2.  **`catalog_enrichment` (Catalog specialist)**
+2.  **`catalog_enrichment_agent` (Catalog specialist)**
     *   **Purpose**: Streamlines the process of adding new products to the system.
     *   **Capabilities**: Takes basic product information from the user (name, brand, price), uses AI to generate compelling product descriptions and categorizations, and stages the enriched product for review.
     *   **Tools**:
@@ -26,7 +26,7 @@ This agent employs a hierarchical design. The central `intelligent_inventory_man
 ## Services & Integration
 
 *   **Google Gemini**: The agent orchestrator and its sub-agents are powered by `gemini-2.5-flash`, utilizing Google's Agent Development Kit (ADK).
-*   **Google Cloud BigQuery**: Used as the primary retail catalog and inventory database. The agents use custom Python tools to query BQ directly (`nl2sql`) and use BQML for semantic similarity searches.
+*   **Google Cloud BigQuery**: Used as the primary retail catalog and inventory database. The agents use custom Python tools to query BQ directly (`nl2sql_agent`) and use BQML for semantic similarity searches.
 
 ## How to Use
 

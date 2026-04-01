@@ -219,5 +219,7 @@ __marimo__/
 .adk
 llms-full.txt
 
-test_*
 .DS_Store
+
+.terraform*
+terraform.tfstate*

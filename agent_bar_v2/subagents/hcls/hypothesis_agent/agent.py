@@ -5,7 +5,7 @@ import os
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@ from . import prompts
 from . import tools
 
 
-AGENT_NAME = "hypothesis_agent"
+AGENT_NAME = "hypothesis_writer"
 AGENT_DESCRIPTION = "Hypothesis agent for creating new hypotheses based on pubmed results."
 
 # Model configuration

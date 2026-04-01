@@ -1,3 +1,17 @@
+# Copyright 2026 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import google.auth
 import os.path
 import json
@@ -320,8 +334,16 @@ def copy_and_replace_document(
         else:
             print("No replacements specified.")
 
+        return {
+            "status": "success",
+            "message": f"Document '{new_document_name}' created and updated successfully.",
+            "document_id": new_document_id
+        }
+
     except HttpError as error:
-        print(f'An error occurred: {error}')
+        return {"status": "error", "message": f"An error occurred: {error}"}
+    except Exception as e:
+        return {"status": "error", "message": f"Error copying and replacing document: {str(e)}"}
 
 def _delete_existing_slides(
     credentials: Any,

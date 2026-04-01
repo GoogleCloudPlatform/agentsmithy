@@ -13,16 +13,18 @@ import os
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from google.adk.agents import Agent
-from google.adk.models import Gemini
-from google.genai import types
+from dotenv import load_dotenv
+from google.adk.agents import LlmAgent
 
-from . import prompts
-from . import tools
+from .prompt import root_agent_instruction
+from .sub_agents.investigation.agent import investigation_agent
+from .sub_agents.response.agent import response_agent
+from .sub_agents.threatintel.agent import threatintel_agent
+from .sub_agents.triage.agent import triage_agent
 
+load_dotenv()
 
-AGENT_NAME = "cyber_incident_response"
-AGENT_DESCRIPTION = "Orchestrates cyber incident response by scanning logs, analyzing threats, and drafting incident reports."
+AGENT_DESCRIPTION = "Orchestrates a multi-agent cybersecurity incident response workflow using specialized triage, investigation, threat intelligence, and response agents."
 
 
 # Model configuration
@@ -58,6 +60,6 @@ root_agent = Agent(
     name=AGENT_NAME,
     model=GEMINI_MODEL_CONFIG,
     description=AGENT_DESCRIPTION,
-    instruction=prompts.SYSTEM_INSTRUCTION,
-    tools=tools.tools,
+    instruction=root_agent_instruction,
+    sub_agents=[triage_agent, investigation_agent, threatintel_agent, response_agent],
 )

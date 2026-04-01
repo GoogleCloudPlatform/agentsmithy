@@ -1,10 +1,10 @@
-# Copyright 2026 Google LLC
+# Copyright 2026 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,49 +53,52 @@ def calculate_ascvd_risk(
     Returns:
         Dict with risk_percent_10y, risk_category, and brief interpretation.
     """
-    # Simplified linear predictor (demonstration; real equations use full Pooled Cohort coefficients)
-    ln_age = math.log(age_years)
-    ln_tc = math.log(total_cholesterol_mg_dl)
-    ln_hdl = math.log(hdl_cholesterol_mg_dl)
-    ln_sbp = math.log(systolic_bp_mmhg) if systolic_bp_mmhg > 0 else 0
+    try:
+        # Simplified linear predictor (demonstration; real equations use full Pooled Cohort coefficients)
+        ln_age = math.log(age_years)
+        ln_tc = math.log(total_cholesterol_mg_dl)
+        ln_hdl = math.log(hdl_cholesterol_mg_dl)
+        ln_sbp = math.log(systolic_bp_mmhg) if systolic_bp_mmhg > 0 else 0
 
-    # Approximate contribution of risk factors (simplified for demo)
-    score = 0
-    score += ln_age * 3.0
-    score -= ln_hdl * 0.9
-    score += ln_tc * 0.5
-    score += ln_sbp * 0.4
-    if sex == "male":
-        score += 0.5
-    if current_smoker:
-        score += 0.7
-    if has_diabetes:
-        score += 0.6
-    if on_bp_medication:
-        score += 0.2
+        # Approximate contribution of risk factors (simplified for demo)
+        score = 0
+        score += ln_age * 3.0
+        score -= ln_hdl * 0.9
+        score += ln_tc * 0.5
+        score += ln_sbp * 0.4
+        if sex == "male":
+            score += 0.5
+        if current_smoker:
+            score += 0.7
+        if has_diabetes:
+            score += 0.6
+        if on_bp_medication:
+            score += 0.2
 
-    # Map to approximate 10-year risk percentage (bounded 1-30% for demo)
-    risk_pct = min(30.0, max(1.0, (1.0 / (1.0 + math.exp(-(score - 5.0))) * 35.0)))
+        # Map to approximate 10-year risk percentage (bounded 1-30% for demo)
+        risk_pct = min(30.0, max(1.0, (1.0 / (1.0 + math.exp(-(score - 5.0))) * 35.0)))
 
-    if risk_pct < 5.0:
-        category = "low"
-        interpretation = "10-year ASCVD risk is in the low range. Focus on preventive lifestyle and periodic reassessment."
-    elif risk_pct < 7.5:
-        category = "borderline"
-        interpretation = "Borderline 10-year risk. Consider risk-enhancing factors and shared decision-making for statin."
-    elif risk_pct < 20.0:
-        category = "intermediate"
-        interpretation = "Intermediate risk. Discuss risk enhancers, calcium scoring, and statin therapy per guidelines."
-    else:
-        category = "high"
-        interpretation = "High 10-year ASCVD risk. Strong recommendation for lifestyle and statin therapy; consider cardiology referral."
+        if risk_pct < 5.0:
+            category = "low"
+            interpretation = "10-year ASCVD risk is in the low range. Focus on preventive lifestyle and periodic reassessment."
+        elif risk_pct < 7.5:
+            category = "borderline"
+            interpretation = "Borderline 10-year risk. Consider risk-enhancing factors and shared decision-making for statin."
+        elif risk_pct < 20.0:
+            category = "intermediate"
+            interpretation = "Intermediate risk. Discuss risk enhancers, calcium scoring, and statin therapy per guidelines."
+        else:
+            category = "high"
+            interpretation = "High 10-year ASCVD risk. Strong recommendation for lifestyle and statin therapy; consider cardiology referral."
 
-    return {
-        "risk_percent_10y": round(risk_pct, 1),
-        "risk_category": category,
-        "interpretation": interpretation,
-        "disclaimer": "Estimate for stratification only; not a substitute for clinical judgment or full ASCVD calculator.",
-    }
+        return {
+            "risk_percent_10y": round(risk_pct, 1),
+            "risk_category": category,
+            "interpretation": interpretation,
+            "disclaimer": "Estimate for stratification only; not a substitute for clinical judgment or full ASCVD calculator.",
+        }
+    except Exception as e:
+        return {"status": "error", "message": f"Error in calculate_ascvd_risk: {e}" }
 
 
 def assess_risk_factors(
@@ -136,90 +139,93 @@ def assess_risk_factors(
     Returns:
         Dict with risk_factors, modifiable_factors, non_modifiable_factors, and recommendations.
     """
-    risk_factors = []
-    modifiable = []
-    non_modifiable = []
+    try:
+        risk_factors = []
+        modifiable = []
+        non_modifiable = []
 
-    if age >= 55:
-        risk_factors.append("Age ≥55 (cardiovascular risk increases with age)")
-        non_modifiable.append("Age")
-    elif age >= 45:
-        risk_factors.append("Age 45–54 (cardiovascular risk increases with age)")
-        non_modifiable.append("Age")
+        if age >= 55:
+            risk_factors.append("Age ≥55 (cardiovascular risk increases with age)")
+            non_modifiable.append("Age")
+        elif age >= 45:
+            risk_factors.append("Age 45–54 (cardiovascular risk increases with age)")
+            non_modifiable.append("Age")
 
-    if bmi is not None:
-        if bmi >= 30:
-            risk_factors.append(f"BMI {bmi:.1f} (obesity)")
-            modifiable.append("Obesity / weight")
-        elif bmi >= 25:
-            risk_factors.append(f"BMI {bmi:.1f} (overweight)")
-            modifiable.append("Overweight")
+        if bmi is not None:
+            if bmi >= 30:
+                risk_factors.append(f"BMI {bmi:.1f} (obesity)")
+                modifiable.append("Obesity / weight")
+            elif bmi >= 25:
+                risk_factors.append(f"BMI {bmi:.1f} (overweight)")
+                modifiable.append("Overweight")
 
-    if systolic_bp is not None:
-        if systolic_bp >= 140:
-            risk_factors.append(f"Elevated systolic BP ({systolic_bp:.0f} mmHg)")
-            modifiable.append("Blood pressure")
-        elif systolic_bp >= 130:
-            risk_factors.append(f"Borderline elevated systolic BP ({systolic_bp:.0f} mmHg)")
-            modifiable.append("Blood pressure")
+        if systolic_bp is not None:
+            if systolic_bp >= 140:
+                risk_factors.append(f"Elevated systolic BP ({systolic_bp:.0f} mmHg)")
+                modifiable.append("Blood pressure")
+            elif systolic_bp >= 130:
+                risk_factors.append(f"Borderline elevated systolic BP ({systolic_bp:.0f} mmHg)")
+                modifiable.append("Blood pressure")
 
-    if diastolic_bp is not None and diastolic_bp >= 90:
-        risk_factors.append(f"Elevated diastolic BP ({diastolic_bp:.0f} mmHg)")
-        if "Blood pressure" not in modifiable:
-            modifiable.append("Blood pressure")
+        if diastolic_bp is not None and diastolic_bp >= 90:
+            risk_factors.append(f"Elevated diastolic BP ({diastolic_bp:.0f} mmHg)")
+            if "Blood pressure" not in modifiable:
+                modifiable.append("Blood pressure")
 
-    if ldl_cholesterol is not None:
-        if ldl_cholesterol >= 190:
-            risk_factors.append(f"Very high LDL ({ldl_cholesterol:.0f} mg/dL)")
-            modifiable.append("LDL cholesterol")
-        elif ldl_cholesterol >= 160:
-            risk_factors.append(f"High LDL ({ldl_cholesterol:.0f} mg/dL)")
-            modifiable.append("LDL cholesterol")
-        elif ldl_cholesterol >= 100:
-            risk_factors.append(f"Borderline-high LDL ({ldl_cholesterol:.0f} mg/dL)")
-            modifiable.append("LDL cholesterol")
+        if ldl_cholesterol is not None:
+            if ldl_cholesterol >= 190:
+                risk_factors.append(f"Very high LDL ({ldl_cholesterol:.0f} mg/dL)")
+                modifiable.append("LDL cholesterol")
+            elif ldl_cholesterol >= 160:
+                risk_factors.append(f"High LDL ({ldl_cholesterol:.0f} mg/dL)")
+                modifiable.append("LDL cholesterol")
+            elif ldl_cholesterol >= 100:
+                risk_factors.append(f"Borderline-high LDL ({ldl_cholesterol:.0f} mg/dL)")
+                modifiable.append("LDL cholesterol")
 
-    if hdl_cholesterol is not None and hdl_cholesterol < 40:
-        risk_factors.append(f"Low HDL ({hdl_cholesterol:.0f} mg/dL)")
-        modifiable.append("HDL (exercise, weight, diet)")
+        if hdl_cholesterol is not None and hdl_cholesterol < 40:
+            risk_factors.append(f"Low HDL ({hdl_cholesterol:.0f} mg/dL)")
+            modifiable.append("HDL (exercise, weight, diet)")
 
-    if fasting_glucose is not None and fasting_glucose >= 126:
-        risk_factors.append(f"Elevated fasting glucose ({fasting_glucose:.0f} mg/dL) — possible diabetes")
-        modifiable.append("Glycemic control")
-    elif hba1c_percent is not None and hba1c_percent >= 6.5:
-        risk_factors.append(f"HbA1c in diabetic range ({hba1c_percent:.1f}%)")
-        modifiable.append("Glycemic control")
+        if fasting_glucose is not None and fasting_glucose >= 126:
+            risk_factors.append(f"Elevated fasting glucose ({fasting_glucose:.0f} mg/dL) — possible diabetes")
+            modifiable.append("Glycemic control")
+        elif hba1c_percent is not None and hba1c_percent >= 6.5:
+            risk_factors.append(f"HbA1c in diabetic range ({hba1c_percent:.1f}%)")
+            modifiable.append("Glycemic control")
 
-    if current_smoker:
-        risk_factors.append("Current smoking")
-        modifiable.append("Smoking cessation")
+        if current_smoker:
+            risk_factors.append("Current smoking")
+            modifiable.append("Smoking cessation")
 
-    if family_history_chd:
-        risk_factors.append("Family history of premature CHD")
-        non_modifiable.append("Family history")
+        if family_history_chd:
+            risk_factors.append("Family history of premature CHD")
+            non_modifiable.append("Family history")
 
-    if sedentary:
-        risk_factors.append("Sedentary lifestyle")
-        modifiable.append("Physical activity")
+        if sedentary:
+            risk_factors.append("Sedentary lifestyle")
+            modifiable.append("Physical activity")
 
-    recommendations = []
-    if modifiable:
-        recommendations.append("Prioritize modifiable factors: " + ", ".join(modifiable))
-    if "Blood pressure" in modifiable:
-        recommendations.append("Lifestyle (DASH diet, sodium, exercise) and consider BP recheck; treat per guidelines if persistently elevated.")
-    if "LDL cholesterol" in modifiable or "HDL" in modifiable:
-        recommendations.append("Cardiovascular diet, exercise, and consider lipid panel follow-up; statin per ASCVD risk.")
-    if "Smoking cessation" in modifiable:
-        recommendations.append("Strong recommendation for smoking cessation; offer counseling and pharmacotherapy.")
-    if not risk_factors:
-        recommendations.append("Limited data provided; encourage routine screening (BP, lipids, glucose) per guidelines for early detection.")
+        recommendations = []
+        if modifiable:
+            recommendations.append("Prioritize modifiable factors: " + ", ".join(modifiable))
+        if "Blood pressure" in modifiable:
+            recommendations.append("Lifestyle (DASH diet, sodium, exercise) and consider BP recheck; treat per guidelines if persistently elevated.")
+        if "LDL cholesterol" in modifiable or "HDL" in modifiable:
+            recommendations.append("Cardiovascular diet, exercise, and consider lipid panel follow-up; statin per ASCVD risk.")
+        if "Smoking cessation" in modifiable:
+            recommendations.append("Strong recommendation for smoking cessation; offer counseling and pharmacotherapy.")
+        if not risk_factors:
+            recommendations.append("Limited data provided; encourage routine screening (BP, lipids, glucose) per guidelines for early detection.")
 
-    return {
-        "risk_factors": risk_factors,
-        "modifiable_factors": list(dict.fromkeys(modifiable)),
-        "non_modifiable_factors": list(dict.fromkeys(non_modifiable)),
-        "recommendations": recommendations,
-    }
+        return {
+            "risk_factors": risk_factors,
+            "modifiable_factors": list(dict.fromkeys(modifiable)),
+            "non_modifiable_factors": list(dict.fromkeys(non_modifiable)),
+            "recommendations": recommendations,
+        }
+    except Exception as e:
+        return {"status": "error", "message": f"Error in assess_risk_factors: {e}" }
 
 
 def interpret_lab_trends(
@@ -233,9 +239,6 @@ def interpret_lab_trends(
     Compare current vs prior lab value to flag worsening or improving trends for
     early detection of cardiac risk progression.
 
-    Use when the user provides serial lab results (e.g., LDL, HbA1c, BP) to
-    identify trend direction and suggest follow-up.
-
     Args:
         metric_name: Name of the lab or vital (e.g., LDL cholesterol, HbA1c, systolic BP).
         current_value: Most recent value.
@@ -246,42 +249,45 @@ def interpret_lab_trends(
     Returns:
         Dict with trend direction, percent change, and brief clinical note.
     """
-    if prior_value == 0:
+    try:
+        if prior_value == 0:
+            return {
+                "trend": "unknown",
+                "percent_change": None,
+                "clinical_note": "Prior value is zero; cannot compute trend.",
+            }
+
+        pct_change = ((current_value - prior_value) / prior_value) * 100.0
+
+        if lower_is_better:
+            if current_value < prior_value:
+                trend = "improving"
+                note = f"{metric_name} improved; reinforce current management."
+            elif current_value > prior_value:
+                trend = "worsening"
+                note = f"{metric_name} increased; consider intensifying therapy or reassessing adherence."
+            else:
+                trend = "stable"
+                note = f"{metric_name} unchanged."
+        else:
+            if current_value > prior_value:
+                trend = "improving"
+                note = f"{metric_name} increased (desired); encourage continuation."
+            elif current_value < prior_value:
+                trend = "worsening"
+                note = f"{metric_name} decreased; review causes if unintended."
+            else:
+                trend = "stable"
+                note = f"{metric_name} unchanged."
+
         return {
-            "trend": "unknown",
-            "percent_change": None,
-            "clinical_note": "Prior value is zero; cannot compute trend.",
+            "metric": metric_name,
+            "current_value": current_value,
+            "prior_value": prior_value,
+            "unit": unit,
+            "trend": trend,
+            "percent_change": round(pct_change, 1),
+            "clinical_note": note,
         }
-
-    pct_change = ((current_value - prior_value) / prior_value) * 100.0
-
-    if lower_is_better:
-        if current_value < prior_value:
-            trend = "improving"
-            note = f"{metric_name} improved; reinforce current management."
-        elif current_value > prior_value:
-            trend = "worsening"
-            note = f"{metric_name} increased; consider intensifying therapy or reassessing adherence."
-        else:
-            trend = "stable"
-            note = f"{metric_name} unchanged."
-    else:
-        if current_value > prior_value:
-            trend = "improving"
-            note = f"{metric_name} increased (desired); encourage continuation."
-        elif current_value < prior_value:
-            trend = "worsening"
-            note = f"{metric_name} decreased; review causes if unintended."
-        else:
-            trend = "stable"
-            note = f"{metric_name} unchanged."
-
-    return {
-        "metric": metric_name,
-        "current_value": current_value,
-        "prior_value": prior_value,
-        "unit": unit,
-        "trend": trend,
-        "percent_change": round(pct_change, 1),
-        "clinical_note": note,
-    }
+    except Exception as e:
+        return {"status": "error", "message": f"Error in interpret_lab_trends: {e}" }

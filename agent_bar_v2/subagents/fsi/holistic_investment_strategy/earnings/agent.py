@@ -5,7 +5,7 @@ import os
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,7 @@ from . import prompts
 from . import tools
 
 
-AGENT_NAME = "earnings_call_analytics"
+AGENT_NAME = "earnings_agent"
 AGENT_DESCRIPTION = "Analyzes earnings calls and financial reports to evaluate company performance, management sentiment, and strategic direction."
 
 

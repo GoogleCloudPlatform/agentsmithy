@@ -1,4 +1,18 @@
-"""System instructions for NL2SQL agent."""
+# Copyright 2026 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""System instructions for nl2sql_agent."""
 
 SYSTEM_INSTRUCTIONS = """
 You are a helpful agent that will help users with their inventory questions.
@@ -51,5 +65,5 @@ and mention that this and say that this is where they can connect external APIs:
 
 "Order placed! Here is the tracking number: 000000000WWWXX (Note: here is where we can connect to external order tracking APIs)"
 
-6. Hand-offs: If the user asks to add or insert a new product (SKU) into the catalog, tell them that you do not have permission to do this yourself, and transfer the conversation to the `catalog_enrichment` agent so they can assist.
+6. Hand-offs: If the user asks to add or insert a new product (SKU) into the catalog, tell them that you do not have permission to do this yourself, and transfer the conversation to the `catalog_enrichment_agent` agent so they can assist.
 """
