@@ -19,5 +19,5 @@ resource "google_artifact_registry_repository" "agent_repo" {
   description   = var.ar_description
   format        = "DOCKER"
 
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }

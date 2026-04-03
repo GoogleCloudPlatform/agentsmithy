@@ -20,7 +20,7 @@ resource "google_storage_bucket" "default_data_bucket" {
 
   uniform_bucket_level_access = true
 
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }
 
 # 2. Sub-agent requirements (cross_industry/product_ad_generation)
@@ -31,7 +31,7 @@ resource "google_storage_bucket" "product_ad_generation_bucket" {
 
   uniform_bucket_level_access = true
 
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }
 
 # 3. Campaign Manager Sub-agent
@@ -42,7 +42,7 @@ resource "google_storage_bucket" "campaign_manager_bucket" {
 
   uniform_bucket_level_access = true
 
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }
 
 # 4. Meeting Intelligence Sub-agent
@@ -53,7 +53,7 @@ resource "google_storage_bucket" "meeting_intelligence_bucket" {
 
   uniform_bucket_level_access = true
 
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }
 
 # 5. Macroeconomics Bucket
@@ -64,7 +64,7 @@ resource "google_storage_bucket" "macroeconomics_bucket" {
 
   uniform_bucket_level_access = true
 
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }
 
 # 6. Economics Sub-agent Data

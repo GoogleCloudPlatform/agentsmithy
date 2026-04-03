@@ -15,6 +15,16 @@ gcloud auth login
 gcloud config set project [YOUR_PROJECT_ID]
 ```
 
+### Ensure the required APIs for Terraform to manage the project are enabled:
+This API is required for Terraform to manage IAM reliably. If it is not already enabled, you'll need to enable it.
+Once you enable the API via `gcloud`, wait about **30–60 seconds** before running `terraform apply`.
+```bash
+gcloud services enable \
+    cloudresourcemanager.googleapis.com \
+    serviceusage.googleapis.com \
+    iam.googleapis.com
+```
+
 ### Initialize and Apply Terraform
 
 Navigate to the `deployment/terraform` directory and apply the configuration. This will enable all necessary APIs and create resources like storage buckets, service accounts, and the artifact registry.

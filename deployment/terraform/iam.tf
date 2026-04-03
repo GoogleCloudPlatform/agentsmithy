@@ -16,7 +16,7 @@
 resource "google_service_account" "agent_sa" {
   account_id   = var.sa_account_id
   display_name = var.sa_display_name
-  depends_on   = [google_project_service.enabled_apis]
+  depends_on   = [time_sleep.wait_for_api_enablement]
 }
 
 # 5. IAM Roles for the Service Account
@@ -28,7 +28,9 @@ resource "google_project_iam_member" "agent_sa_roles" {
 }
 
 # Get project details
-data "google_project" "project" {}
+data "google_project" "project" {
+  depends_on = [time_sleep.wait_for_api_enablement]
+}
 
 # 6. IAM Roles for default Compute Engine SA for Cloud Build
 resource "google_project_iam_member" "compute_sa_build_roles" {
@@ -36,7 +38,7 @@ resource "google_project_iam_member" "compute_sa_build_roles" {
   project    = var.project_id
   role       = each.key
   member     = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }
 
 # 7. IAM Roles for default Cloud Build SA
@@ -45,5 +47,5 @@ resource "google_project_iam_member" "cloudbuild_sa_roles" {
   project    = var.project_id
   role       = each.key
   member     = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }
