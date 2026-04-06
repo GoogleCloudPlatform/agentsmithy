@@ -9,10 +9,10 @@ from datetime import datetime
 
 # Configuration
 CONCURRENCY = 100
-PROJECT_ID = "ai-agent-bar-2026-stage"
-LOCATION = "us-central1"
+PROJECT_ID = "your_project_id" # "ai-agent-bar-2026-stage"
+LOCATION = "your_location" # "us-central1"
 # We'll use the ENGINE_ID from the previous run
-ENGINE_ID = "5076999889058004992" 
+ENGINE_ID = "your_agent_engine_id" # "5076999889058004992"
 CREATE_SESSION_URL = f"https://{LOCATION}-aiplatform.googleapis.com/v1/projects/{PROJECT_ID}/locations/{LOCATION}/reasoningEngines/{ENGINE_ID}:query"
 STREAM_QUERY_URL = f"https://{LOCATION}-aiplatform.googleapis.com/v1/projects/{PROJECT_ID}/locations/{LOCATION}/reasoningEngines/{ENGINE_ID}:streamQuery?alt=sse"
 

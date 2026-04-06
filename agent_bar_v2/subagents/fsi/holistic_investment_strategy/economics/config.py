@@ -1,4 +1,4 @@
-# Copyright 2026 Google LLC. All Rights Reserved.
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,4 +15,8 @@
 """Configuration for the economics agent."""
 import os
 
-MACROECONOMICS_BUCKET_NAME = os.getenv("MACROECONOMICS_BUCKET_NAME", "agent-bar-sample-data")
+gcs_bucket = os.getenv("GCS_BUCKET", "")
+# Remove gs:// prefix if present
+default_bucket = gcs_bucket.replace("gs://", "") if gcs_bucket else "agent-bar-sample-data"
+
+MACROECONOMICS_BUCKET_NAME = os.getenv("MACROECONOMICS_BUCKET_NAME", default_bucket)

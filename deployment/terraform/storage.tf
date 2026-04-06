@@ -1,4 +1,4 @@
-# Copyright 2026 Google LLC. All Rights Reserved.
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -71,5 +71,5 @@ resource "google_storage_bucket" "macroeconomics_bucket" {
 resource "google_storage_bucket_object" "economics_world_bank_data" {
   name   = "fsi/economics/data/world_bank_data_2025.csv"
   source = "${path.module}/../../agent_bar_v2/subagents/fsi/holistic_investment_strategy/economics/data/world_bank_data_2025.csv"
-  bucket = google_storage_bucket.default_data_bucket.name
+  bucket = google_storage_bucket.macroeconomics_bucket.name
 }
