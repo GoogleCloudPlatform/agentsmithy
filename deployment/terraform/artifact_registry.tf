@@ -1,4 +1,4 @@
-# Copyright 2026 Google LLC. All Rights Reserved.
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,5 +19,5 @@ resource "google_artifact_registry_repository" "agent_repo" {
   description   = var.ar_description
   format        = "DOCKER"
 
-  depends_on = [google_project_service.enabled_apis]
+  depends_on = [time_sleep.wait_for_api_enablement]
 }

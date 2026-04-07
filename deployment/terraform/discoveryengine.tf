@@ -5,7 +5,7 @@ resource "google_discovery_engine_data_store" "finops_datastore" {
   industry_vertical = "GENERIC"
   content_config    = "NO_CONTENT"
   project           = var.project_id
-  depends_on        = [google_project_service.enabled_apis]
+  depends_on        = [time_sleep.wait_for_api_enablement]
 }
 
 resource "google_discovery_engine_data_store" "retail_datastore" {
@@ -15,5 +15,5 @@ resource "google_discovery_engine_data_store" "retail_datastore" {
   industry_vertical = "GENERIC"
   content_config    = "NO_CONTENT"
   project           = var.project_id
-  depends_on        = [google_project_service.enabled_apis]
+  depends_on        = [time_sleep.wait_for_api_enablement]
 }
