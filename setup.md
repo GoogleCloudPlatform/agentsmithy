@@ -1,6 +1,6 @@
 # Environment Setup and Deployment Guide
 
-This guide walks you through setting up your Google Cloud environment and deploying the Agent Bar v2 application to Cloud Run.
+This guide walks you through setting up your Google Cloud environment and deploying the Multi-Agent Quest application to Cloud Run.
 
 ## 1. Infrastructure Setup (Terraform)
 

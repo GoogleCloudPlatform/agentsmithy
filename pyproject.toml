@@ -1,7 +1,7 @@
 [project]
-name = "agent-bar-v2"
+name = "multi-agent-quest"
 version = "0.1.0"
-description = "Agent Bar v2"
+description = "Multi-Agent Quest"
 authors = [
     { name = "Agustin Ramirez", email = "agusramirez@google.com" },
     { name = "Sean Rastatter", email = "srastatter@google.com" },

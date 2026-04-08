@@ -1,9 +1,9 @@
-# Agent Bar v2
+# Multi-Agent Quest (aka Agent Bar v2)
 
 
 ## Introduction
 
-**Agent Bar v2** is a robust multi-agent runtime designed to facilitate the orchestration, execution, and management of complex multi-agent systems. It provides the underlying infrastructure for agent communication, dynamic state management, tool integration, and industry-specific use cases.
+**Multi-Agent Quest** is a robust multi-agent runtime designed to facilitate the orchestration, execution, and management of complex multi-agent systems. It provides the underlying infrastructure for agent communication, dynamic state management, tool integration, and industry-specific use cases.
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/srastatter/agent-bar-v2-agent-runtime.git&cloudshell_tutorial=setup.md)
 
@@ -24,7 +24,7 @@ The repository is organized as follows:
 
 ## Use Cases by Industry
 
-This section outlines the predefined use cases available in Agent Bar v2, organized by industry. These use cases are mapped in `agent_bar_v2/subagents/agent_registry.py`.
+This section outlines the predefined use cases available in Multi-Agent Quest, organized by industry. These use cases are mapped in `agent_bar_v2/subagents/agent_registry.py`.
 
 ### 🏥 Health and Life Sciences (HCLS)
 
@@ -98,7 +98,7 @@ If you just want to run the agent locally for development:
 
 ## Testing with the ADK Web UI
 
-The ADK Web UI provides an interactive interface for chatting with the agents. Agent Bar v2 dynamically loads specific sub-agents and prompts based on the session's **industry** and **use case** configuration.
+The ADK Web UI provides an interactive interface for chatting with the agents. Multi-Agent Quest dynamically loads specific sub-agents and prompts based on the session's **industry** and **use case** configuration.
 
 1. **Start the ADK web interface:**
 ```bash
@@ -106,7 +106,7 @@ adk web
 ```
 
 2. **Initialize the session state:**
-Agent Bar v2 relies on the session state to determine which agents to activate. This mapping is defined in `agent_bar_v2/subagents/agent_registry.py`. By changing the `industry_id` and `use_case_id` in the state initialization, you dynamically swap the agents handling the conversation.
+Multi-Agent Quest relies on the session state to determine which agents to activate. This mapping is defined in `agent_bar_v2/subagents/agent_registry.py`. By changing the `industry_id` and `use_case_id` in the state initialization, you dynamically swap the agents handling the conversation.
 
 In a separate terminal, use `curl` to set the initial context for your session (e.g., cross-industry meeting intelligence):
 ```bash
