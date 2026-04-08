@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import os
 # Copyright 2026 Google LLC
 #x
-=======
-# Copyright 2026 Google LLC
-#
->>>>>>> 2fb09e9f780e8e4fed2b90f3a0007e602572692b
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at

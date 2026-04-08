@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import os
-=======
->>>>>>> 2fb09e9f780e8e4fed2b90f3a0007e602572692b
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
