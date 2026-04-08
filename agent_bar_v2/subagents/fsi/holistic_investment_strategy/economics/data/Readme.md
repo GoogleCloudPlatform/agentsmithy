@@ -1,4 +1,4 @@
-# copy world_bank_data.csv to gs://ai-agent-bar-data/economics/world_bank_data.csv  
-
-gcloud cp world_bank_data_2025.csv gs://agent-bar-v2-agents-default-data/fsi/economics/data/world_bank_data_2025.csv
+# Copy world_bank_data_2025.csv to the macroeconomics data bucket
+# Note: This is handled automatically by Terraform if you use it.
+gcloud storage cp world_bank_data_2025.csv gs://[PROJECT_ID]-abv2-macroeconomics/fsi/economics/data/world_bank_data_2025.csv
 

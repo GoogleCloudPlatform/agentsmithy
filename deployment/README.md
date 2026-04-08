@@ -73,6 +73,8 @@ The Terraform configurations in this directory will create the following Google 
   - Tables: `products`, `stores`, `inventory`
 - **Finsights**:
   - Dataset: `finsights`
+    > [!NOTE]
+    > The Finsights sub-agent and its associated data are excluded from this open source release.
 - **Cyber Guardian**:
   - Dataset: `cyber_guardian`
 

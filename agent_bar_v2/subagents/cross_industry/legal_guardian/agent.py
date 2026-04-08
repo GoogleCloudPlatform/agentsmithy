@@ -24,7 +24,7 @@ from google.genai import types
 from . import prompts
 from .sub_agents.contract_review.agent import root_agent as contract_review
 
-AGENT_NAME = "legal_guardian"  # e.g., "insurance_claims_handler"
+AGENT_NAME = "legal_guardian"
 AGENT_DESCRIPTION = "Handles specific use case requests and delegates to sub-agents as needed."
 
 # Model configuration

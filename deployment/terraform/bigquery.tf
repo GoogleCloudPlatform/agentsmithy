@@ -29,7 +29,7 @@ resource "google_bigquery_dataset" "retail_dataset" {
   depends_on = [time_sleep.wait_for_api_enablement]
 }
 
-# Finsights BigQuery Dataset
+# Financial Insights BigQuery Dataset
 resource "google_bigquery_dataset" "finsights_dataset" {
   dataset_id = var.bq_finsights_dataset_id
   location   = var.region

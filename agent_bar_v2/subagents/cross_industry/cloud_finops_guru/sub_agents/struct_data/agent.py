@@ -28,7 +28,7 @@ struct_data_agent = Agent(
    name="struct_data_agent",
    include_contents='none',
    description="Technical agent that executes SQL queries on GCP BigQuery billing tables to find cost evidence.",
-   instruction=prompt, # Keep your existing prompt
+   instruction=prompt,
    tools=[bigquery_toolset],
    output_key="struct_data_result",
 )

@@ -127,7 +127,7 @@ def parse_gcs_uri_and_find_errors(gcs_output_path):
     except Exception as e:
         return f"Error scanning GCS: {str(e)}"
 
-def analyze_sql_with_gemini(sql_content, model_name="gemini-2.0-flash"):
+def analyze_sql_with_gemini(sql_content, model_name="gemini-2.5-flash"):
     """
     Sends translated BigQuery SQL to Gemini for an initial check for 'ERROR_UNIMPLEMENTED' and other known translation artifacts.
     """
@@ -145,7 +145,7 @@ def resolve_sql_error_with_gemini(
     project_id,
     current_error_message=None,
     initial_analysis=None,
-    model_name="gemini-2.0-flash"
+    model_name="gemini-2.5-flash"
 ):
     """
     Iteratively refines SQL using Gemini to resolve BQ specific translation errors.

@@ -25,7 +25,7 @@ from . import prompts
 from .sub_agents.product_ad_generation.agent import root_agent as product_ad_generation
 from .sub_agents.proposal_writer.agent import root_agent as proposal_writer
 
-AGENT_NAME = "proposal_pitch_factory"  # e.g., "insurance_claims_handler"
+AGENT_NAME = "proposal_pitch_factory"
 AGENT_DESCRIPTION = "Handles specific use case requests and delegates to sub-agents as needed."
 
 # Model configuration

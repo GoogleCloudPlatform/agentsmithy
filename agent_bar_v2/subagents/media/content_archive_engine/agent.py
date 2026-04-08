@@ -23,7 +23,7 @@ from google.genai import types
 from . import prompts
 from . import tools
 
-AGENT_NAME = "content_archive_engine"  # e.g., "insurance_claims_handler"
+AGENT_NAME = "content_archive_engine"
 AGENT_DESCRIPTION = """
     The Content Archive Engine. Mission: Monetize the archives.
     1. Video Transcription creates metadata.
