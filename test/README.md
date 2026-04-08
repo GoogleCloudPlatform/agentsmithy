@@ -1,6 +1,6 @@
 # Evaluate
 
-This directory contains the evaluation and test suite for the Agent Bar V2.
+This directory contains the evaluation and test suite for the Multi-Agent Quest.
 
 ## Local Environment Setup
 

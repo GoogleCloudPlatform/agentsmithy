@@ -1,4 +1,9 @@
+# Cyber Incident Response Mock Data
 
+> [!WARNING]
+> This directory contains mock datasets for simulating cyber incidents, including references to malware tools (e.g., Mimikatz) and attack signatures in `endpoint_process_events.csv`. These files are for testing purposes only and do not contain live malware or sensitive data. They may trigger alerts in automated security scanners.
+
+```bash
 # Export required environment variables
 export GOOGLE_CLOUD_PROJECT="ai-agent-bar-2026-stage"
 export BQ_DATASET="cyber_guardian_data" # Or your desired BigQuery dataset name

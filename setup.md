@@ -91,7 +91,7 @@ cp deployment/cloud_run/Dockerfile .
 cp deployment/cloud_run/main.py .
 ```
 
-### Deploy the Agent Bar v2 application along with the UI
+### Deploy the Multi-Agent Quest application along with the UI
 ```bash
 gcloud run deploy agent-bar-v2 \
   --source . \
@@ -112,7 +112,7 @@ rm Dockerfile main.py
 
 ## 5. Test Your Agent
 
-Once deployed, you must initialize a session before interacting with the agent. Agent Bar v2 dynamically loads sub-agents and prompts based on the **Session State**.
+Once deployed, you must initialize a session before interacting with the agent. Multi-Agent Quest dynamically loads sub-agents and prompts based on the **Session State**.
 
 ### Initialize a Predefined Use Case
 
