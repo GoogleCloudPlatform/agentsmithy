@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2026 Google LLC. All Rights Reserved.
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # limitations under the License.
 # ==============================================================================
 
-header="Copyright [0-9]{4} Google LLC. All Rights Reserved."
+header="Copyright [0-9]{4} Google LLC"
 files=($(git ls-files './*[a-z].py' './*[a-z].ipynb'))
 bad_files=()
 

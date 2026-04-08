@@ -1,13 +1,17 @@
 [project]
 name = "agent-bar-v2"
 version = "0.1.0"
-description = "A short project description."
-authors = [{ name = "agusramirez", email = "agusramirez@google.com" }]
+description = "Agent Bar v2"
+authors = [
+    { name = "Agustin Ramirez", email = "agusramirez@google.com" },
+    { name = "Sean Rastatter", email = "srastatter@google.com" },
+    { name = "Ahmad Khan", email = "ahmadkh@google.com" }
+]
 classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.12",
 ]
-keywords = ['agent-catalog', 'adk', 'agent']
+keywords = ['agent-bar-v2', 'adk', 'agent']
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

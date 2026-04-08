@@ -1,4 +1,4 @@
-# Copyright 2026 Google LLC. All Rights Reserved.
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,4 +18,9 @@ resource "google_project_service" "enabled_apis" {
   project            = var.project_id
   service            = each.key
   disable_on_destroy = false
+}
+
+resource "time_sleep" "wait_for_api_enablement" {
+  depends_on = [google_project_service.enabled_apis]
+  create_duration = "30s"
 }

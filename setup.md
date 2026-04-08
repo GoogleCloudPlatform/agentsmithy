@@ -15,6 +15,16 @@ gcloud auth login
 gcloud config set project [YOUR_PROJECT_ID]
 ```
 
+### Ensure the required APIs are enabled:
+These APIs are required for Terraform to manage the project reliably. If they are not already enabled, you'll need to enable them.
+Once you enable the APIs via `gcloud`, wait about **30–60 seconds** before running `terraform apply`.
+```bash
+gcloud services enable \
+    cloudresourcemanager.googleapis.com \
+    serviceusage.googleapis.com \
+    iam.googleapis.com
+```
+
 ### Initialize and Apply Terraform
 
 Navigate to the `deployment/terraform` directory and apply the configuration. This will enable all necessary APIs and create resources like storage buckets, service accounts, and the artifact registry.
@@ -36,7 +46,6 @@ terraform plan --var="project_id=$(gcloud config get-value project)" -var-file=v
 cd ../..
 ```
 
-
 *Terraform will provision:*
 - **APIs**: AI Platform, Artifact Registry, Cloud Build, Cloud Run, etc.
 - **Storage**: Buckets for default data, product ad generation, campaign manager, and meeting intelligence.
@@ -45,32 +54,30 @@ cd ../..
 
 ## 2. Configure Environment Variables
 
-After Terraform finishes, you need to configure your local `.env` file with the provisioned resource names.
+Automate the configuration of your `.env` file by running the following command. This pulls the provisioned resource names directly from Terraform and formats them for the application:
 
-Copy the sample environment file:
-```bash
-cp agent_bar_v2/.env.sample agent_bar_v2/.env
-```
-
-Retrieve the outputs from Terraform:
 ```bash
 cd deployment/terraform
-terraform output
+
+
+# 1. Get the Terraform outputs and save them to a temp file
+terraform output -json | jq -r 'to_entries | .[] | "\(.key)=\(.value.value)"' > /tmp/tf_envs
+
+# 2. Merge with .env.sample (parsing placeholders and overwriting TF outputs)
+awk -F= 'NR==FNR{a[$1]=$2;next} {split($0,b,"="); key=b[1]; value=b[2]; if(value ~ /\[terraform_output:/){match(value,/\[terraform_output:[^\]]+\]/);hint=substr(value,RSTART+18,RLENGTH-19);if(hint in a){sub(/\[terraform_output:[^\]]+\]/,a[hint],value);print key"="value;next}} if(value ~ /\[your_project_id\]/){if("project_id" in a){sub(/\[your_project_id\]/,a["project_id"],value);print key"="value;next}} if(key in a){print key"="a[key];next} print $0}' /tmp/tf_envs ../../agent_bar_v2/.env.sample > ../../agent_bar_v2/.env
+
+# 3. Clean up the temp file
+rm /tmp/tf_envs
+
+
 cd ../..
 ```
-
-Update `agent_bar_v2/.env` with the values from the `terraform output` command:
-- `GOOGLE_CLOUD_PROJECT`: Use the `project_id` output.
-- `GCS_BUCKET`: Use `gs://` followed by the `default_data_bucket_name` output.
-- `GCS_BUCKET_PRODUCT_AD_GENERATION`: Use `gs://` followed by the `product_ad_generation_bucket_name` output.
-- `GCS_BUCKET_CAMPAING_MANAGER`: Use the `campaign_manager_bucket_name` output.
-- `GCS_BUCKET_MEETING_INTELLIGENCE`: Use the `meeting_intelligence_bucket_name` output.
 
 > **Note on Pre-loaded Data:** Some sub-agents (e.g., Knowledge Graph, Retail Inventory) require specific datasets or files to be pre-loaded into BigQuery or GCS. If an agent depends on pre-loaded data, you can find detailed instructions and schemas within that specific sub-agent's directory under `agent_bar_v2/subagents/`.
 
 ## 4. Deploy to Cloud Run
 
-Deploy the agent and its Web UI to Cloud Run using the `adk deploy cloud_run` command. We will use the Service Account created by Terraform.
+Deploy the agent and its Web UI to Cloud Run using the `gcloud run deploy` command. We will use the Service Account created by Terraform.
 
 ```bash
 export PROJECT_ID=$(gcloud config get-value project)
@@ -78,26 +85,29 @@ export REGION="us-central1"
 export SERVICE_ACCOUNT=$(cd deployment/terraform && terraform output -raw agent_service_account_email)
 ```
 
-Generate cloud run required structure
+### Temporarily bring the Dockerfile and main.py to the root
 ```bash
-cp deployment/cloud_run/requirements.txt .
 cp deployment/cloud_run/Dockerfile .
 cp deployment/cloud_run/main.py .
-
 ```
 
 ### Deploy the Agent Bar v2 application along with the UI
 ```bash
 gcloud run deploy agent-bar-v2 \
---source . \
---region $REGION \
---project $PROJECT_ID \
---allow-unauthenticated \
---service-account $SERVICE_ACCOUNT \
---cpu=4 \
---memory=8Gi
---set-env-vars=$(grep -v '^#' agent_bar_v2/.env | xargs | sed 's/ /,/g')
+  --source . \
+  --region $REGION \
+  --project $PROJECT_ID \
+  --service-account $SERVICE_ACCOUNT \
+  --no-allow-unauthenticated \
+  --cpu=4 \
+  --memory=8Gi \
+  --set-env-vars=$(grep -v '^#' agent_bar_v2/.env | xargs | sed 's/ /,/g')
 # Add any other necessary environment variables your agent might need
+```
+
+# Clean up the root directory
+```bash
+rm Dockerfile main.py
 ```
 
 ## 5. Test Your Agent
@@ -114,6 +124,7 @@ export CLOUD_RUN_URL=$(gcloud run services describe agent-bar-v2 --platform mana
 
 # Initialize a session for the "legal_guardian" use case in the "cross" industry
 curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_123" \
+     -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
      -H "Content-Type: application/json" \
      -d '{ 
            "user_id": "user123", 
@@ -128,6 +139,7 @@ You can also bypass the registry and define a custom agent and workflow directly
 
 ```bash
 curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_custom" \
+     -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
      -H "Content-Type: application/json" \
      -d '{
            "user_id": "user123",
@@ -140,10 +152,20 @@ curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_custom" 
          }'
 ```
 
-### Access the Web UI
+### Access the Web UI (via Cloud Shell Proxy)
 
-After initializing the session via `curl`, you can interact with the agent in your browser:
+After initializing the session via `curl`, you can interact with the agent in your browser.
+
+> [!NOTE]
+> To ensure the Web UI uses the session you just initialized (e.g., `user123` / `s_123`), you should append them as query parameters to the URL in your browser.
 
 ```bash
-echo "$CLOUD_RUN_URL/dev-ui/?app=agent_bar_v2&session=s_123&userId=user123"
+# In a new Cloud Shell terminal tab, start the proxy:
+gcloud run services proxy agent-bar-v2 --port=8080 --region us-central1
+
+# Then, use the "Web Preview" button in the Cloud Shell toolbar
+# and select "Preview on port 8080".
+#
+# To use your initialized session, append these to the URL:
+# ?userId=user123&session=s_123
 ```
