@@ -19,7 +19,5 @@ import os
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT")
 PROJECT_LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION")
 
-BQ_PROJECT_ID = os.environ.get("BQ_DATA_PROJECT_ID") #Only here but not implemented yet
-BQ_DATASET_ID = os.environ.get("BQ_DATASET_ID")
 GRAPH_NAME = os.environ.get("GRAPH_NAME")
 GCP_DATASET_ID = os.environ.get("GCP_DATASET_ID", "retail")
