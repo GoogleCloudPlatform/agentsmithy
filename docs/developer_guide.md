@@ -157,6 +157,25 @@ pytest test/eval/
 ```
 
 ---
+## 9. Running Locally for Manual Testing
+
+To test agents interactively and verify that changes do not break existing functionality, you can use the local development playground.
+
+### Prerequisites
+Ensure you have set up your environment variables by copying `.env.sample` to `.env` and filling in the required values.
+
+### Starting the Playground
+Run the following command from the project root to start the playground:
+
+```bash
+make playground
+```
+
+This will start a Streamlit app at `http://localhost:8501`. You can interact with the agents through this web interface.
+Select the `agent_bar_v2` folder in the playground to interact with the agents developed in this runtime.
+
+### Running Evaluations
+To run automated evaluations using Golden Datasets, use `pytest` as described in Section 8. This is the best way to ensure no regressions were introduced.
 
 ## Summary for Demo staffers
 

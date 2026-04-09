@@ -76,10 +76,6 @@ output "BQ_FINOPS_TABLE_ID" {
   value = google_bigquery_table.finops_table.table_id
 }
 
-output "BQ_KG_DATASET_ID" {
-  value = google_bigquery_dataset.kg_dataset.dataset_id
-}
-
 output "BQ_RETAIL_DATASET_ID" {
   value = google_bigquery_dataset.retail_dataset.dataset_id
 }

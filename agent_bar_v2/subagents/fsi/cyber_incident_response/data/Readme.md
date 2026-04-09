@@ -5,7 +5,7 @@
 
 ```bash
 # Export required environment variables
-export GOOGLE_CLOUD_PROJECT="ai-agent-bar-2026-stage"
+export GOOGLE_CLOUD_PROJECT="[your-project-id]"
 export BQ_DATASET="cyber_guardian_data" # Or your desired BigQuery dataset name
 ```
 

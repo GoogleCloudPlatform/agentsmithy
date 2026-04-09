@@ -149,7 +149,7 @@ def search_product_table_v2(tool_context: ToolContext, search_term: str, filter:
             ml_generate_embedding_result.*
         FROM
             ML.GENERATE_EMBEDDING(
-            MODEL `ai-agent-bar-2026-stage.cymbal_retail.text_embedding`,
+            MODEL `{GCP_PROJECT_ID}.{GCP_DATASET_ID}.text_embedding`,
             (SELECT @search_term_placeholder AS content)
             ) AS ml_generate_embedding_result
         ),

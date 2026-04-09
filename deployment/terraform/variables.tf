@@ -101,13 +101,6 @@ variable "bq_finops_table_id" {
   type        = string
   default     = "finops10ktable"
 }
-
-variable "bq_kg_dataset_id" {
-  description = "BigQuery dataset ID for Knowledge Graph"
-  type        = string
-  default     = "kg_agent"
-}
-
 variable "bq_retail_dataset_id" {
   description = "BigQuery dataset ID for Retail"
   type        = string

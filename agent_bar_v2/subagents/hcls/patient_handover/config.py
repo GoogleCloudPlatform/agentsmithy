@@ -13,3 +13,7 @@
 # limitations under the License.
 
 """Configuration for the patient_handover agent."""
+
+import os
+
+CLINICAL_HANDOVER_BUCKET = os.environ.get("CLINICAL_HANDOVER_BUCKET", "ai-agent-bar-data")

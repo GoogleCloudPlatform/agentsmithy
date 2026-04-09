@@ -30,7 +30,7 @@ The agent relies on the following environment variables (configured in `config.p
 
 *   `GOOGLE_CLOUD_PROJECT`: The Google Cloud project ID.
 *   `GOOGLE_CLOUD_LOCATION`: The Google Cloud location (e.g., us-central1).
-*   `BQ_DATASET_ID`: The default BigQuery dataset ID to explore.
+*   `GCP_DATASET_ID`: The BigQuery dataset ID to explore (defaults to "retail").
 *   `GRAPH_NAME`: The name of the graph to be built.
 
 ## Tools

@@ -26,7 +26,7 @@ from .tools.sql_translation import (
 )
 
 
-AGENT_NAME = "oracle_to_bigquery"
+AGENT_NAME = "migration_agent"
 AGENT_DESCRIPTION = "Translates Oracle schemas and PL/SQL to BigQuery compatible SQL, optimizing for the cloud environment."
 
 root_agent = LlmAgent(
