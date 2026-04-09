@@ -60,10 +60,10 @@ Automate the configuration of your `.env` file by running the following command.
 cd deployment/terraform
 
 
-# 1. Get the Terraform outputs and save them to a temp file
+# 1. Get the Terraform outputs
 terraform output -json | jq -r 'to_entries | .[] | "\(.key)=\(.value.value)"' > /tmp/tf_envs
 
-# 2. Merge with .env.sample (parsing placeholders and overwriting TF outputs)
+# 2. Merge with .env.sample
 awk -F= 'NR==FNR{a[$1]=$2;next} {split($0,b,"="); key=b[1]; value=b[2]; if(value ~ /\[terraform_output:/){match(value,/\[terraform_output:[^\]]+\]/);hint=substr(value,RSTART+18,RLENGTH-19);if(hint in a){sub(/\[terraform_output:[^\]]+\]/,a[hint],value);print key"="value;next}} if(value ~ /\[your_project_id\]/){if("project_id" in a){sub(/\[your_project_id\]/,a["project_id"],value);print key"="value;next}} if(key in a){print key"="a[key];next} print $0}' /tmp/tf_envs ../../agent_bar_v2/.env.sample > ../../agent_bar_v2/.env
 
 # 3. Clean up the temp file
