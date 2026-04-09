@@ -1,3 +1,7 @@
+resource "random_id" "job_suffix" {
+  byte_length = 4
+}
+
 # FinOps BigQuery Dataset & Table
 resource "google_bigquery_dataset" "finops_dataset" {
   dataset_id = var.bq_finops_dataset_id
@@ -22,13 +26,6 @@ resource "google_bigquery_dataset" "retail_dataset" {
 }
 
 # Financial Insights BigQuery Dataset
-resource "google_bigquery_dataset" "finsights_dataset" {
-  dataset_id = var.bq_finsights_dataset_id
-  location   = var.region
-  project    = var.project_id
-  depends_on = [time_sleep.wait_for_api_enablement]
-}
-
 # Cyber Guardian BigQuery Dataset
 resource "google_bigquery_dataset" "cyber_guardian_dataset" {
   dataset_id = var.bq_cyber_guardian_dataset_id
@@ -67,6 +64,9 @@ resource "google_bigquery_table" "retail_product_staging" {
 
 resource "google_bigquery_job" "load_products_staging" {
   project = var.project_id
+  job_id  = "load_products_staging_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
 
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.retail_products_data.name}"]
@@ -84,6 +84,9 @@ resource "google_bigquery_job" "load_products_staging" {
 
 resource "google_bigquery_job" "load_retail_stores" {
   project = var.project_id
+  job_id  = "load_retail_stores_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
 
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.retail_stores_data.name}"]
@@ -101,6 +104,9 @@ resource "google_bigquery_job" "load_retail_stores" {
 
 resource "google_bigquery_job" "load_retail_inventory" {
   project = var.project_id
+  job_id  = "load_retail_inventory_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
 
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.retail_inventory_data.name}"]
@@ -118,6 +124,8 @@ resource "google_bigquery_job" "load_retail_inventory" {
 
 resource "google_bigquery_job" "create_model_and_embeddings" {
   project = var.project_id
+  job_id  = "create_model_and_embeddings_${random_id.job_suffix.hex}"
+  location = var.region
 
   query {
     query = <<EOF
@@ -141,7 +149,8 @@ resource "google_bigquery_job" "create_model_and_embeddings" {
 
   depends_on = [
     google_bigquery_job.load_products_staging,
-    google_bigquery_table.retail_product_table
+    google_bigquery_table.retail_product_table,
+    time_sleep.wait_for_bq_propagation
   ]
 }
 
@@ -198,6 +207,9 @@ resource "google_bigquery_table" "cyber_iam_login_events" {
 # Load Jobs for Cyber Incident Response
 resource "google_bigquery_job" "load_cyber_asset_inventory" {
   project = var.project_id
+  job_id  = "load_cyber_asset_inventory_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.cyber_asset_inventory.name}"]
     destination_table {
@@ -214,6 +226,9 @@ resource "google_bigquery_job" "load_cyber_asset_inventory" {
 
 resource "google_bigquery_job" "load_cyber_endpoint_process_events" {
   project = var.project_id
+  job_id  = "load_cyber_endpoint_process_events_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.cyber_endpoint_process_events.name}"]
     destination_table {
@@ -230,6 +245,9 @@ resource "google_bigquery_job" "load_cyber_endpoint_process_events" {
 
 resource "google_bigquery_job" "load_cyber_incident_management" {
   project = var.project_id
+  job_id  = "load_cyber_incident_management_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.cyber_incident_management.name}"]
     destination_table {
@@ -246,6 +264,9 @@ resource "google_bigquery_job" "load_cyber_incident_management" {
 
 resource "google_bigquery_job" "load_cyber_network_connection_log" {
   project = var.project_id
+  job_id  = "load_cyber_network_connection_log_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.cyber_network_connection_log.name}"]
     destination_table {
@@ -262,6 +283,9 @@ resource "google_bigquery_job" "load_cyber_network_connection_log" {
 
 resource "google_bigquery_job" "load_cyber_response_playbooks" {
   project = var.project_id
+  job_id  = "load_cyber_response_playbooks_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.cyber_response_playbooks.name}"]
     destination_table {
@@ -278,6 +302,9 @@ resource "google_bigquery_job" "load_cyber_response_playbooks" {
 
 resource "google_bigquery_job" "load_cyber_threat_intelligence_kb" {
   project = var.project_id
+  job_id  = "load_cyber_threat_intelligence_kb_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.cyber_threat_intelligence_kb.name}"]
     destination_table {
@@ -294,6 +321,9 @@ resource "google_bigquery_job" "load_cyber_threat_intelligence_kb" {
 
 resource "google_bigquery_job" "load_cyber_iam_login_events" {
   project = var.project_id
+  job_id  = "load_cyber_iam_login_events_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.cyber_iam_login_events.name}"]
     destination_table {
@@ -311,6 +341,9 @@ resource "google_bigquery_job" "load_cyber_iam_login_events" {
 # Load Job for FinOps Data
 resource "google_bigquery_job" "load_finops_data" {
   project = var.project_id
+  job_id  = "load_finops_data_${random_id.job_suffix.hex}"
+  location = var.region
+  depends_on = [time_sleep.wait_for_bq_propagation]
   load {
     source_uris = ["gs://${google_storage_bucket.default_data_bucket.name}/${google_storage_bucket_object.finops_csv_data.name}"]
     destination_table {
@@ -323,4 +356,14 @@ resource "google_bigquery_job" "load_finops_data" {
     source_format     = "CSV"
     skip_leading_rows = 1
   }
+}
+
+resource "time_sleep" "wait_for_bq_propagation" {
+  depends_on = [
+    google_bigquery_dataset.retail_dataset,
+    google_bigquery_dataset.cyber_guardian_dataset,
+    google_bigquery_dataset.finops_dataset
+  ]
+
+  create_duration = "30s"
 }

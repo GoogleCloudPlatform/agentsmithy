@@ -60,10 +60,6 @@ output "GCS_BUCKET_MACROECONOMICS" {
 }
 
 # BigQuery Datasets & Tables
-output "BQ_FINSIGHTS_DATASET_ID" {
-  value = google_bigquery_dataset.finsights_dataset.dataset_id
-}
-
 output "BQ_CYBER_GUARDIAN_DATASET_ID" {
   value = google_bigquery_dataset.cyber_guardian_dataset.dataset_id
 }

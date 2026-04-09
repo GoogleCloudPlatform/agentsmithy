@@ -78,12 +78,6 @@ variable "bucket_suffix_macroeconomics" {
 }
 
 # BigQuery Variables
-variable "bq_finsights_dataset_id" {
-  description = "BigQuery dataset ID for Finsights"
-  type        = string
-  default     = "finsights"
-}
-
 variable "bq_cyber_guardian_dataset_id" {
   description = "BigQuery dataset ID for Cyber Guardian"
   type        = string
