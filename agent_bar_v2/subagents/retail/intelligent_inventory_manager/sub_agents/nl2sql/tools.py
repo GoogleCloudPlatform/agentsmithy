@@ -36,7 +36,7 @@ except Exception as e:
 
 # GCP table information (move this to .env file in the future) + have this more
 # generic to be able to work outside of this project (possibly Terraform)
-GCP_PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
+GCP_PROJECT_ID = os.getenv("BQ_DATA_PROJECT_ID")
 GCP_DATASET_ID = os.getenv("GCP_DATASET_ID")
 GCP_PRODUCT_TABLE_ID = os.getenv("GCP_PRODUCT_TABLE_ID")
 GCP_STORE_TABLE_ID = os.getenv("GCP_STORE_TABLE_ID")

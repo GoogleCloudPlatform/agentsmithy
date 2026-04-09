@@ -36,7 +36,7 @@ except Exception as e:
     client = None
 
 # GCP table information
-GCP_PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
+GCP_PROJECT_ID = os.getenv("BQ_DATA_PROJECT_ID")
 GCP_DATASET_ID = os.getenv("GCP_DATASET_ID")
 GCP_PRODUCT_TABLE_ID = os.getenv("GCP_PRODUCT_TABLE_ID")
 

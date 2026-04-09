@@ -78,7 +78,7 @@ def get_bq_datasets() -> list:
             ('bigquery-public-data', 'bbc_news'),
             ('bigquery-public-data', 'iowa_liquor_sales'),
             ('bigquery-public-data', 'stackoverflow'),
-            (PROJECT_ID, 'cymbal_retail')
+            # (PROJECT_ID, 'cymbal_retail')
         ]
         return approved_datasets
     except Exception as e:
