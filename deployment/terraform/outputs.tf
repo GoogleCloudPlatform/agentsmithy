@@ -94,5 +94,5 @@ output "DATASTORE_FINOPS_ID" {
 }
 
 output "DATASTORE_RETAIL_ID" {
-  value = google_discovery_engine_data_store.retail_datastore.data_store_id
+  value = google_discovery_engine_data_store.retail_datastore.name
 }
