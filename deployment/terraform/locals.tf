@@ -23,7 +23,8 @@ locals {
     "speech.googleapis.com",
     "run.googleapis.com", # Required for Cloud Run deployment
     "bigquery.googleapis.com",
-    "discoveryengine.googleapis.com"
+    "discoveryengine.googleapis.com",
+    "translate.googleapis.com"
   ]
 
   agent_roles = [
