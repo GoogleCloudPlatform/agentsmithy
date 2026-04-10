@@ -19,7 +19,7 @@ from google.adk.tools import AgentTool
 # Import sub-agents
 from .sub_agents import customer_support_agent, conversational_shopping_assistant_agent
 
-MODEL = os.getenv("LLM_MODEL", "gemini-2.5-flash")
+MODEL = os.getenv("LLM_MODEL", os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"))
 support_tool = AgentTool(customer_support_agent)
 shopping_tool = AgentTool(conversational_shopping_assistant_agent)
 

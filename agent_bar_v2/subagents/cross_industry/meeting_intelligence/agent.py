@@ -1,3 +1,4 @@
+import os
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Main Agent definition for the content_archive_engine use case."""
+"""Main Agent definition for the meeting_intelligence use case."""
 
 from google.adk.agents import Agent
 from google.adk.models import Gemini
@@ -23,23 +24,15 @@ from google.genai import types
 from . import prompts
 from . import tools
 
-AGENT_NAME = "content_archive_engine"  # e.g., "insurance_claims_handler"
+AGENT_NAME = "meeting_intelligence"
 AGENT_DESCRIPTION = """
-    The Content Archive Engine. Mission: Monetize the archives.
-    1. Video Transcription creates metadata.
-    2. Video Moments finds viral clips.
+    The Meeting Intelligence Agent. Mission: Summarize town halls to make corporate knowledge searchable and accessible.
     """
 
+from agent_bar_v2.subagents.utils.model import get_gemini_config
+
 # Model configuration
-GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
-    generation_config=types.GenerateContentConfig(
-        temperature=0.5,
-        top_p=0.95,
-        max_output_tokens=8192,
-    ),
-    retry_options=types.HttpRetryOptions(attempts=3),
-)
+GEMINI_MODEL_CONFIG = get_gemini_config()
 
 root_agent = Agent(
     name=AGENT_NAME,

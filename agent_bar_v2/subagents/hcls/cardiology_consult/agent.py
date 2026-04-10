@@ -1,5 +1,6 @@
+import os
 # Copyright 2026 Google LLC
-#
+#x
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -36,7 +37,7 @@ AGENT_DESCRIPTION = (
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     generation_config=types.GenerateContentConfig(
         temperature=0.7,
         top_p=0.95,

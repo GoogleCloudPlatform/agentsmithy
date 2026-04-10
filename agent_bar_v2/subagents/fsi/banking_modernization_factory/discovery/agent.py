@@ -1,3 +1,4 @@
+import os
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +33,7 @@ AGENT_DESCRIPTION = "Analyzes legacy codebases via GitHub repositories to identi
 
 # Model configuration
 root_agent = LlmAgent(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     generate_content_config=types.GenerateContentConfig(
         temperature=0.2,
         top_p=0.95,

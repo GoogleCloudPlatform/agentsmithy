@@ -17,7 +17,6 @@ from dotenv import load_dotenv
 
 # Construct the path to the .env file in the root directory
 # Uncomment this to load env vars for sharing file
-# TODO improve this
 # dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 # load_dotenv(dotenv_path)
 
@@ -265,6 +264,21 @@ def get_predefined_use_case_sub_agents(industry_id: str, use_case_id: str):
     return get_sub_agents(agent_ids)
 
 
+def get_agent_descriptions_json(agent_ids: list[str]) -> str:
+    """Returns a JSON string of agent descriptions for a list of agent IDs."""
+    import json
+    agents_data = []
+    for agent_id in agent_ids:
+        agent = AGENT_REGISTRY_MAP.get(agent_id)
+        if agent:
+            agents_data.append({
+                "id": agent_id,
+                "name": getattr(agent, "name", "Unknown"),
+                "description": getattr(agent, "description", "Unknown"),
+                "system_instruction": getattr(agent, "instruction", "")
+            })
+    return json.dumps(agents_data, indent=2)
+
 def main():
 
     import argparse
@@ -282,16 +296,10 @@ def main():
     )
     args = parser.parse_args()
 
+    available_agents_list = json.loads(get_agent_descriptions_json(list(AGENT_REGISTRY_MAP.keys())))
     # Prepare the data to be exported
     registry_data = {
-        "available_agents": [
-            {
-                "id": agent_id,
-                "name": agent.name,
-                "description": agent.description,
-            }
-            for agent_id, agent in AGENT_REGISTRY_MAP.items()
-        ],
+        "available_agents": available_agents_list,
         "default_industry_use_cases": {
             industry_id: {
                 use_case_id: use_case_config["agents"] for use_case_id, use_case_config in industry_config.items()

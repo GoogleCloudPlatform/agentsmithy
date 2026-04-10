@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import logging
 from google.adk.agents.llm_agent import Agent
 
@@ -26,7 +27,7 @@ logging.basicConfig(level=logging.INFO)
 context_based_toolset = ContextBasedToolset()
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     name="root_agent",
     description="",
     instruction="",

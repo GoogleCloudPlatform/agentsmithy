@@ -140,7 +140,7 @@ async def content_moderation_video(
     tool_context: ToolContext,
     video_gcs_uri: str = "",
     artifact_name: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Use LLMs to conduct content moderation on videos to detect sensitive, inappropriate, explicit and/or aggressive content.
     The video can be a local upload available in the state already or it could be a GCS URI.
@@ -580,7 +580,7 @@ async def profanity_correction(
     transcript_gcs_uri: str = "",
     transcript: str = "",
     artifact_name: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Use LLMs to identify profanity words in a transcript and obscure the detected words with asterisks.
     The transcript can be a local upload available in the state already, it could be a transcript string or it could be a GCS URI.

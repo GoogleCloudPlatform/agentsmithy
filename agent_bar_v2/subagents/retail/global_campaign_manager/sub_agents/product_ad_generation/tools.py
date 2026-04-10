@@ -41,7 +41,7 @@ from google.cloud import storage
 from google.genai import types
 from PIL import Image
 
-from .config import BUCKET_NAME, LOCATION, PROJECT_ID
+from .config import AUDIO_GENERATION_MODEL_VERSION, BUCKET_NAME, LOCATION, PROJECT_ID
 
 # ==============================================================================
 # --- 0. GCS HELPERS (replaced gsutil) ---
@@ -540,7 +540,7 @@ async def generate_music_from_prompt(
 
     music_api_endpoint = (
         f"https://us-central1-aiplatform.googleapis.com/v1/projects/{PROJECT_ID}"
-        "/locations/us-central1/publishers/google/models/lyria-002:predict"
+        f"/locations/us-central1/publishers/google/models/{AUDIO_GENERATION_MODEL_VERSION}:predict"
     )
     request_data = {"prompt": music_prompt}
     req = {"instances": [request_data], "parameters": {}}

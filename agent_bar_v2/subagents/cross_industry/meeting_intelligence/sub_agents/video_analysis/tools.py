@@ -157,7 +157,7 @@ async def scene_analysis(
     vtt_gcs_uri: str = "",
     artifact_name_vtt: str = "",
     artifact_name_video: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Use LLMs to do a scene analysis on a video to identify scene transitions
     and if requested generate summaries for each scene.
@@ -331,7 +331,7 @@ async def entity_analysis(
     scene_analysis_string: str = "",
     gcs_uri: str = "",
     bq_table_id: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Given scene analysis information containing a list of scenes from a video file
     with summaries of each scene and an entity name, identify each scene the entity is contained in the video.
@@ -633,7 +633,7 @@ async def write_results_gcs(content: str, file_name: str) -> dict:
 async def write_synopsis(
     scene_analysis: str = "",
     bq_table_id: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Use LLMs to generate synopsis for videos from their scene analysis results.
     The scene analysis info can be provided as strings or a BQ table ID.
@@ -754,7 +754,7 @@ async def storyboard_trailer(
     duration: int = 90,
     scene_analysis: str = "",
     bq_table_id: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Use LLMs to generate storyboards for trailers from the scene analysis results of videos.
     The scene analysis info can be provided as strings or a BQ table ID.
@@ -839,7 +839,7 @@ async def storyboard_highlight_reel(
     duration: int = 90,
     entity_analysis: str = "",
     bq_table_id: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Use LLMs to generate storyboards for highlight reels focusing on a particular entity
     in a video based on entity analysis input provided.
@@ -986,7 +986,7 @@ async def content_categorization(
     scene_analysis_bq_table_id: str = "",
     video_gcs_uri: str = "",
     scene_analysis: str = "",
-    gemini_model: str = "gemini-2.5-flash",
+    gemini_model: str = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
 ) -> dict:
     """Use LLMs to generate content tags for a video file for categorization and recommendation purposes.
     Generate tags based on the video file or based on the scene analysis generated from the video.

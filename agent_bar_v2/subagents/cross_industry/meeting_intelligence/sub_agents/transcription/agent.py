@@ -1,3 +1,4 @@
+import os
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,10 +26,10 @@ from .callbacks import inline_data_processing
 AGENT_NAME = "meeting_transcription"
 AGENT_DESCRIPTION = "Agent to extract audio data from video files and then transcribe the audio files."
 
+from agent_bar_v2.subagents.utils.model import get_gemini_config
+
 # Model configuration
-GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
-)
+GEMINI_MODEL_CONFIG = get_gemini_config()
 
 root_agent = Agent(
     name=AGENT_NAME,
