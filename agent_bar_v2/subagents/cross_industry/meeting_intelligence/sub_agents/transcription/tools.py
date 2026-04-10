@@ -37,8 +37,12 @@ DEFAULT_SPEECH_MODEL = "chirp_2"
 VALID_STT_MODELS = {"chirp", "chirp_2", "chirp_telephony"}
 
 
+MEETING_INTELLIGENCE_DEMO_FILE = os.getenv("MEETING_INTELLIGENCE_DEMO_FILE", "gs://agent-bar-v2-agents-default-data/meeting_recording.mp4")
+MEETING_INTELLIGENCE_DEMO_AUDIO = os.getenv("MEETING_INTELLIGENCE_DEMO_AUDIO", "gs://agent-bar-v2-agents-default-data/transcription_agent_output/meeting_recording.wav")
+
+
 async def extract_audio(
-    tool_context: ToolContext, video_gcs_uri: str = "gs://agent-bar-v2-agents-default-data/meeting_recording.mp4", artifact_name: str = ""
+    tool_context: ToolContext, video_gcs_uri: str = f"{MEETING_INTELLIGENCE_DEMO_FILE}", artifact_name: str = ""
 ) -> dict:
     """
     Extracts audio from a video file, uploads it to GCS, and cleans up local files.
@@ -78,13 +82,12 @@ async def extract_audio(
                 source_file_path = os.path.join(temp_dir, artifact_name)
                 with open(source_file_path, "wb") as f:
                     f.write(video_part.inline_data.data)
-
             elif video_gcs_uri:
-                if video_gcs_uri == "gs://agent-bar-v2-agents-default-data/meeting_recording.mp4":
+                if video_gcs_uri == f"{MEETING_INTELLIGENCE_DEMO_FILE}":
                     logging.info("Using pre-extracted demo audio file to bypass ffmpeg execution.")
-                    tool_context.state['audio_gcs_uri'] = "gs://agent-bar-v2-agents-default-data/transcription_agent_output/meeting_recording.wav"
+                    tool_context.state['audio_gcs_uri'] = f"{MEETING_INTELLIGENCE_DEMO_AUDIO}"
                     return {
-                        "status": "success, audio extracted and uploaded to GCS, audio_gcs_uri=gs://agent-bar-v2-agents-default-data/transcription_agent_output/meeting_recording.wav",
+                        "status": f"success, audio extracted and uploaded to GCS, audio_gcs_uri={MEETING_INTELLIGENCE_DEMO_AUDIO}",
                     }
                 
                 logging.info(f"Loading audio from gcs video file {video_gcs_uri}")
