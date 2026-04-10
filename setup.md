@@ -84,7 +84,7 @@ Deploy the agent and its Web UI to Cloud Run using the `gcloud run deploy` comma
 ```bash
 export PROJECT_ID=$(gcloud config get-value project)
 export REGION="us-central1"
-export SERVICE_ACCOUNT=$(cd deployment/terraform && terraform output -raw agent_service_account_email)
+export SERVICE_ACCOUNT=$(cd deployment/terraform && terraform output -raw AGENT_SERVICE_ACCOUNT_EMAIL)
 ```
 
 ### Temporarily bring the Dockerfile and main.py to the root
@@ -104,8 +104,8 @@ gcloud run deploy agent-bar-v2 \
   --cpu=4 \
   --memory=8Gi \
   --set-env-vars=$(grep -v '^#' agent_bar_v2/.env | xargs | sed 's/ /,/g')
-# Add any other necessary environment variables your agent might need
 ```
+Add any other necessary environment variables your agent might need
 
 # Clean up the root directory
 ```bash
@@ -118,13 +118,13 @@ Once deployed, you must initialize a session before interacting with the agent. 
 
 ### Initialize a Predefined Use Case
 
-The `industry_id` and `use_case_id` are used to match a predefined agent configuration in the `agent_registry.py`.
+The `industry_id` and `use_case_id` are used to match a predefined agent configuration in the Agent Registry `agent_bar_v2/subagents/agent_registry.py`. In this example, we will use the `legal_guardian` use case in the `cross` industry.
 
 ```bash
-# Get the deployed Cloud Run service URL
+# Get Cloud Run service URL
 export CLOUD_RUN_URL=$(gcloud run services describe agent-bar-v2 --platform managed --region $REGION --format 'value(status.url)')
 
-# Initialize a session for the "legal_guardian" use case in the "cross" industry
+# Initialize a session
 curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_123" \
      -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
      -H "Content-Type: application/json" \
@@ -161,13 +161,31 @@ After initializing the session via `curl`, you can interact with the agent in yo
 > [!NOTE]
 > To ensure the Web UI uses the session you just initialized (e.g., `user123` / `s_123`), you should append them as query parameters to the URL in your browser.
 
+In a new Cloud Shell terminal tab, start the proxy:
 ```bash
-# In a new Cloud Shell terminal tab, start the proxy:
 gcloud run services proxy agent-bar-v2 --port=8080 --region us-central1
-
-# Then, use the "Web Preview" button in the Cloud Shell toolbar
-# and select "Preview on port 8080".
-#
-# To use your initialized session, append these to the URL:
-# ?userId=user123&session=s_123
 ```
+
+Then, use the "Web Preview" button in the Cloud Shell toolbar
+and select "Preview on port 8080".
+
+To use your initialized session, append these to the URL:
+`?userId=user123&session=s_123`
+
+## Now try on your own! Check out these example use cases
+
+- **HCLS**: Cut Research Time From Weeks to Minutes
+  - `industry_id`: `hcls`
+  - `use_case_id`: `research_accelerator`
+- **FSI**: Protect Sensitive Corporate Assets from Breaches
+  - `industry_id`: `fsi`
+  - `use_case_id`: `cyber_incident_response`
+- **Retail**: Achieve Global Marketing Time-to-Market in One Hour
+  - `industry_id`: `retail`
+  - `use_case_id`: `global_campaign_launcher`
+- **Media**: Open International Revenue Streams with Subtitles and Dubbing
+  - `industry_id`: `media`
+  - `use_case_id`: `global_content_localizer`
+- **Cross Industry**: Increase Sales Velocity with Persuasive Pitch Assets
+  - `industry_id`: `cross`
+  - `use_case_id`: `proposal_pitch_factory`

@@ -74,7 +74,7 @@ The Terraform configurations in this directory will create the following Google 
 - **Finsights**:
   - Dataset: `finsights`
     > [!NOTE]
-    > The Finsights sub-agent and its associated data are excluded from this open source release.
+    > The Finsights sub-agent and its associated data are excluded from this open source release. You can access and deploy Finsights via the [Google Cloud Marketplace](https://console.cloud.google.com/marketplace/product/finsights/finsights). Please contact the team if you would like to know more.
 - **Cyber Guardian**:
   - Dataset: `cyber_guardian`
 
