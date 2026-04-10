@@ -126,17 +126,20 @@ async def extract_audio(
                 capture_output=True,
             )  # capture_output suppresses console logs
 
+            logging.info("Audio loaded")
+
             # --- Step 3: Upload the extracted audio file to GCS ---
             gcs_path = f"{GCS_OUTPUT_PATH}/{output_filename}"
-            dest_bucket = storage_client.bucket(BUCKET_NAME)
+            bucket_name=BUCKET_NAME.replace("gs://","") # Cleaning bucklet name 
+            dest_bucket = storage_client.bucket(bucket_name)
             dest_blob = dest_bucket.blob(gcs_path)
             dest_blob.upload_from_filename(output_file_path)
             # update the state
-            tool_context.state['audio_gcs_uri'] = f"gs://{BUCKET_NAME}/{gcs_path}"
-            logging.info(f"Audio uploaded to gcs bucket and path {BUCKET_NAME}/{gcs_path}")
+            tool_context.state['audio_gcs_uri'] = f"gs://{bucket_name}/{gcs_path}"
+            logging.info(f"Audio uploaded to gcs bucket and path {bucket_name}/{gcs_path}")
 
             return {
-                "status": "success, audio extracted and uploaded to GCS, audio_gcs_uri=gcs://{BUCKET_NAME}/{gcs_path}",
+                "status": "success, audio extracted and uploaded to GCS, audio_gcs_uri=gcs://{bucket_name}/{gcs_path}",
             }
 
         except subprocess.CalledProcessError as e:

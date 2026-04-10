@@ -131,7 +131,7 @@ AGENT_REGISTRY_MAP = {
     "nl2sql_agent": nl2sql_agent,
     # from media
     "content_moderation": content_moderation,
-    "transcription_agent": meeting_transcription,
+    #"transcription_agent": meeting_transcription,
     "video_analysis_agent": video_analysis,
     "translation_agent": translation_agent,
     # from cross industry
@@ -198,7 +198,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
     "media": {
         "content_archive_engine": {
             "prompt": MEDIA_CONTENT_ARCHIVE_ENGINE_PROMPT,
-            "agents": ["content_moderation", "transcription_agent", "video_analysis_agent"],
+            "agents": ["content_moderation", "meeting_transcription", "video_analysis_agent"],
         },
         "global_content_localizer": {
             "prompt": GLOBAL_CONTENT_LOCALIZER_PROMPT,

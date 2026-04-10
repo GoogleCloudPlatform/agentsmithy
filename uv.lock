@@ -47,6 +47,7 @@ dependencies = [
     { name = "pillow" },
     { name = "pyarrow" },
     { name = "pygithub" },
+    { name = "pyopenssl" },
     { name = "requests" },
     { name = "uvicorn" },
 ]
@@ -98,6 +99,7 @@ requires-dist = [
     { name = "pillow" },
     { name = "pyarrow" },
     { name = "pygithub" },
+    { name = "pyopenssl" },
     { name = "requests" },
     { name = "uvicorn" },
 ]
@@ -3803,6 +3805,19 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pynacl/pynacl-1.6.2-cp38-abi3-win32.whl", hash = "sha256:5811c72b473b2f38f7e2a3dc4f8642e3a3e9b5e7317266e4ced1fba85cae41aa" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pynacl/pynacl-1.6.2-cp38-abi3-win_amd64.whl", hash = "sha256:62985f233210dee6548c223301b6c25440852e13d59a8b81490203c3227c5ba0" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pynacl/pynacl-1.6.2-cp38-abi3-win_arm64.whl", hash = "sha256:834a43af110f743a754448463e8fd61259cd4ab5bbedcf70f9dabad1d28a394c" },
+]
+
+[[package]]
+name = "pyopenssl"
+version = "26.0.0"
+source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }
+dependencies = [
+    { name = "cryptography" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pyopenssl/pyopenssl-26.0.0.tar.gz", hash = "sha256:f293934e52936f2e3413b89c6ce36df66a0b34ae1ea3a053b8c5020ff2f513fc" }
+wheels = [
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pyopenssl/pyopenssl-26.0.0-py3-none-any.whl", hash = "sha256:df94d28498848b98cc1c0ffb8ef1e71e40210d3b0a8064c9d29571ed2904bf81" },
 ]
 
 [[package]]

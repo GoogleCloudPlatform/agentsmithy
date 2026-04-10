@@ -16,8 +16,10 @@ import os
 
 PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
 DATASTORE_ID = os.getenv("DATASTORE_ID")
-DATASTORE_REF = os.path.join(
-    f"projects/{PROJECT_ID}/locations/global/collections/",
-    f"default_collection/dataStores/{DATASTORE_ID}",
-)
+
+# DATASTORE_REF = os.path.join(
+#     f"projects/{PROJECT_ID}/locations/global/collections/",
+#     f"default_collection/dataStores/{DATASTORE_ID}",
+
+DATASTORE_REF = os.getenv("DATASTORE_ID","")
 MAX_CITATIONS = int(os.getenv("MAX_CITATIONS", 4))
