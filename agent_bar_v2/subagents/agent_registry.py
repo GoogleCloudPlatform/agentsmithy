@@ -28,7 +28,7 @@ from ..subagents.hcls.cardiology_consult.agent import root_agent as cardiology_c
 from ..subagents.hcls.provider_directory_search.agent import root_agent as provider_directory_search
 from ..subagents.fsi.holistic_investment_strategy.economics.agent import root_agent as macro_agent
 from ..subagents.fsi.holistic_investment_strategy.earnings.agent import root_agent as earnings_agent
-from ..subagents.fsi.holistic_investment_strategy.finsights.agent import root_agent as finsights_agent
+
 from ..subagents.fsi.banking_modernization_factory.discovery.agent import root_agent as discovery_agent
 from ..subagents.fsi.banking_modernization_factory.migration.agent import root_agent as migration_agent
 from ..subagents.fsi.cyber_incident_response.agent import root_agent as cyber_incident_response
@@ -118,7 +118,7 @@ AGENT_REGISTRY_MAP = {
     # from fsi
     "macro_agent": macro_agent,
     "earnings_agent": earnings_agent,
-    "finsights_agent": finsights_agent,
+
     "discovery_agent": discovery_agent,
     "migration_agent": migration_agent,
     # from retail
@@ -168,7 +168,7 @@ INDUSTRY_USE_CASE_AGENTS_MAP = {
     "fsi": {
         "holistic_investment_strategy": {
             "prompt": HOLISTIC_INVESTMENT_STRATEGY_PROMPT,
-            "agents": ["macro_agent", "earnings_agent", "finsights_agent"],
+            "agents": ["macro_agent", "earnings_agent"],
         },
         "banking_modernization_factory": {
             "prompt": BANKING_MODERNIZATION_FACTORY_PROMPT,

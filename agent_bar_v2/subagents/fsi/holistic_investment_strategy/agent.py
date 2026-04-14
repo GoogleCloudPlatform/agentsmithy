@@ -20,7 +20,7 @@ from google.genai import types
 from .prompt import SYSTEM_INSTRUCTIONS
 from .economics.agent import root_agent as macro_agent
 from .earnings.agent import root_agent as earnings_agent
-from .finsights.agent import root_agent as finsights_agent
+
 
 AGENT_DESCRIPTION = "Orchestrates a holistic investment strategy by combining macroeconomic research, earnings analysis, and quantitative screening."
 
@@ -35,6 +35,6 @@ root_agent = LlmAgent(
     tools=[
         AgentTool(macro_agent),
         AgentTool(earnings_agent),
-        AgentTool(finsights_agent),
+
     ],
 )
