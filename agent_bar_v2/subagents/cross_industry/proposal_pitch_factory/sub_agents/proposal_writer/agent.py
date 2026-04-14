@@ -1,3 +1,4 @@
+import os
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +25,7 @@ AGENT_DESCRIPTION = "This agent takes an existing draft passed in and makes only
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     generation_config=types.GenerateContentConfig(
         temperature=0.6, top_p=0.95, max_output_tokens=65535
     ),

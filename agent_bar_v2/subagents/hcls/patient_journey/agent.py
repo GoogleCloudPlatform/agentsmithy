@@ -1,4 +1,5 @@
-# Copyright 2026 Google LLC
+import os
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +21,7 @@ from . import prompt
 
 cardiology_consult = LlmAgent(
     name="patient_journey_agent",
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     description=(
         "Patient Journey"
     ),

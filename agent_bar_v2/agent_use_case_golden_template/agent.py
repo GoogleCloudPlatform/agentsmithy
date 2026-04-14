@@ -14,6 +14,7 @@
 
 """Main Agent definition for the [Use Case Name] use case."""
 
+import os
 from google.adk.agents import Agent
 from google.adk.models import Gemini
 from google.adk.tools import AgentTool
@@ -29,7 +30,7 @@ AGENT_DESCRIPTION = "Handles specific use case requests and delegates to sub-age
 
 # Model configuration
 GEMINI_MODEL_CONFIG = Gemini(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     generation_config=types.GenerateContentConfig(
         temperature=0.5,
         top_p=0.95,

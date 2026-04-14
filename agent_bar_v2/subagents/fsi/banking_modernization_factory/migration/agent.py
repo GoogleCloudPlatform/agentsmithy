@@ -1,3 +1,4 @@
+import os
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from google.adk.agents import LlmAgent
+from google.adk.agents import Agent
+from google.adk.models import Gemini
 from google.genai import types
 
 from .prompt import AGENT_INSTRUCTION
@@ -29,7 +31,19 @@ from .tools.sql_translation import (
 AGENT_NAME = "migration_agent"
 AGENT_DESCRIPTION = "Translates Oracle schemas and PL/SQL to BigQuery compatible SQL, optimizing for the cloud environment."
 
-root_agent = LlmAgent(
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
+    generation_config=types.GenerateContentConfig(
+        temperature=0.2,
+        top_p=0.95,
+        max_output_tokens=65536,
+    ),
+    retry_options=types.HttpRetryOptions(attempts=3),
+)
+
+root_agent = Agent(
     name=AGENT_NAME,
     model="gemini-2.5-flash",
     description=AGENT_DESCRIPTION,

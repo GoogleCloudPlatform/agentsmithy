@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from google.adk.agents import Agent
 from .prompt import PROMPT
 from .tools import copy_and_replace_document_tool, save_document_tool, list_drive_documents_tool
@@ -19,7 +20,7 @@ from .tools import copy_and_replace_document_tool, save_document_tool, list_driv
 
 drive_agent = Agent(
     name="DriveAgent",
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
     description="Drive Agent",
     instruction=PROMPT,
     tools=[

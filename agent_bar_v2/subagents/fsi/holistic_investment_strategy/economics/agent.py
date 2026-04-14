@@ -1,3 +1,4 @@
+import os
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +16,11 @@
 import os
 from pathlib import Path
 from injector import Binder, Injector, SingletonScope
-from google.adk.agents import BaseAgent, SequentialAgent
+from google.adk.agents import BaseAgent, SequentialAgent, Agent
+from google.adk.models import Gemini
+from google.genai import types
+
+# Import local modules
 from .configuration import AgentConfig
 from .data_lookup import DataProvider
 from .sub_agents.query_generation_agent.agent import get_query_generation_agent
@@ -23,6 +28,9 @@ from .sub_agents.query_validation_agent.agent import get_query_validation_agent
 from .sub_agents.query_runner_agent.agent import get_query_runner_agent
 from .sub_agents.answer_generation_agent.agent import get_answer_generation_agent
 from .config import MACROECONOMICS_BUCKET_NAME
+from . import prompts
+from . import tools
+
 
 # Configuration and Dependency Injection
 CURRENT_DIR = Path(__file__).parent
@@ -56,5 +64,22 @@ def create_root_agent() -> BaseAgent:
 AGENT_NAME = "macro_agent"
 AGENT_DESCRIPTION = "Analyzes global economic trends, central bank policies, and market indicators to provide macroeconomic insights."
 
-# For compatibility with legacy loading if needed
-root_agent = create_root_agent()
+
+# Model configuration
+GEMINI_MODEL_CONFIG = Gemini(
+    model=os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash"),
+    generation_config=types.GenerateContentConfig(
+        temperature=0.7,
+        top_p=0.95,
+        max_output_tokens=65536,
+    ),
+    retry_options=types.HttpRetryOptions(attempts=3),
+)
+
+root_agent = Agent(
+    name=AGENT_NAME,
+    model=GEMINI_MODEL_CONFIG,
+    description=AGENT_DESCRIPTION,
+    instruction=prompts.SYSTEM_INSTRUCTION,
+    tools=tools.tools,
+)
