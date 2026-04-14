@@ -4,6 +4,8 @@ version = "0.1.0"
 description = ""
 authors = [
     {name = "Theo Haddad", email = "theohaddad@google.com"},
+    {name = "Defne Yazicioglu", email = "defney@google.com"},
+    {name = "Shubham Bhagwat", email = "shubhambhagwat@google.com"},
 ]
 dependencies = [
     "google-adk>=1.15.0,<2.0.0",

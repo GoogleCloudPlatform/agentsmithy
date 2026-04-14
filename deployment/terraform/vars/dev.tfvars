@@ -6,12 +6,9 @@ bucket_suffix_campaign_manager      = "-abv2-gcma"
 bucket_suffix_meeting_intelligence  = "-abv2-mi"
 bucket_suffix_macroeconomics        = "-abv2-macro"
 
-# BigQuery Config
-bq_finsights_dataset_id      = "finsights"
 bq_cyber_guardian_dataset_id = "cyber_guardian_data"
 bq_finops_dataset_id         = "finops"
 bq_finops_table_id           = "finops-table"
-bq_kg_dataset_id             = "kgraph"
 bq_retail_dataset_id         = "retail"
 bq_retail_product_table_id   = "retail-products"
 bq_retail_store_table_id     = "retail-stores"

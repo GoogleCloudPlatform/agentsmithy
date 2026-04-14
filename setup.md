@@ -1,6 +1,6 @@
 # Environment Setup and Deployment Guide
 
-This guide walks you through setting up your Google Cloud environment and deploying the Agent Bar v2 application to Cloud Run.
+This guide walks you through setting up your Google Cloud environment and deploying the Multi-Agent Quest application to Cloud Run.
 
 ## 1. Infrastructure Setup (Terraform)
 
@@ -60,10 +60,10 @@ Automate the configuration of your `.env` file by running the following command.
 cd deployment/terraform
 
 
-# 1. Get the Terraform outputs and save them to a temp file
+# 1. Get the Terraform outputs
 terraform output -json | jq -r 'to_entries | .[] | "\(.key)=\(.value.value)"' > /tmp/tf_envs
 
-# 2. Merge with .env.sample (parsing placeholders and overwriting TF outputs)
+# 2. Merge with .env.sample
 awk -F= 'NR==FNR{a[$1]=$2;next} {split($0,b,"="); key=b[1]; value=b[2]; if(value ~ /\[terraform_output:/){match(value,/\[terraform_output:[^\]]+\]/);hint=substr(value,RSTART+18,RLENGTH-19);if(hint in a){sub(/\[terraform_output:[^\]]+\]/,a[hint],value);print key"="value;next}} if(value ~ /\[your_project_id\]/){if("project_id" in a){sub(/\[your_project_id\]/,a["project_id"],value);print key"="value;next}} if(key in a){print key"="a[key];next} print $0}' /tmp/tf_envs ../../agent_bar_v2/.env.sample > ../../agent_bar_v2/.env
 
 # 3. Clean up the temp file
@@ -75,6 +75,8 @@ cd ../..
 
 > **Note on Pre-loaded Data:** Some sub-agents (e.g., Knowledge Graph, Retail Inventory) require specific datasets or files to be pre-loaded into BigQuery or GCS. If an agent depends on pre-loaded data, you can find detailed instructions and schemas within that specific sub-agent's directory under `agent_bar_v2/subagents/`.
 
+> **Note on Optional Environment Variables:** `GITHUB_ACCESS_TOKEN` is optional and only required if you plan to use the banking modernization discovery agent.
+
 ## 4. Deploy to Cloud Run
 
 Deploy the agent and its Web UI to Cloud Run using the `gcloud run deploy` command. We will use the Service Account created by Terraform.
@@ -82,7 +84,7 @@ Deploy the agent and its Web UI to Cloud Run using the `gcloud run deploy` comma
 ```bash
 export PROJECT_ID=$(gcloud config get-value project)
 export REGION="us-central1"
-export SERVICE_ACCOUNT=$(cd deployment/terraform && terraform output -raw agent_service_account_email)
+export SERVICE_ACCOUNT=$(cd deployment/terraform && terraform output -raw AGENT_SERVICE_ACCOUNT_EMAIL)
 ```
 
 ### Temporarily bring the Dockerfile and main.py to the root
@@ -91,7 +93,7 @@ cp deployment/cloud_run/Dockerfile .
 cp deployment/cloud_run/main.py .
 ```
 
-### Deploy the Agent Bar v2 application along with the UI
+### Deploy the Multi-Agent Quest application along with the UI
 ```bash
 gcloud run deploy agent-bar-v2 \
   --source . \
@@ -102,8 +104,8 @@ gcloud run deploy agent-bar-v2 \
   --cpu=4 \
   --memory=8Gi \
   --set-env-vars=$(grep -v '^#' agent_bar_v2/.env | xargs | sed 's/ /,/g')
-# Add any other necessary environment variables your agent might need
 ```
+Add any other necessary environment variables your agent might need
 
 # Clean up the root directory
 ```bash
@@ -112,17 +114,17 @@ rm Dockerfile main.py
 
 ## 5. Test Your Agent
 
-Once deployed, you must initialize a session before interacting with the agent. Agent Bar v2 dynamically loads sub-agents and prompts based on the **Session State**.
+Once deployed, you must initialize a session before interacting with the agent. Multi-Agent Quest dynamically loads sub-agents and prompts based on the **Session State**.
 
 ### Initialize a Predefined Use Case
 
-The `industry_id` and `use_case_id` are used to match a predefined agent configuration in the `agent_registry.py`.
+The `industry_id` and `use_case_id` are used to match a predefined agent configuration in the Agent Registry `agent_bar_v2/subagents/agent_registry.py`. In this example, we will use the `legal_guardian` use case in the `cross` industry.
 
 ```bash
-# Get the deployed Cloud Run service URL
+# Get Cloud Run service URL
 export CLOUD_RUN_URL=$(gcloud run services describe agent-bar-v2 --platform managed --region $REGION --format 'value(status.url)')
 
-# Initialize a session for the "legal_guardian" use case in the "cross" industry
+# Initialize a session
 curl -X POST "$CLOUD_RUN_URL/apps/agent_bar_v2/users/user123/sessions/s_123" \
      -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
      -H "Content-Type: application/json" \
@@ -159,13 +161,31 @@ After initializing the session via `curl`, you can interact with the agent in yo
 > [!NOTE]
 > To ensure the Web UI uses the session you just initialized (e.g., `user123` / `s_123`), you should append them as query parameters to the URL in your browser.
 
+In a new Cloud Shell terminal tab, start the proxy:
 ```bash
-# In a new Cloud Shell terminal tab, start the proxy:
 gcloud run services proxy agent-bar-v2 --port=8080 --region us-central1
-
-# Then, use the "Web Preview" button in the Cloud Shell toolbar
-# and select "Preview on port 8080".
-#
-# To use your initialized session, append these to the URL:
-# ?userId=user123&session=s_123
 ```
+
+Then, use the "Web Preview" button in the Cloud Shell toolbar
+and select "Preview on port 8080".
+
+To use your initialized session, append these to the URL:
+`?userId=user123&session=s_123`
+
+## Now try on your own! Check out these example use cases
+
+- **HCLS**: Cut Research Time From Weeks to Minutes
+  - `industry_id`: `hcls`
+  - `use_case_id`: `research_accelerator`
+- **FSI**: Protect Sensitive Corporate Assets from Breaches
+  - `industry_id`: `fsi`
+  - `use_case_id`: `cyber_incident_response`
+- **Retail**: Achieve Global Marketing Time-to-Market in One Hour
+  - `industry_id`: `retail`
+  - `use_case_id`: `global_campaign_launcher`
+- **Media**: Open International Revenue Streams with Subtitles and Dubbing
+  - `industry_id`: `media`
+  - `use_case_id`: `global_content_localizer`
+- **Cross Industry**: Increase Sales Velocity with Persuasive Pitch Assets
+  - `industry_id`: `cross`
+  - `use_case_id`: `proposal_pitch_factory`

@@ -14,12 +14,14 @@
 
 # Industry specific prompts
 
+from .hcls.patient_handover.config import CLINICAL_HANDOVER_BUCKET
+
 
 DEFAULT_PROMPT = """
 You are a helpful AI assistant.
 """
 
-HCLS_CLINICAL_HANDOVER_PROMPT = """
+HCLS_CLINICAL_HANDOVER_PROMPT = f"""
 You are a specialized agent focused on drafting handoff reports for patients in
 a clinical environment. The patient data you need to build reports on is accessible
 in an external data source that you can access with your tools.
@@ -31,14 +33,14 @@ The following tools are available to you
   You can prime the environment by performing the following actions in sequence
   1) Update patients in the system. You will do this by executing the tool
      list_blobs_tool(
-        bucket_name = 'ai-agent-bar-data',
+        bucket_name = '{CLINICAL_HANDOVER_BUCKET}',
         prefix = 'clinical_handover/patients',
         key_name = 'patients'
         )
   2) Load data for a particular patient. You will do this by executing the tool
     get_file_contents(
-    bucket_name = 'ai-agent-bar-data', 
-    blob_name = {patient_id}.txt, 
+    bucket_name = '{CLINICAL_HANDOVER_BUCKET}',
+    blob_name = {{patient_id}}.txt,
     key_name = 'patient_data')
 
 Once data is loaded, you can use the patient_handover agent to continue the workflow

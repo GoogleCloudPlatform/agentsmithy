@@ -1,6 +1,6 @@
 # Deployment
 
-This directory contains the Terraform configurations for provisioning the necessary Google Cloud infrastructure for Agent Bar v2.
+This directory contains the Terraform configurations for provisioning the necessary Google Cloud infrastructure for Multi-Agent Quest.
 
 ## Directory Structure
 
@@ -9,7 +9,7 @@ deployment/
 ├── README.md
 └── terraform/
     ├── apis.tf                 # Enables required Google Cloud APIs
-    ├── artifact_registry.tf    # Provisions Docker repository for Agent Bar v2 images
+    ├── artifact_registry.tf    # Provisions Docker repository for Multi-Agent Quest images
     ├── bigquery.tf             # Provisions BigQuery datasets and tables for FinOps, Knowledge Graph, and Retail
     ├── discoveryengine.tf      # Provisions Vertex AI Search (Discovery Engine) Datastores for FinOps and Retail
     ├── iam.tf                  # Provisions the Service Account and assigns required IAM roles
@@ -45,13 +45,11 @@ The Terraform configurations in this directory will create the following Google 
 - **Assigned Roles**:
   - `roles/aiplatform.user`
   - `roles/aiplatform.admin`
-  - `roles/storage.objectUser`
+  - `roles/storage.admin`
   - `roles/logging.logWriter`
   - `roles/artifactregistry.reader`
   - `roles/bigquery.dataEditor`
   - `roles/bigquery.jobUser`
-  - `roles/spanner.databaseAdmin`
-  - `roles/spanner.databaseReader`
   - `roles/discoveryengine.editor`
 
 ### 3. Cloud Storage Buckets
@@ -59,6 +57,7 @@ The Terraform configurations in this directory will create the following Google 
 - **Product Ad Generation**: `[PROJECT_ID]-abv2-cross-product-ad-generation`
 - **Campaign Manager**: `[PROJECT_ID]-abv2-global-campaign-manager-agent`
 - **Meeting Intelligence**: `[PROJECT_ID]-abv2-meeting-intelligence`
+- **Macroeconomics**: `[PROJECT_ID]-abv2-macroeconomics`
 
 ### 4. Artifact Registry
 - **Repository**: `agent-bar-v2-repo` (Docker format)
@@ -72,12 +71,14 @@ The Terraform configurations in this directory will create the following Google 
 - **Retail Inventory**:
   - Dataset: `retail_inventory`
   - Tables: `products`, `stores`, `inventory`
+- **Finsights**:
+  - Dataset: `finsights`
+    > [!NOTE]
+    > The Finsights sub-agent and its associated data are excluded from this open source release. You can access and deploy Finsights via the [Google Cloud Marketplace](https://console.cloud.google.com/marketplace/product/finsights/finsights). Please contact the team if you would like to know more.
+- **Cyber Guardian**:
+  - Dataset: `cyber_guardian`
 
-### 6. Cloud Spanner
-- **Instance**: `knowledge-graph-instance`
-- **Database**: `knowledge-graph-db`
-
-### 7. Vertex AI Search (Discovery Engine) Datastores
+### 6. Vertex AI Search (Discovery Engine) Datastores
 - **FinOps Data Store**: `finops-app-datastore` (GENERIC / NO_CONTENT)
 - **Retail Support Data Store**: `retail-site-search-datastore` (GENERIC / NO_CONTENT)
 

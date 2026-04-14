@@ -36,8 +36,8 @@ from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
 from .config import (
     PROJECT_ID,
     PROJECT_LOCATION,
-    BQ_DATASET_ID,
     GRAPH_NAME,
+    GCP_DATASET_ID,
 )
 
 
@@ -78,7 +78,7 @@ def get_bq_datasets() -> list:
             ('bigquery-public-data', 'bbc_news'),
             ('bigquery-public-data', 'iowa_liquor_sales'),
             ('bigquery-public-data', 'stackoverflow'),
-            # (PROJECT_ID, 'cymbal_retail')
+            (PROJECT_ID, GCP_DATASET_ID)
         ]
         return approved_datasets
     except Exception as e:
@@ -432,7 +432,7 @@ def get_schema_wrapper(project_id: Optional[str] = None, dataset_id: Optional[st
     if not project_id:
         project_id = PROJECT_ID
     if not dataset_id:
-        dataset_id = BQ_DATASET_ID
+        dataset_id = GCP_DATASET_ID
 
     if not project_id or not dataset_id:
         datasets = str(get_bq_datasets())
@@ -451,7 +451,7 @@ def call_builder_tool_wrapper(user_request: str, project_id: Optional[str] = Non
     if not project_id:
         project_id = PROJECT_ID
     if not dataset_id:
-        dataset_id = BQ_DATASET_ID
+        dataset_id = GCP_DATASET_ID
 
     if not project_id or not dataset_id:
          return "Error: project_id and dataset_id must be provided or set in config."

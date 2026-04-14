@@ -1,0 +1,4 @@
+store_id,name,url,city,state
+101,Downtown Store,http://example.com/downtown,San Francisco,CA
+102,Uptown Store,http://example.com/uptown,New York,NY
+103,Suburban Mall,http://example.com/suburban,Austin,TX

@@ -1,9 +1,9 @@
-# Agent Bar v2
+# Multi-Agent Quest (aka Agent Bar v2)
 
 
 ## Introduction
 
-**Agent Bar v2** is a robust multi-agent runtime designed to facilitate the orchestration, execution, and management of complex multi-agent systems. It provides the underlying infrastructure for agent communication, dynamic state management, tool integration, and industry-specific use cases.
+**Multi-Agent Quest** is a robust multi-agent runtime designed to facilitate the orchestration, execution, and management of complex multi-agent systems. It provides the underlying infrastructure for agent communication, dynamic state management, tool integration, and industry-specific use cases.
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/srastatter/agent-bar-v2-agent-runtime.git&cloudshell_tutorial=setup.md)
 
@@ -24,7 +24,7 @@ The repository is organized as follows:
 
 ## Use Cases by Industry
 
-This section outlines the predefined use cases available in Agent Bar v2, organized by industry. These use cases are mapped in `agent_bar_v2/subagents/agent_registry.py`.
+This section outlines the predefined use cases available in Multi-Agent Quest, organized by industry. These use cases are mapped in `agent_bar_v2/subagents/agent_registry.py`.
 
 ### 🏥 Health and Life Sciences (HCLS)
 
@@ -39,7 +39,7 @@ This section outlines the predefined use cases available in Agent Bar v2, organi
 
 | Use Case | Problem Statement | Agents Used | Description |
 | :--- | :--- | :--- | :--- |
-| **Build Winning Portfolios with Holistic Data** | Inefficient investment decision-making due to the difficulty for wealth managers in synthesizing disparate macroeconomic trends and micro-level company performance data. | 1. [Macroeconomic Research Agent](agent_bar_v2/subagents/fsi/holistic_investment_strategy/economics/agent.py)<br>2. [Earnings Call Analytics Agent](agent_bar_v2/subagents/fsi/holistic_investment_strategy/earnings/agent.py)<br>3. [Finsights](agent_bar_v2/subagents/fsi/holistic_investment_strategy/finsights/agent.py) | The mission with this agent journey is to build robust investment portfolios by analyzing macroeconomic data and earnings call transcripts. |
+| **Build Winning Portfolios with Holistic Data** | Inefficient investment decision-making due to the difficulty for wealth managers in synthesizing disparate macroeconomic trends and micro-level company performance data. | 1. [Macroeconomic Research Agent](agent_bar_v2/subagents/fsi/holistic_investment_strategy/economics/agent.py)<br>2. [Earnings Call Analytics Agent](agent_bar_v2/subagents/fsi/holistic_investment_strategy/earnings/agent.py)<br>3. Finsights (excluded from release, assessible via the [Google Cloud Marketplace](https://console.cloud.google.com/marketplace/product/finsights/finsights)) | The mission with this agent journey is to build robust investment portfolios by analyzing macroeconomic data and earnings call transcripts. |
 | **De-Risk Complex Legacy Banking migrations to Cloud** | High risk and cost associated with manually migrating complex legacy banking cores and translating proprietary schemas to the cloud. | 1. [Domain Discovery Agent](agent_bar_v2/subagents/fsi/banking_modernization_factory/discovery/agent.py)<br>2. [Oracle To Big query Translation Agent](agent_bar_v2/subagents/fsi/banking_modernization_factory/migration/agent.py) | The mission with this agent journey is to migrate a legacy banking core by scanning legacy code and translating proprietary Oracle schemas to the cloud. |
 | **Protect Sensitive Corporate Assets from Breaches** | Slow security threat remediation and high losses due to the manual effort required from SecOps teams to analyze logs and draft reports. | 1. [Cyber Guardian](agent_bar_v2/subagents/fsi/cyber_incident_response/agent.py) | The mission with this agent journey is to mitigate security threats by analyzing system logs for indicators of compromise. |
 
@@ -64,13 +64,56 @@ This section outlines the predefined use cases available in Agent Bar v2, organi
 | :--- | :--- | :--- | :--- |
 | **Minimize Legal Exposure with Compliant Contract Reviews** | High risk and administrative burden for legal teams manually conducting tedious privacy and risk reviews for every contract. | 1. [Contract Review Agent](agent_bar_v2/subagents/cross_industry/legal_guardian/sub_agents/contract_review/agent.py) | The mission with this agent journey is to safeguard enterprise data by auditing documents for privacy compliance and legal risks. |
 | **Increase Sales Velocity with Persuasive Pitch Assets** | Slow sales cycles and inconsistent bid quality because sales teams are manually drafting complex SOWs and pitch sizzle reels. | 1. [Professional Services (PSO) Proposal Writer](agent_bar_v2/subagents/cross_industry/proposal_pitch_factory/sub_agents/proposal_writer/agent.py)<br>2. [Product Ad Generation Agent](agent_bar_v2/subagents/cross_industry/proposal_pitch_factory/sub_agents/product_ad_generation/agent.py) | The mission with this agent journey is to win client deals by having agents draft statements of work and create product "sizzle reels". |
-| **Optimize Cloud Resource Efficiency to Save Bills** | Difficulty identifying cloud resource waste and optimizing expensive BigQuery usage, directly impacting the bottom line. | 1. Cloud Cost AI Guru<br>2. BigQuery Optimization Agent | The mission with this agent journey is to cut your cloud bill by having an agent squad identify resource waste and refactor expensive database queries. |
+| **Optimize Cloud Resource Efficiency to Save Bills** | Difficulty identifying cloud resource waste and optimizing expensive BigQuery usage, directly impacting the bottom line. | 1. [FinOps Optimizer](agent_bar_v2/subagents/cross_industry/cloud_finops_guru/agent.py) | The mission with this agent journey is to cut your cloud bill by having an agent squad identify resource waste and refactor expensive database queries. |
 | **Save Administrative Hours with Searchable Corporate Knowledge** | Lost corporate knowledge and low team alignment because critical town hall decisions rely on memory rather than searchable notes. | 1. [Video Transcription Agent](agent_bar_v2/subagents/cross_industry/meeting_intelligence/sub_agents/transcription/agent.py)<br>2. [Video Moments Agent](agent_bar_v2/subagents/cross_industry/meeting_intelligence/sub_agents/video_analysis/agent.py) | The mission with this agent journey is to summarize town hall meetings by automatically capturing audio and identifying key topics and speakers. |
-| **Democratize Complex Data Analysis to Reveal Hidden Connections** | Hidden business insights and connections are missed because complex data is siloed across disparate, difficult-to-query databases. | 1. Graph Creation and Natural Language Querying Agent | The mission with this agent journey is to connect disparate databases by having an agent squad automatically build a logical knowledge graph. |
-| **Minimize Disruptions by Visualizing Single Points of Failure** | Slow response to disruptions due to the difficulty of visualizing complex supply chain dependencies and identifying single points of failure. | 1. Graph Creation and Natural Language Querying Agent | The mission with this agent journey is to visualize risk by having a graph agent automatically transform raw relationship data into an interactive visual map. |
+| **Democratize Complex Data Analysis to Reveal Hidden Connections** | Hidden business insights and connections are missed because complex data is siloed across disparate, difficult-to-query databases. | 1. [Knowledge Graph Builder](agent_bar_v2/subagents/cross_industry/knowledge_graph_builder/agent.py) | The mission with this agent journey is to connect disparate databases by having an agent squad automatically build a logical knowledge graph. |
+| **Minimize Disruptions by Visualizing Single Points of Failure** | Slow response to disruptions due to the difficulty of visualizing complex supply chain dependencies and identifying single points of failure. | 1. [Knowledge Graph Builder](agent_bar_v2/subagents/cross_industry/knowledge_graph_builder/agent.py) | The mission with this agent journey is to visualize risk by having a graph agent automatically transform raw relationship data into an interactive visual map. |
 | **Accelerate Productivity and Onboarding of Engineering New Hires** | Reduced engineering productivity and long onboarding cycles due to the difficulty for new hires in mastering complex cloud console workflows. | 1. Sherpa | The mission with this agent journey is to onboard new hires by guiding them step-by-step through complex technical tasks in the cloud console. |
 
 *Note: Agents without links are planned conceptual models not yet instantiated in the codebase.*
+
+## Catalog of Available Agents
+
+Multi-Agent Quest includes a variety of specialized agents that can be combined to solve complex problems. Here is a description of the available agents and how they fit together:
+
+### 🏥 Health and Life Sciences (HCLS)
+*   **Medical Search Agent** (`medical_search_agent`): Searches medical literature (PubMed) to synthesize research findings. It fits with the Research Question and Hypothesis agents to accelerate drug trials.
+*   **Research Question Agent** (`research_question_writer`): Generates targeted research questions based on literature synthesis.
+*   **Hypothesis Agent** (`hypothesis_writer`): Generates testable hypotheses based on research questions.
+*   **Provider Directory Search** (`provider_directory_search`): Searches complex provider directories to match patients with specialists quickly.
+*   **Patient Handover Agent** (`patient_handover`): Generates shift handover reports by summarizing critical patient vitals and risks, reducing clinical errors.
+*   **Cardiology Agent** (`cardiology_consult`): Assesses cardiac risk by analyzing ECG data and patient history.
+
+### 💰 Financial Services Industry (FSI)
+*   **Macroeconomic Research Agent** (`macro_agent`): Analyzes macroeconomic data and trends. It fits with the Earnings Agent to provide a holistic view for investment strategies.
+*   **Earnings Call Analytics Agent** (`earnings_agent`): Analyzes earnings call transcripts for micro-level company performance.
+*   **Finsights** (`finsights_agent`): Combines macro and micro insights to assist wealth managers in building winning portfolios.
+    > [!NOTE]
+    > The Finsights sub-agent is excluded from this open source release. You can access and deploy Finsights via the [Google Cloud Marketplace](https://console.cloud.google.com/marketplace/product/finsights/finsights). Please contact the team if you would like to know more.
+*   **Domain Discovery Agent** (`discovery_agent`): Scans legacy banking code to discover domains for migration.
+*   **Oracle To BigQuery Translation Agent** (`migration_agent`): Translates legacy Oracle schemas to cloud-native BigQuery formats.
+*   **Cyber Guardian** (`cyber_incident_response`): Analyzes system logs for indicators of compromise to protect corporate assets.
+
+### 🛒 Retail/CPG
+*   **Product Ad Generation Agent** (`product_ad_agent`): Generates localized marketing content for global product launches.
+*   **Video Translation Agent** (`video_transcription_agent`): Transcribes and localizes video content.
+*   **Customer Support Agent** (`customer_support`): Resolves customer service inquiries by routing issues to specialized sub-agents.
+*   **Conversational Shopping Assistant** (`conversational_shopping_assistant`): Assists customers with shopping queries and product discovery.
+*   **Catalog Enrichment Agent** (`catalog_enrichment_agent`): Enriches product catalogs by processing raw supplier data.
+*   **NL2SQL Shopping Assistant** (`nl2sql_agent`): Converts natural language queries into SQL to access stock levels and inventory data.
+
+### 🎬 Media
+*   **Content Moderation Agent** (`content_moderation`): Audits video content for safety and compliance.
+*   **Transcription Agent** (`transcription_agent`): Automatically captures audio and transcribes video content.
+*   **Video Moments Agent** (`video_analysis_agent`): Analyzes video to identify key moments or highlights.
+*   **Translation Agent** (`translation_agent`): Generates subtitles and dubbed audio tracks for international localization.
+
+### ⚔️ Cross-Industry
+*   **Contract Review Agent** (`contract_review`): Audits documents for privacy compliance and legal risks.
+*   **Professional Services (PSO) Proposal Writer** (`proposal_writer`): Drafts statements of work and pitch assets.
+*   **FinOps Optimizer** (`finops_optimizer`): Identifies cloud resource waste to reduce bills.
+*   **Knowledge Graph Builder** (`knowledge_graph_builder`): Connects disparate data sources to build a logical knowledge graph.
+
 
 
 ## Setup
@@ -98,7 +141,7 @@ If you just want to run the agent locally for development:
 
 ## Testing with the ADK Web UI
 
-The ADK Web UI provides an interactive interface for chatting with the agents. Agent Bar v2 dynamically loads specific sub-agents and prompts based on the session's **industry** and **use case** configuration.
+The ADK Web UI provides an interactive interface for chatting with the agents. Multi-Agent Quest dynamically loads specific sub-agents and prompts based on the session's **industry** and **use case** configuration.
 
 1. **Start the ADK web interface:**
 ```bash
@@ -106,7 +149,7 @@ adk web
 ```
 
 2. **Initialize the session state:**
-Agent Bar v2 relies on the session state to determine which agents to activate. This mapping is defined in `agent_bar_v2/subagents/agent_registry.py`. By changing the `industry_id` and `use_case_id` in the state initialization, you dynamically swap the agents handling the conversation.
+Multi-Agent Quest relies on the session state to determine which agents to activate. This mapping is defined in `agent_bar_v2/subagents/agent_registry.py`. By changing the `industry_id` and `use_case_id` in the state initialization, you dynamically swap the agents handling the conversation.
 
 In a separate terminal, use `curl` to set the initial context for your session (e.g., cross-industry meeting intelligence):
 ```bash
