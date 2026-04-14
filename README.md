@@ -1,9 +1,9 @@
-# Multi-Agent Quest (aka Agent Bar v2)
+# Multi-Agent Quest
 
 
 ## Introduction
 
-**Multi-Agent Quest** is a robust multi-agent runtime designed to facilitate the orchestration, execution, and management of complex multi-agent systems. It provides the underlying infrastructure for agent communication, dynamic state management, tool integration, and industry-specific use cases.
+**Multi-Agent Quest** (aka Agent Bar v2) is a robust multi-agent runtime designed to facilitate the orchestration, execution, and management of complex multi-agent systems. It provides the underlying infrastructure for agent communication, dynamic state management, tool integration, and industry-specific use cases.
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/srastatter/agent-bar-v2-agent-runtime.git&cloudshell_tutorial=setup.md)
 
