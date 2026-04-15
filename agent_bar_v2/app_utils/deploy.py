@@ -229,29 +229,29 @@ def setup_agent_identity(client: Any, project: str, display_name: str) -> Any:
 @click.option(
     "--min-instances",
     type=int,
-    default=1,
+    default=10,
     help="Minimum number of instances (default: 1)",
 )
 @click.option(
     "--max-instances",
     type=int,
-    default=10,
+    default=40,
     help="Maximum number of instances (default: 10)",
 )
 @click.option(
     "--cpu",
-    default="4",
+    default="8",
     help="CPU limit (default: 4)",
 )
 @click.option(
     "--memory",
-    default="8Gi",
+    default="16Gi",
     help="Memory limit (default: 8Gi)",
 )
 @click.option(
     "--container-concurrency",
     type=int,
-    default=9,
+    default=4,
     help="Container concurrency (default: 9)",
 )
 @click.option(

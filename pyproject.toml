@@ -45,7 +45,8 @@ dependencies = [
     "injector",
     "db-dtypes",
     "pandas",
-    "pyOpenSSL"
+    "pyOpenSSL",
+    "moviepy"
 ]
 
 [build-system]

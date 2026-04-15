@@ -22,7 +22,10 @@ from google.adk.tools.bigquery.config import BigQueryToolConfig, WriteMode
 # ALLOWED: Tools will have full write capabilites.
 # BLOCKED: Default mode. Effectively makes the tool read-only.
 # PROTECTED: Only allows writes on temporary data for a given BigQuery session.
-tool_config = BigQueryToolConfig(write_mode=WriteMode.BLOCKED)
+tool_config = BigQueryToolConfig(
+    write_mode=WriteMode.BLOCKED,
+    location="US",
+)
 
 # Initialize the tools to use the application default credentials (ADC).
 # This works for local development after `gcloud auth application-default login`

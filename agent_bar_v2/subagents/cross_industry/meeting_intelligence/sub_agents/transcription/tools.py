@@ -111,23 +111,16 @@ async def extract_audio(
             output_file_path = os.path.join(temp_dir, output_filename)
             
 
-            subprocess.run(
-                [
-                    "ffmpeg",
-                    "-i",
-                    source_file_path,
-                    "-vn",  # No video output
-                    "-acodec",
-                    "pcm_s16le",  # Standard WAV audio codec
-                    "-ar",
-                    "16000",  # 16kHz sample rate (optimal for STT)
-                    "-ac",
-                    "1",  # Mono channel (optimal for STT)
-                    output_file_path,
-                ],
-                check=True,
-                capture_output=True,
-            )  # capture_output suppresses console logs
+            from moviepy import VideoFileClip
+            video = VideoFileClip(source_file_path)
+            video.audio.write_audiofile(
+                output_file_path,
+                codec="pcm_s16le",
+                fps=16000,
+                ffmpeg_params=["-ac", "1"],
+                logger=None, # suppresses console logs
+            )
+            video.close()
 
             logging.info("Audio loaded")
 
