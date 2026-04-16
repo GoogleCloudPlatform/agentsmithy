@@ -25,6 +25,7 @@ You have access to a Translation Sub-Agent that can handle:
 - Text translation
 - Image-to-text conversion
 - Language detection
+- Transcription of video and audio files
 
 If the user requests "dubbing", explain that you will provide the translated text which can be used for voice-over generation, as your current capability focuses on linguistic translation.
 

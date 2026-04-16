@@ -19,6 +19,7 @@ load_dotenv()
 
 PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
+SPEECH_LOCATION = "us-central1" if LOCATION == "global" else LOCATION
 BUCKET_NAME = os.getenv("GCS_BUCKET")
 GCS_OUTPUT_PATH = "translation_agent_output"
 DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL_VERSION", "gemini-2.5-flash")

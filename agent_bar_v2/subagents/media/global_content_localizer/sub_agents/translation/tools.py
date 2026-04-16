@@ -31,8 +31,12 @@ from google.api_core import client_options
 import subprocess
 import tempfile
 import time
+import logging
 
-from .config import PROJECT_ID, LOCATION, BUCKET_NAME, GCS_OUTPUT_PATH, DEFAULT_GEMINI_MODEL, DEFAULT_SPEECH_MODEL, VALID_STT_MODELS
+from .config import PROJECT_ID, LOCATION, SPEECH_LOCATION, BUCKET_NAME, GCS_OUTPUT_PATH, DEFAULT_GEMINI_MODEL, DEFAULT_SPEECH_MODEL, VALID_STT_MODELS
+
+logger = logging.getLogger(__name__)
+
 
 async def translate_text_with_model(
     source_language: str,
@@ -392,6 +396,10 @@ async def extract_audio(
         source_file_path = None
 
         try:
+            logger.info(f"=== extract_audio started ===")
+            logger.info(f"video_gcs_uri: {video_gcs_uri}")
+            logger.info(f"artifact_name: {artifact_name}")
+
             # --- Step 1: Get the video file onto the local filesystem ---
             filenames = tool_context.state.get("video_files")
             if not artifact_name and filenames:
@@ -453,8 +461,10 @@ async def extract_audio(
             dest_blob = dest_bucket.blob(gcs_path)
             dest_blob.upload_from_filename(output_file_path)
 
+            final_uri = f"gs://{BUCKET_NAME}/{gcs_path}"
             return {
                 "status": "success",
+                "audio_gcs_uri": final_uri
             }
 
         except subprocess.CalledProcessError:
@@ -493,6 +503,12 @@ async def transcribe_batch_gcs_input_inline_output_v2(
     Returns:
         dict: A dictionary with the status and in case of success the transcribed text.
     """
+    logger.info(f"=== transcribe_batch_gcs_input_inline_output_v2 started ===")
+    logger.info(f"language: {language}")
+    logger.info(f"audio_gcs_uri: {audio_gcs_uri}")
+    logger.info(f"artifact_name: {artifact_name}")
+    logger.info(f"model: {model}")
+
     # Determine the artifact name if not explicitly provided
     filenames = tool_context.state.get("audio_files")
     if not artifact_name and filenames:
@@ -556,18 +572,29 @@ async def transcribe_batch_gcs_input_inline_output_v2(
             "status": "error",
             "message": "The only valid output types for a transcription is native text or vtt.",
         }
-    file_path = os.path.join(os.path.dirname(__file__), "transcription_codes.json")
+    file_path = os.path.join(os.path.dirname(__file__), "translation_codes.json")
     with open(file_path, "r", encoding="utf-8") as f:
         language_codes = json.load(f)
 
-    if language.lower() in language_codes:
-        language = language_codes[language.lower()]
-    elif language not in language_codes.values():
+    lang_lower = language.lower()
+    base_lang = language.split("-")[0].lower()
+    
+    # 1. If it's a full locale code passing through (e.g. "en-US"), keep it if the base is valid.
+    if len(language.split("-")) > 1 and base_lang in language_codes.values():
+        pass # language remains as passed
+    # 2. If it's a full name (e.g. "english"), look up the code and map to default locale.
+    elif lang_lower in language_codes:
+        code = language_codes[lang_lower]
+        language = f"{code}-US" if code == "en" else f"{code}-{code.upper()}"
+    # 3. If it's a base code (e.g. "en"), map to default locale.
+    elif base_lang in language_codes.values():
+        language = f"{base_lang}-US" if base_lang == "en" else f"{base_lang}-{base_lang.upper()}"
+    else:
         return {"status": "error", "message": "Provide a valid language."}
 
     endpoint = "speech.googleapis.com"
-    if LOCATION != "global":
-        endpoint = f"{LOCATION}-{endpoint}"
+    if SPEECH_LOCATION != "global":
+        endpoint = f"{SPEECH_LOCATION}-{endpoint}"
 
     # Configure client options, specifically setting the API endpoint.
     options = client_options.ClientOptions(api_endpoint=endpoint)
@@ -606,7 +633,7 @@ async def transcribe_batch_gcs_input_inline_output_v2(
         output_format_config = None
 
     request = cloud_speech.BatchRecognizeRequest(
-        recognizer=f"projects/{PROJECT_ID}/locations/{LOCATION}/recognizers/_",
+        recognizer=f"projects/{PROJECT_ID}/locations/{SPEECH_LOCATION}/recognizers/_",
         config=config,
         files=[file_metadata],
         recognition_output_config=cloud_speech.RecognitionOutputConfig(
