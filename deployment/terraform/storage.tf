@@ -155,3 +155,10 @@ resource "google_storage_bucket_object" "finops_pdf_data" {
   source = "${path.module}/../../agent_bar_v2/subagents/cross_industry/cloud_finops_guru/data/ACME business document.pdf"
   bucket = google_storage_bucket.default_data_bucket.name
 }
+
+# Clinical Handover Sub-agent Data
+resource "google_storage_bucket_object" "clinical_handover_patient_data" {
+  name   = "clinical_handover/patients/MHID123456789.txt"
+  source = "${path.module}/../../agent_bar_v2/subagents/hcls/patient_handover/data/MHID123456789.txt"
+  bucket = google_storage_bucket.default_data_bucket.name
+}

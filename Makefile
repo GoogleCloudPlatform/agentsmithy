@@ -21,7 +21,7 @@ playground:
 	@echo "|                                                                             |"
 	@echo "| 🔍 IMPORTANT: Select the 'agent_bar_v2' folder to interact with your agent.          |"
 	@echo "==============================================================================="
-	uv run adk web . --port 8501 --reload_agents
+	uv run adk web . --port 8000 --reload_agents
 
 # ==============================================================================
 # Backend Deployment Targets

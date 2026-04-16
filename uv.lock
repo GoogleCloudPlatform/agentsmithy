@@ -1,4 +1,5 @@
 version = 1
+revision = 2
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -13,112 +14,6 @@ source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-sta
 sdist = { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/absl-py/absl_py-2.4.0.tar.gz", hash = "sha256:8c6af82722b35cf71e0f4d1d47dcaebfff286e27110a99fc359349b247dfb5d4" }
 wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/absl-py/absl_py-2.4.0-py3-none-any.whl", hash = "sha256:88476fd881ca8aab94ffa78b7b6c632a782ab3ba1cd19c9bd423abc4fb4cd28d" },
-]
-
-[[package]]
-name = "agent-bar-v2"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "asyncpg" },
-    { name = "biopython" },
-    { name = "db-dtypes" },
-    { name = "fastapi" },
-    { name = "fpdf" },
-    { name = "gcsfs" },
-    { name = "google-adk" },
-    { name = "google-cloud-aiplatform", extra = ["evaluation"] },
-    { name = "google-cloud-bigquery" },
-    { name = "google-cloud-bigquery-migration" },
-    { name = "google-cloud-logging" },
-    { name = "google-cloud-speech" },
-    { name = "google-cloud-storage" },
-    { name = "google-cloud-translate" },
-    { name = "google-cloud-videointelligence" },
-    { name = "google-cloud-vision" },
-    { name = "google-genai" },
-    { name = "immutabledict" },
-    { name = "injector" },
-    { name = "langchain-google-spanner" },
-    { name = "langchain-google-vertexai" },
-    { name = "langchain-text-splitters" },
-    { name = "loguru" },
-    { name = "pandas" },
-    { name = "pillow" },
-    { name = "pyarrow" },
-    { name = "pygithub" },
-    { name = "pyopenssl" },
-    { name = "requests" },
-    { name = "uvicorn" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "deptry" },
-    { name = "google-adk", extra = ["eval"] },
-    { name = "ipykernel" },
-    { name = "ipython" },
-    { name = "mypy" },
-    { name = "pre-commit" },
-    { name = "pylint" },
-    { name = "pytest" },
-    { name = "pytest-asyncio" },
-    { name = "pytest-cov" },
-    { name = "pytest-dotenv" },
-    { name = "pytest-html" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "asyncpg", specifier = ">=0.30.0,<1.0.0" },
-    { name = "biopython" },
-    { name = "db-dtypes" },
-    { name = "fastapi", specifier = ">=0.115.8,<1.0.0" },
-    { name = "fpdf" },
-    { name = "gcsfs", specifier = ">=2024.11.0" },
-    { name = "google-adk" },
-    { name = "google-cloud-aiplatform" },
-    { name = "google-cloud-aiplatform", extras = ["evaluation"], specifier = "==1.130.0" },
-    { name = "google-cloud-bigquery" },
-    { name = "google-cloud-bigquery-migration" },
-    { name = "google-cloud-logging", specifier = ">=3.12.0,<4.0.0" },
-    { name = "google-cloud-speech" },
-    { name = "google-cloud-storage" },
-    { name = "google-cloud-translate" },
-    { name = "google-cloud-videointelligence" },
-    { name = "google-cloud-vision" },
-    { name = "google-genai" },
-    { name = "immutabledict" },
-    { name = "injector" },
-    { name = "langchain-google-spanner" },
-    { name = "langchain-google-vertexai" },
-    { name = "langchain-text-splitters" },
-    { name = "loguru" },
-    { name = "pandas" },
-    { name = "pillow" },
-    { name = "pyarrow" },
-    { name = "pygithub" },
-    { name = "pyopenssl" },
-    { name = "requests" },
-    { name = "uvicorn" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "deptry", specifier = ">=0.23.0" },
-    { name = "google-adk", extras = ["eval"] },
-    { name = "ipykernel", specifier = ">=6.29.5" },
-    { name = "ipython", specifier = ">=8.36.0" },
-    { name = "mypy", specifier = ">=1.16.0" },
-    { name = "pre-commit", specifier = ">=4.2.0" },
-    { name = "pylint" },
-    { name = "pytest", specifier = ">=8.3.5" },
-    { name = "pytest-asyncio" },
-    { name = "pytest-cov", specifier = ">=4.0.0" },
-    { name = "pytest-dotenv" },
-    { name = "pytest-html" },
-    { name = "ruff", specifier = ">=0.11.5" },
 ]
 
 [[package]]
@@ -2135,6 +2030,10 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/jiter/jiter-0.13.0-cp314-cp314t-win32.whl", hash = "sha256:24dc96eca9f84da4131cdf87a95e6ce36765c3b156fc9ae33280873b1c32d5f6" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/jiter/jiter-0.13.0-cp314-cp314t-win_amd64.whl", hash = "sha256:0a8d76c7524087272c8ae913f5d9d608bd839154b62c4322ef65723d2e5bb0b8" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/jiter/jiter-0.13.0-cp314-cp314t-win_arm64.whl", hash = "sha256:2c26cf47e2cad140fa23b6d58d435a7c0161f5c514284802f25e87fddfe11024" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/jiter/jiter-0.13.0-graalpy312-graalpy250_312_native-macosx_10_12_x86_64.whl", hash = "sha256:3d744a6061afba08dd7ae375dcde870cffb14429b7477e10f67e9e6d68772a0a" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/jiter/jiter-0.13.0-graalpy312-graalpy250_312_native-macosx_11_0_arm64.whl", hash = "sha256:ff732bd0a0e778f43d5009840f20b935e79087b4dc65bd36f1cd0f9b04b8ff7f" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/jiter/jiter-0.13.0-graalpy312-graalpy250_312_native-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ab44b178f7981fcaea7e0a5df20e773c663d06ffda0198f1a524e91b2fde7e59" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/jiter/jiter-0.13.0-graalpy312-graalpy250_312_native-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:7bb00b6d26db67a05fe3e12c76edc75f32077fb51deed13822dc648fa373bc19" },
 ]
 
 [[package]]
@@ -2681,6 +2580,112 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/mmh3/mmh3-5.2.1-cp314-cp314t-win32.whl", hash = "sha256:29bc3973676ae334412efdd367fcd11d036b7be3efc1ce2407ef8676dabfeb82" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/mmh3/mmh3-5.2.1-cp314-cp314t-win_amd64.whl", hash = "sha256:28cfab66577000b9505a0d068c731aee7ca85cd26d4d63881fab17857e0fe1fb" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/mmh3/mmh3-5.2.1-cp314-cp314t-win_arm64.whl", hash = "sha256:dfd51b4c56b673dfbc43d7d27ef857dd91124801e2806c69bb45585ce0fa019b" },
+]
+
+[[package]]
+name = "multi-agent-quest"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "asyncpg" },
+    { name = "biopython" },
+    { name = "db-dtypes" },
+    { name = "fastapi" },
+    { name = "fpdf" },
+    { name = "gcsfs" },
+    { name = "google-adk" },
+    { name = "google-cloud-aiplatform", extra = ["evaluation"] },
+    { name = "google-cloud-bigquery" },
+    { name = "google-cloud-bigquery-migration" },
+    { name = "google-cloud-logging" },
+    { name = "google-cloud-speech" },
+    { name = "google-cloud-storage" },
+    { name = "google-cloud-translate" },
+    { name = "google-cloud-videointelligence" },
+    { name = "google-cloud-vision" },
+    { name = "google-genai" },
+    { name = "immutabledict" },
+    { name = "injector" },
+    { name = "langchain-google-spanner" },
+    { name = "langchain-google-vertexai" },
+    { name = "langchain-text-splitters" },
+    { name = "loguru" },
+    { name = "pandas" },
+    { name = "pillow" },
+    { name = "pyarrow" },
+    { name = "pygithub" },
+    { name = "pyopenssl" },
+    { name = "requests" },
+    { name = "uvicorn" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "deptry" },
+    { name = "google-adk", extra = ["eval"] },
+    { name = "ipykernel" },
+    { name = "ipython" },
+    { name = "mypy" },
+    { name = "pre-commit" },
+    { name = "pylint" },
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+    { name = "pytest-cov" },
+    { name = "pytest-dotenv" },
+    { name = "pytest-html" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "asyncpg", specifier = ">=0.30.0,<1.0.0" },
+    { name = "biopython" },
+    { name = "db-dtypes" },
+    { name = "fastapi", specifier = ">=0.115.8,<1.0.0" },
+    { name = "fpdf" },
+    { name = "gcsfs", specifier = ">=2024.11.0" },
+    { name = "google-adk" },
+    { name = "google-cloud-aiplatform" },
+    { name = "google-cloud-aiplatform", extras = ["evaluation"], specifier = "==1.130.0" },
+    { name = "google-cloud-bigquery" },
+    { name = "google-cloud-bigquery-migration" },
+    { name = "google-cloud-logging", specifier = ">=3.12.0,<4.0.0" },
+    { name = "google-cloud-speech" },
+    { name = "google-cloud-storage" },
+    { name = "google-cloud-translate" },
+    { name = "google-cloud-videointelligence" },
+    { name = "google-cloud-vision" },
+    { name = "google-genai" },
+    { name = "immutabledict" },
+    { name = "injector" },
+    { name = "langchain-google-spanner" },
+    { name = "langchain-google-vertexai" },
+    { name = "langchain-text-splitters" },
+    { name = "loguru" },
+    { name = "pandas" },
+    { name = "pillow" },
+    { name = "pyarrow" },
+    { name = "pygithub" },
+    { name = "pyopenssl" },
+    { name = "requests" },
+    { name = "uvicorn" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "deptry", specifier = ">=0.23.0" },
+    { name = "google-adk", extras = ["eval"] },
+    { name = "ipykernel", specifier = ">=6.29.5" },
+    { name = "ipython", specifier = ">=8.36.0" },
+    { name = "mypy", specifier = ">=1.16.0" },
+    { name = "pre-commit", specifier = ">=4.2.0" },
+    { name = "pylint" },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "pytest-asyncio" },
+    { name = "pytest-cov", specifier = ">=4.0.0" },
+    { name = "pytest-dotenv" },
+    { name = "pytest-html" },
+    { name = "ruff", specifier = ">=0.11.5" },
 ]
 
 [[package]]
@@ -3699,6 +3704,10 @@ wheels = [
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pydantic-core/pydantic_core-2.41.5-cp314-cp314t-win32.whl", hash = "sha256:b4ececa40ac28afa90871c2cc2b9ffd2ff0bf749380fbdf57d165fd23da353aa" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pydantic-core/pydantic_core-2.41.5-cp314-cp314t-win_amd64.whl", hash = "sha256:80aa89cad80b32a912a65332f64a4450ed00966111b6615ca6816153d3585a8c" },
     { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pydantic-core/pydantic_core-2.41.5-cp314-cp314t-win_arm64.whl", hash = "sha256:35b44f37a3199f771c3eaa53051bc8a70cd7b54f333531c59e29fd4db5d15008" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pydantic-core/pydantic_core-2.41.5-graalpy312-graalpy250_312_native-macosx_10_12_x86_64.whl", hash = "sha256:7da7087d756b19037bc2c06edc6c170eeef3c3bafcb8f532ff17d64dc427adfd" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pydantic-core/pydantic_core-2.41.5-graalpy312-graalpy250_312_native-macosx_11_0_arm64.whl", hash = "sha256:aabf5777b5c8ca26f7824cb4a120a740c9588ed58df9b2d196ce92fba42ff8dc" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pydantic-core/pydantic_core-2.41.5-graalpy312-graalpy250_312_native-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c007fe8a43d43b3969e8469004e9845944f1a80e6acd47c150856bb87f230c56" },
+    { url = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/pydantic-core/pydantic_core-2.41.5-graalpy312-graalpy250_312_native-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:76d0819de158cd855d1cbb8fcafdf6f5cf1eb8e470abe056d5d161106e38062b" },
 ]
 
 [[package]]

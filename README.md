@@ -135,9 +135,15 @@ If you just want to run the agent locally for development:
    source .venv/bin/activate
 
    # Install the ADK and dependencies
+   pip install --upgrade pip
    pip install google-adk
    pip install -e .
+
+   # Alternatively run `make install`
    ```
+
+3. **Environment Setup:**
+   Follow Section 2 of [**setup.md**](setup.md) to create and configure your `.env` file. The agent requires these environment variables (such as Project ID) to function correctly, even for local development.
 
 ## Testing with the ADK Web UI
 
@@ -146,6 +152,7 @@ The ADK Web UI provides an interactive interface for chatting with the agents. M
 1. **Start the ADK web interface:**
 ```bash
 adk web
+# Alternatively run `make playground`
 ```
 
 2. **Initialize the session state:**

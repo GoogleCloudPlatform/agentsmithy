@@ -314,6 +314,10 @@ def list_patients(tool_context: ToolContext) -> dict[str, Any]:
     try:
         patients_data = tool_context.state.get("patients")
         if patients_data is None:
+            # Fallback to local files
+            if PATIENT_FILE_DIR.exists():
+                patients = [f.stem for f in PATIENT_FILE_DIR.glob("*.txt")]
+                return {"success": "Patients found in local storage.", "patients": patients}
             return {"error": "No patients found."}
 
         patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in patients_data]
@@ -341,12 +345,26 @@ async def generate_shift_endorsement(
     """
     try:
         patients_data = tool_context.state.get("patients")
+        patient_content = None
         if not patients_data:
-            return {"error": "No patients data found in state."}
-
-        patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in patients_data]
-        if not any(pid == patient for pid in patients):
-            return {"error": f"Patient not found: {patient}"}
+            # Fallback to local files
+            patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
+            if patient_file.exists():
+                patient_content = patient_file.read_text()
+            else:
+                return {"error": "No patients data found in state and no local file."}
+        else:
+            patients = [x['name'].rsplit('/', 1)[1].replace('.txt', '') for x in patients_data]
+            if not any(pid == patient for pid in patients):
+                return {"error": f"Patient not found: {patient}"}
+            patient_content = tool_context.state.get("patient_data")
+            if not patient_content:
+                # Try to load from file if not in state but in list
+                patient_file = PATIENT_FILE_DIR / f"{patient}.txt"
+                if patient_file.exists():
+                    patient_content = patient_file.read_text()
+                else:
+                    return {"error": "Patient found in list but no data in state and no local file."}
 
         start_dt, end_dt = (
             datetime.fromisoformat(start_time),
@@ -370,17 +388,11 @@ async def generate_shift_endorsement(
         inputs_filename = f"{patient}-{int(start_dt.timestamp())}-{int(end_dt.timestamp())}-raw-inputs.txt"
         _ = await tool_context.save_artifact(
             inputs_filename,
-            # artifact=tool_context.load_artifact("patient_data")
-            artifact=types.Part(text=tool_context.state.get("patient_data"))
-            # artifact=types.Part.from_bytes(
-            #     data=patient_file.read_text().encode(),
-            #     mime_type="text/plain",
-            # ),
+            artifact=types.Part(text=patient_content)
         )
 
         summary_content = summarizer.generate(
-            # file_path=tool_context.load_artifact(patient),
-            patient = tool_context.state.get("patient_data"),
+            patient = patient_content,
             start_time=start_dt,
             end_time=end_dt,
         )
