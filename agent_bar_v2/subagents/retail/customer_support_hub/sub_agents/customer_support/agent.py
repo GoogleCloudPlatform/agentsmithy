@@ -18,13 +18,10 @@ from google.adk.models import Gemini
 
 from . import prompts
 from . import tools
-from .sub_agents.product_condition.agent import root_agent as product_condition_agent
-from .sub_agents.refund_issue.agent import root_agent as refund_issue_agent
 
 AGENT_NAME = "customer_support"
 AGENT_DESCRIPTION = """
-        Greets users, triages issues and routes requests
-        to the right sub-agent or escalates to human support.
+    Help user to solve his issue with products, Returns, refunds, damaged items, shipping delays, "where is my order" (WISMO) calls, and finding store locations.
     """
 
 GEMINI_MODEL_CONFIG = Gemini(
@@ -36,6 +33,6 @@ root_agent = Agent(
     model=GEMINI_MODEL_CONFIG,
     description=AGENT_DESCRIPTION,
     instruction=prompts.SYSTEM_INSTRUCTION,
-    sub_agents=[product_condition_agent, refund_issue_agent],
+    # sub_agents=[product_condition_agent, refund_issue_agent],
     tools=tools.tools,
 )

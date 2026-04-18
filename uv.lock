@@ -2689,6 +2689,114 @@ dev = [
 ]
 
 [[package]]
+name = "multi-agent-quest"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "asyncpg" },
+    { name = "biopython" },
+    { name = "db-dtypes" },
+    { name = "fastapi" },
+    { name = "fpdf" },
+    { name = "gcsfs" },
+    { name = "google-adk" },
+    { name = "google-cloud-aiplatform", extra = ["evaluation"] },
+    { name = "google-cloud-bigquery" },
+    { name = "google-cloud-bigquery-migration" },
+    { name = "google-cloud-logging" },
+    { name = "google-cloud-speech" },
+    { name = "google-cloud-storage" },
+    { name = "google-cloud-translate" },
+    { name = "google-cloud-videointelligence" },
+    { name = "google-cloud-vision" },
+    { name = "google-genai" },
+    { name = "immutabledict" },
+    { name = "injector" },
+    { name = "langchain-google-spanner" },
+    { name = "langchain-google-vertexai" },
+    { name = "langchain-text-splitters" },
+    { name = "loguru" },
+    { name = "moviepy" },
+    { name = "pandas" },
+    { name = "pillow" },
+    { name = "pyarrow" },
+    { name = "pygithub" },
+    { name = "pyopenssl" },
+    { name = "requests" },
+    { name = "uvicorn" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "deptry" },
+    { name = "google-adk", extra = ["eval"] },
+    { name = "ipykernel" },
+    { name = "ipython" },
+    { name = "mypy" },
+    { name = "pre-commit" },
+    { name = "pylint" },
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+    { name = "pytest-cov" },
+    { name = "pytest-dotenv" },
+    { name = "pytest-html" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "asyncpg", specifier = ">=0.30.0,<1.0.0" },
+    { name = "biopython" },
+    { name = "db-dtypes" },
+    { name = "fastapi", specifier = ">=0.115.8,<1.0.0" },
+    { name = "fpdf" },
+    { name = "gcsfs", specifier = ">=2024.11.0" },
+    { name = "google-adk" },
+    { name = "google-cloud-aiplatform" },
+    { name = "google-cloud-aiplatform", extras = ["evaluation"], specifier = "==1.130.0" },
+    { name = "google-cloud-bigquery" },
+    { name = "google-cloud-bigquery-migration" },
+    { name = "google-cloud-logging", specifier = ">=3.12.0,<4.0.0" },
+    { name = "google-cloud-speech" },
+    { name = "google-cloud-storage" },
+    { name = "google-cloud-translate" },
+    { name = "google-cloud-videointelligence" },
+    { name = "google-cloud-vision" },
+    { name = "google-genai" },
+    { name = "immutabledict" },
+    { name = "injector" },
+    { name = "langchain-google-spanner" },
+    { name = "langchain-google-vertexai" },
+    { name = "langchain-text-splitters" },
+    { name = "loguru" },
+    { name = "moviepy" },
+    { name = "pandas" },
+    { name = "pillow" },
+    { name = "pyarrow" },
+    { name = "pygithub" },
+    { name = "pyopenssl" },
+    { name = "requests" },
+    { name = "uvicorn" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "deptry", specifier = ">=0.23.0" },
+    { name = "google-adk", extras = ["eval"] },
+    { name = "ipykernel", specifier = ">=6.29.5" },
+    { name = "ipython", specifier = ">=8.36.0" },
+    { name = "mypy", specifier = ">=1.16.0" },
+    { name = "pre-commit", specifier = ">=4.2.0" },
+    { name = "pylint" },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "pytest-asyncio" },
+    { name = "pytest-cov", specifier = ">=4.0.0" },
+    { name = "pytest-dotenv" },
+    { name = "pytest-html" },
+    { name = "ruff", specifier = ">=0.11.5" },
+]
+
+[[package]]
 name = "multidict"
 version = "6.7.1"
 source = { registry = "https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/simple/" }

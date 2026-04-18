@@ -26,9 +26,9 @@ shopping_tool = AgentTool(conversational_shopping_assistant_agent)
 hub_agent = LlmAgent(
     name="Customer_Support_Hub",
     description="""
-        A central hub agent that routes user queries to specialized sub-agents.
-        1. Customer Support: For returns, refunds, and support issues.
-        2. Conversational Shopping Assistant: For product search and shopping assistance.
+        A central hub agent that orchestrates the customer experience by consulting specialized sub-agents.
+        1. Customer Support: For returns, refunds, and post-purchase issues.
+        2. Conversational Shopping Assistant: For product search and pre-purchase queries.
     """,
     instruction=SYSTEM_INSTRUCTION,
     model=MODEL,
