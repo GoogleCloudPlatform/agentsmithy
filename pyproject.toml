@@ -24,6 +24,7 @@ dependencies = [
     "google-cloud-storage",
     "google-cloud-bigquery",
     "google-cloud-bigquery-migration",
+    "google-cloud-dataplex",
     "google-cloud-videointelligence",
     "fpdf",
     "google-genai",
