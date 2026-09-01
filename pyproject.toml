@@ -25,6 +25,8 @@ dependencies = [
     "google-cloud-bigquery",
     "google-cloud-bigquery-migration",
     "google-cloud-videointelligence",
+    "google-api-python-client",
+    "google-auth-oauthlib",
     "fpdf",
     "google-genai",
     "google-cloud-translate",
@@ -34,6 +36,8 @@ dependencies = [
     "google-cloud-logging>=3.12.0,<4.0.0",
     "google-cloud-aiplatform[evaluation]==1.130.0",    
     "pyarrow",
+    "langchain-community",
+    "langchain-core",
     "langchain-google-spanner",
     "langchain-google-vertexai",
     "langchain-text-splitters",
@@ -46,7 +50,12 @@ dependencies = [
     "db-dtypes",
     "pandas",
     "pyOpenSSL",
-    "moviepy"
+    "moviepy",
+    "python-dotenv",
+    "pyyaml",
+    "sqlparse",
+    "aiosqlite",
+    "pydantic"
 ]
 
 [build-system]

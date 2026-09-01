@@ -24,6 +24,7 @@ from ..subagents.agent_registry import get_predefined_use_case_sub_agents, get_s
 class ContextBasedToolset(BaseToolset):
 
     def __init__(self, prefix: str = "ctxts_"):
+        super().__init__()
         self.tool_name_prefix = prefix
 
     async def get_tools(self, readonly_context: Optional[ReadonlyContext] = None) -> List[BaseTool]:
